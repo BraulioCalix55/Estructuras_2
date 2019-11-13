@@ -9,7 +9,7 @@ public class Metadata implements Serializable{
     private int num_campos;
     private ArrayList<Campos> lista_campos;
     private boolean registros;
-    private long firstavail;
+    private int firstavail;
 
     public Metadata() {
     registros=false;
@@ -19,8 +19,18 @@ public class Metadata implements Serializable{
         this.num_campos = num_campos;
         this.lista_campos = lista_campos;
         this.registros = registros;
+        this.firstavail = -1;
+    }
+
+    public Metadata(int num_campos, ArrayList<Campos> lista_campos, boolean registros, int firstavail) {
+        this.num_campos = num_campos;
+        this.lista_campos = lista_campos;
+        this.registros = registros;
         this.firstavail = firstavail;
     }
+
+
+    
 
     public int getNum_campos() {
         return num_campos;
@@ -46,11 +56,11 @@ public class Metadata implements Serializable{
         this.registros = registros;
     }
 
-    public long getFirstavail() {
+    public int getFirstavail() {
         return firstavail;
     }
 
-    public void setFirstavail(long firstavail) {
+    public void setFirstavail(int firstavail) {
         this.firstavail = firstavail;
     }
     
