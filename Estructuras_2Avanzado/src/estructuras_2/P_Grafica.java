@@ -357,12 +357,11 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-        String Mensaje="";
+        String Mensaje=""+temp.size()+";";
         for (int i = 0; i < temp.size(); i++) {
             Mensaje+=temp.get(i).toString();
         }
-        Mensaje+=";";
-                
+        Mensaje+=";0;-1;";
         try {
             FileWriter fw = new FileWriter(archivo);
             BufferedWriter bw = new BufferedWriter(fw);
