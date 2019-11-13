@@ -37,11 +37,12 @@ public class leer_archivo {
                     lista.add(nombre[1]);
                     i++;
                 }
-                
-                for (int i = 0; i < (num_campos)*2; i++) {
+                System.out.println("num campos: "+(num_campos)*2);
+                for (int i = 0; i < (lista.size())/2; i++) {
                     lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
                 }
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
+                
             }
             input.close();
         } catch (Exception ex) {

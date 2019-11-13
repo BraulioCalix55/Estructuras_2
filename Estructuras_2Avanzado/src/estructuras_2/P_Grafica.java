@@ -34,6 +34,7 @@ public class P_Grafica extends javax.swing.JFrame {
      * Creates new form P_Grafica
      */
     File Archivo = null;
+
     public P_Grafica() {
         initComponents();
 
@@ -357,21 +358,21 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-        String Mensaje=""+temp.size()+";0;1;";
+        String Mensaje = "" + temp.size() + ";0;1;";
         for (int i = 0; i < temp.size(); i++) {
-            Mensaje+=temp.get(i).toString();
+            Mensaje += temp.get(i).toString();
         }
-        Mensaje+=";";
+        Mensaje += ";";
         try {
             FileWriter fw = new FileWriter(archivo);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(Mensaje);
             bw.close();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_BT_Agrega_campoMouseClicked
 
     private void Terminar_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Terminar_camposMouseClicked
@@ -396,14 +397,21 @@ public class P_Grafica extends javax.swing.JFrame {
     private void Abrir_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Abrir_archivoMouseClicked
         // TODO add your handling code here:
         JFileChooser jfc = new JFileChooser("./");
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
-            jfc.setFileFilter(filtro);
-            int seleccion = jfc.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION) {
-             Archivo  = jfc.getSelectedFile();
-            }
-                System.out.println(Archivo.getName());
-                leer_archivo.main(Archivo.getName());
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
+        jfc.setFileFilter(filtro);
+        int seleccion = jfc.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            Archivo = jfc.getSelectedFile();
+        }
+
+        metadata = leer_archivo.main(Archivo.getName());
+        System.out.println("salio del metodo");
+        System.out.println("campo fuera de metodo: " + metadata.getNum_campos());
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            System.out.println("entra en i=" + i);
+            System.out.println("" + metadata.getLista_campos().get(i).toString());
+        }
+
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     /**
@@ -476,6 +484,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel utilidades;
     // End of variables declaration//GEN-END:variables
 ArrayList<Campos> temp = new ArrayList();
-Metadata metadata = new Metadata();
-File archivo;
+    Metadata metadata = new Metadata();
+    File archivo;
 }
