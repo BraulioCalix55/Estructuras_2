@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,6 +33,7 @@ public class P_Grafica extends javax.swing.JFrame {
     /**
      * Creates new form P_Grafica
      */
+    File Archivo = null;
     public P_Grafica() {
         initComponents();
 
@@ -359,6 +361,8 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < temp.size(); i++) {
             Mensaje+=temp.get(i).toString();
         }
+        Mensaje+=";";
+                
         try {
             FileWriter fw = new FileWriter(archivo);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -392,6 +396,15 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void Abrir_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Abrir_archivoMouseClicked
         // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser("./");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
+            jfc.setFileFilter(filtro);
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+             Archivo  = jfc.getSelectedFile();
+            }
+                System.out.println(Archivo.getName());
+                leer_archivo.main(Archivo.getName());
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     /**
