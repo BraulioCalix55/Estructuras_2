@@ -32,14 +32,14 @@ public class leer_archivo {
                 int cabeza=Integer.parseInt(arreglo[2]);
                 String campos[]=arreglo[3].split(",");
                 ArrayList lista= new ArrayList();
-                for (int i = 0; i < campos.length-1; i++) {
+                for (int i = 0; i < campos.length; i++) {
                     String nombre[]=campos[i].split("=");
                     lista.add(nombre[1]);
-                    i++;
                 }
-                System.out.println("num campos: "+(num_campos)*2);
-                for (int i = 0; i < (lista.size())/2; i++) {
+                
+                for (int i = 0; i < lista.size(); i++) {
                     lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
+                    i++;
                 }
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
                 

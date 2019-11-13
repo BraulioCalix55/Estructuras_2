@@ -390,7 +390,6 @@ public class P_Grafica extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
-        System.out.println("despues exception");
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -405,10 +404,7 @@ public class P_Grafica extends javax.swing.JFrame {
         }
 
         metadata = leer_archivo.main(Archivo.getName());
-        System.out.println("salio del metodo");
-        System.out.println("campo fuera de metodo: " + metadata.getNum_campos());
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            System.out.println("entra en i=" + i);
             System.out.println("" + metadata.getLista_campos().get(i).toString());
         }
 
