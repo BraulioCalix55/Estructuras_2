@@ -71,6 +71,10 @@ public class P_Grafica extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        Modificar_campos = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        Lfondo = new javax.swing.JLabel();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -118,6 +122,11 @@ public class P_Grafica extends javax.swing.JFrame {
         Menu_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listarCampos.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         Menu_campos.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
         Nuevo_registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo campo.png"))); // NOI18N
@@ -199,6 +208,26 @@ public class P_Grafica extends javax.swing.JFrame {
         );
 
         listar_campos.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        Modificar_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        Modificar_campos.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, 150));
+
+        Lfondo.setToolTipText("");
+        Modificar_campos.getContentPane().add(Lfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 542, 424));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -299,10 +328,14 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_archivosMouseClicked
 
     private void L_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_camposMouseClicked
+        if (Archivo==null) {
+            JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo...");
+        }else{
         Menu_campos.setModal(true);
         Menu_campos.pack();
         Menu_campos.setLocationRelativeTo(this);
         Menu_campos.setVisible(true);
+        }
     }//GEN-LAST:event_L_camposMouseClicked
 
     private void Archivo_nuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Archivo_nuevoMouseClicked
@@ -410,6 +443,25 @@ public class P_Grafica extends javax.swing.JFrame {
 
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+                JTable temp = new JTable();
+        DefaultTableModel model = (DefaultTableModel) temp.getModel();
+        model.addColumn("Nombre");
+        model.addColumn("Tipo");
+        temp.setModel(model);
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            Object[] regi = new Object[2];
+            regi[0] = metadata.getLista_campos().get(i).getNombre();
+            regi[1] = metadata.getLista_campos().get(i).getTipo();
+            model.addRow(regi);
+        }
+        temp.setModel(model);
+        jTable1.setModel(temp.getModel());
+        listar_campos.pack();
+        listar_campos.setLocationRelativeTo(null);
+        listar_campos.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -457,8 +509,10 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
+    private javax.swing.JLabel Lfondo;
     private javax.swing.JDialog Menu_archivos;
     private javax.swing.JDialog Menu_campos;
+    private javax.swing.JDialog Modificar_campos;
     private javax.swing.JDialog Nuevo_campos;
     private javax.swing.JLabel Nuevo_registro;
     private javax.swing.JLabel Reindexar;
@@ -474,7 +528,9 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JLabel modificar;
     private javax.swing.JLabel utilidades;
