@@ -34,9 +34,11 @@ public class P_Grafica extends javax.swing.JFrame {
      * Creates new form P_Grafica
      */
     File Archivo = null;
+    int posmodificar = 0;
 
     public P_Grafica() {
         initComponents();
+        
 
     }
 
@@ -71,10 +73,12 @@ public class P_Grafica extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        elim_campo = new javax.swing.JButton();
+        mod_campo = new javax.swing.JButton();
         Modificar_campos = new javax.swing.JDialog();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        Lfondo = new javax.swing.JLabel();
+        tf_mod_campo = new javax.swing.JTextField();
+        combo_tipo2 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -143,10 +147,7 @@ public class P_Grafica extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondocampos.jpg"))); // NOI18N
         Menu_campos.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Nuevo_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         Combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
-        Nuevo_campos.getContentPane().add(Combo_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 90, 90, 40));
 
         Tx_campo.setText("Nombre del Campo");
         Tx_campo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +155,6 @@ public class P_Grafica extends javax.swing.JFrame {
                 Tx_campoMouseClicked(evt);
             }
         });
-        Nuevo_campos.getContentPane().add(Tx_campo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 170, 40));
 
         BT_Agrega_campo.setText("Agregar");
         BT_Agrega_campo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -162,12 +162,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 BT_Agrega_campoMouseClicked(evt);
             }
         });
-        Nuevo_campos.getContentPane().add(BT_Agrega_campo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 90, 40));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setText("Creacion de Campos");
-        Nuevo_campos.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
-        Nuevo_campos.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 180, 279));
 
         Terminar_campos.setText("terminar de agregar");
         Terminar_campos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -175,7 +172,46 @@ public class P_Grafica extends javax.swing.JFrame {
                 Terminar_camposMouseClicked(evt);
             }
         });
-        Nuevo_campos.getContentPane().add(Terminar_campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 150, 40));
+
+        javax.swing.GroupLayout Nuevo_camposLayout = new javax.swing.GroupLayout(Nuevo_campos.getContentPane());
+        Nuevo_campos.getContentPane().setLayout(Nuevo_camposLayout);
+        Nuevo_camposLayout.setHorizontalGroup(
+            Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel5))
+                    .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(Tx_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(Combo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(BT_Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(90, Short.MAX_VALUE))
+        );
+        Nuevo_camposLayout.setVerticalGroup(
+            Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Nuevo_camposLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(51, 51, 51)
+                        .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Tx_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Combo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BT_Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,13 +226,32 @@ public class P_Grafica extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        elim_campo.setText("Eliminar");
+        elim_campo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                elim_campoMouseClicked(evt);
+            }
+        });
+
+        mod_campo.setText("Modificar");
+        mod_campo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mod_campoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(elim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -204,30 +259,57 @@ public class P_Grafica extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217))
+                .addGap(87, 87, 87)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(elim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(85, 85, 85))
         );
 
         listar_campos.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        Modificar_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        tf_mod_campo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tf_mod_campoMouseClicked(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        });
 
-        Modificar_campos.getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, 150));
+        combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
+        combo_tipo2.setToolTipText("");
 
-        Lfondo.setToolTipText("");
-        Modificar_campos.getContentPane().add(Lfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 542, 424));
+        jButton1.setText("Modificar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Modificar_camposLayout = new javax.swing.GroupLayout(Modificar_campos.getContentPane());
+        Modificar_campos.getContentPane().setLayout(Modificar_camposLayout);
+        Modificar_camposLayout.setHorizontalGroup(
+            Modificar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Modificar_camposLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(tf_mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(combo_tipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
+            .addGroup(Modificar_camposLayout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Modificar_camposLayout.setVerticalGroup(
+            Modificar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Modificar_camposLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addGroup(Modificar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combo_tipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(39, 39, 39))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -470,6 +552,55 @@ public class P_Grafica extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
+        if (jTable1.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            modelo.removeRow(jTable1.getSelectedRow());
+            jTable1.setModel(modelo);
+        }
+    }//GEN-LAST:event_elim_campoMouseClicked
+
+    private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
+        Modificar_campos.setModal(true);
+        Modificar_campos.pack();
+        Modificar_campos.setLocationRelativeTo(this);
+        Modificar_campos.setVisible(true);
+    }//GEN-LAST:event_mod_campoMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        boolean verificar = false;
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            if( metadata.getLista_campos().get(i).getNombre().equals(Tx_campo.getText())){
+                verificar = true;
+            }
+            
+        }
+        if(verificar){
+            JOptionPane.showMessageDialog(this,"Ya existe campo con ese nombre");
+        }else{
+        metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
+        metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
+       JTable temp = new JTable();
+       DefaultTableModel model = (DefaultTableModel) temp.getModel();
+            model.addColumn("Nombre");
+            model.addColumn("Tipo");
+            temp.setModel(model);
+            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                Object[] regi = new Object[2];
+                regi[0] = metadata.getLista_campos().get(i).getNombre();
+                regi[1] = metadata.getLista_campos().get(i).getTipo();
+                model.addRow(regi);
+            }
+            temp.setModel(model);
+            jTable1.setModel(temp.getModel());
+            Modificar_campos.setVisible(false);
+        }    
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
+        tf_mod_campo.setText("");
+    }//GEN-LAST:event_tf_mod_campoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -517,7 +648,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
-    private javax.swing.JLabel Lfondo;
     private javax.swing.JDialog Menu_archivos;
     private javax.swing.JDialog Menu_campos;
     private javax.swing.JDialog Modificar_campos;
@@ -526,7 +656,10 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel Reindexar;
     private javax.swing.JButton Terminar_campos;
     private javax.swing.JTextField Tx_campo;
+    private javax.swing.JComboBox<String> combo_tipo2;
+    private javax.swing.JButton elim_campo;
     private javax.swing.JLabel fondo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -536,11 +669,11 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JDialog listar_campos;
+    private javax.swing.JButton mod_campo;
     private javax.swing.JLabel modificar;
+    private javax.swing.JTextField tf_mod_campo;
     private javax.swing.JLabel utilidades;
     // End of variables declaration//GEN-END:variables
 ArrayList<Campos> temp = new ArrayList();
