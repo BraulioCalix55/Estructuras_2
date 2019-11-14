@@ -1,0 +1,1 @@
+3;0;1;nombre=pro,tipo=int,nombre=ble,tipo=int,nombre=mas,tipo=Char,;
