@@ -69,8 +69,8 @@ public class P_Grafica extends javax.swing.JFrame {
         Terminar_campos = new javax.swing.JButton();
         listar_campos = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_1 = new javax.swing.JTextArea();
         Modificar_campos = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -177,34 +177,25 @@ public class P_Grafica extends javax.swing.JFrame {
         });
         Nuevo_campos.getContentPane().add(Terminar_campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 150, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ta_1.setColumns(20);
+        ta_1.setRows(5);
+        jScrollPane3.setViewportView(ta_1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         listar_campos.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -440,26 +431,35 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             System.out.println("" + metadata.getLista_campos().get(i).toString());
         }
+        
+        //Object [] row = {BT_Agrega_campo,Combo_tipo};
+        //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        //model.addRow(row);
 
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-                JTable temp = new JTable();
-        DefaultTableModel model = (DefaultTableModel) temp.getModel();
-        model.addColumn("Nombre");
-        model.addColumn("Tipo");
-        temp.setModel(model);
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            Object[] regi = new Object[2];
-            regi[0] = metadata.getLista_campos().get(i).getNombre();
-            regi[1] = metadata.getLista_campos().get(i).getTipo();
-            model.addRow(regi);
-        }
-        temp.setModel(model);
-        jTable1.setModel(temp.getModel());
-        listar_campos.pack();
-        listar_campos.setLocationRelativeTo(null);
-        listar_campos.setVisible(true);
+//        JTable temp = new JTable();
+//        DefaultTableModel model = (DefaultTableModel) temp.getModel();
+//        model.addColumn("Nombre");
+//        model.addColumn("Tipo");
+//        temp.setModel(model);
+//        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+//            Object[] regi = new Object[2];
+//            regi[0] = metadata.getLista_campos().get(i).getNombre();
+//            regi[1] = metadata.getLista_campos().get(i).getTipo();
+//            model.addRow(regi);
+//        }
+//        temp.setModel(model);
+//        jTable1.setModel(temp.getModel());
+//        listar_campos.pack();
+//        listar_campos.setLocationRelativeTo(null);
+//        listar_campos.setVisible(true);
+          
+          listar_campos.setModal(true);
+          listar_campos.pack();
+          listar_campos.setLocationRelativeTo(this);
+          listar_campos.setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
@@ -527,12 +527,12 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JLabel modificar;
+    private javax.swing.JTextArea ta_1;
     private javax.swing.JLabel utilidades;
     // End of variables declaration//GEN-END:variables
 ArrayList<Campos> temp = new ArrayList();
