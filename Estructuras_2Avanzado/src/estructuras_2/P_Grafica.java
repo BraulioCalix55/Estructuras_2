@@ -243,7 +243,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 L_registroMouseClicked(evt);
             }
         });
-        getContentPane().add(L_registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, -1, -1));
+        getContentPane().add(L_registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, -1, -1));
 
         L_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
         L_salir.addMouseListener(new java.awt.event.MouseAdapter() {

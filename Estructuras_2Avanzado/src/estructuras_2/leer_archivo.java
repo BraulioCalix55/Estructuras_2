@@ -36,17 +36,15 @@ public class leer_archivo {
                     String nombre[]=campos[i].split("=");
                     lista.add(nombre[1]);
                 }
-                
                 for (int i = 0; i < lista.size(); i++) {
                     lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
                     i++;
                 }
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
-                
             }
             input.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
         return metadata;
     }
