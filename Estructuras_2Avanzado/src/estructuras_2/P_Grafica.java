@@ -328,13 +328,13 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_archivosMouseClicked
 
     private void L_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_camposMouseClicked
-        if (Archivo==null) {
+        if (Archivo == null) {
             JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo...");
-        }else{
-        Menu_campos.setModal(true);
-        Menu_campos.pack();
-        Menu_campos.setLocationRelativeTo(this);
-        Menu_campos.setVisible(true);
+        } else {
+            Menu_campos.setModal(true);
+            Menu_campos.pack();
+            Menu_campos.setLocationRelativeTo(this);
+            Menu_campos.setVisible(true);
         }
     }//GEN-LAST:event_L_camposMouseClicked
 
@@ -356,6 +356,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Menu_archivos, "Arhcivo con ese nombre ya existe");
             }
         }
+        nuevo = true;
     }//GEN-LAST:event_Archivo_nuevoMouseClicked
 
     private void Tx_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tx_campoMouseClicked
@@ -375,6 +376,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Archivos_salirMouseClicked
 
     private void BT_Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Agrega_campoMouseClicked
+        nuevo=false;
         String campo = Tx_campo.getText();
         int pos = Combo_tipo.getSelectedIndex();
         System.out.println(Combo_tipo.getSelectedIndex());
@@ -435,20 +437,25 @@ public class P_Grafica extends javax.swing.JFrame {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             Archivo = jfc.getSelectedFile();
         }
+        if (nuevo == true) {
 
-        metadata = leer_archivo.main(Archivo.getName());
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            System.out.println("" + metadata.getLista_campos().get(i).toString());
+        } else {
+            metadata = leer_archivo.main(Archivo.getName());
+            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                System.out.println("" + metadata.getLista_campos().get(i).toString());
+            }
         }
 
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-                JTable temp = new JTable();
+        Menu_campos.setVisible(false);
+        JTable temp = new JTable();
         DefaultTableModel model = (DefaultTableModel) temp.getModel();
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
+         metadata = leer_archivo.main(Archivo.getName());
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
@@ -460,6 +467,7 @@ public class P_Grafica extends javax.swing.JFrame {
         listar_campos.pack();
         listar_campos.setLocationRelativeTo(null);
         listar_campos.setVisible(true);
+
     }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
@@ -537,5 +545,6 @@ public class P_Grafica extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 ArrayList<Campos> temp = new ArrayList();
     Metadata metadata = new Metadata();
-    File archivo=null;
+    File archivo = null;
+    boolean nuevo = false;
 }
