@@ -481,5 +481,5 @@ public class P_Grafica extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 ArrayList<Campos> temp = new ArrayList();
     Metadata metadata = new Metadata();
-    File archivo;
+    File archivo=null;
 }
