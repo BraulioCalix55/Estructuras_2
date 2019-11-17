@@ -578,8 +578,8 @@ public class P_Grafica extends javax.swing.JFrame {
         if(verificar){
             JOptionPane.showMessageDialog(this,"Ya existe campo con ese nombre");
         }else{
-        metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
-        metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
+        metadata.getLista_campos().get(posmodificar).setNombre(tf_mod_campo.getText());
+        metadata.getLista_campos().get(posmodificar).setTipo(combo_tipo2.getSelectedItem().toString());
        JTable temp = new JTable();
        DefaultTableModel model = (DefaultTableModel) temp.getModel();
             model.addColumn("Nombre");
