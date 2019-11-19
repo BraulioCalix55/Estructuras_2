@@ -35,11 +35,10 @@ public class P_Grafica extends javax.swing.JFrame {
      */
     File Archivo = null;
     int posmodificar = 0;
-
+    
     public P_Grafica() {
         initComponents();
         
-
     }
 
     /**
@@ -58,9 +57,8 @@ public class P_Grafica extends javax.swing.JFrame {
         Archivos_salir = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         Menu_campos = new javax.swing.JDialog();
-        jLabel4 = new javax.swing.JLabel();
+        Listar_Campos = new javax.swing.JLabel();
         Nuevo_registro = new javax.swing.JLabel();
-        modificar = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Nuevo_campos = new javax.swing.JDialog();
         Combo_tipo = new javax.swing.JComboBox<>();
@@ -75,10 +73,15 @@ public class P_Grafica extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         elim_campo = new javax.swing.JButton();
         mod_campo = new javax.swing.JButton();
+        Agrega_campo = new javax.swing.JButton();
         Modificar_campos = new javax.swing.JDialog();
         tf_mod_campo = new javax.swing.JTextField();
         combo_tipo2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        Agregar_campos = new javax.swing.JDialog();
+        nombre_agregar = new javax.swing.JTextField();
+        Boton_agregar = new javax.swing.JButton();
+        Combo_Agrega = new javax.swing.JComboBox<>();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -125,13 +128,13 @@ public class P_Grafica extends javax.swing.JFrame {
 
         Menu_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listarCampos.png"))); // NOI18N
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        Listar_Campos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listarCampos.png"))); // NOI18N
+        Listar_Campos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                Listar_CamposMouseClicked(evt);
             }
         });
-        Menu_campos.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
+        Menu_campos.getContentPane().add(Listar_Campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
         Nuevo_registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo campo.png"))); // NOI18N
         Nuevo_registro.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -141,11 +144,8 @@ public class P_Grafica extends javax.swing.JFrame {
         });
         Menu_campos.getContentPane().add(Nuevo_registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
-        modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
-        Menu_campos.getContentPane().add(modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, -1, -1));
-
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondocampos.jpg"))); // NOI18N
-        Menu_campos.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        Menu_campos.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 390));
 
         Combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
 
@@ -240,6 +240,13 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         });
 
+        Agrega_campo.setText("Agregar");
+        Agrega_campo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Agrega_campoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -249,7 +256,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(elim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Agrega_campo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(111, Short.MAX_VALUE))
@@ -259,11 +268,16 @@ public class P_Grafica extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(elim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(85, 85, 85))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(elim_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(129, 129, 129))
         );
 
         listar_campos.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -295,7 +309,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addComponent(combo_tipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
             .addGroup(Modificar_camposLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
+                .addGap(58, 58, 58)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -309,6 +323,49 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(39, 39, 39))
+        );
+
+        nombre_agregar.setText("Nombre del Campo");
+        nombre_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nombre_agregarMouseClicked(evt);
+            }
+        });
+
+        Boton_agregar.setText("jButton2");
+        Boton_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Boton_agregarMouseClicked(evt);
+            }
+        });
+
+        Combo_Agrega.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
+
+        javax.swing.GroupLayout Agregar_camposLayout = new javax.swing.GroupLayout(Agregar_campos.getContentPane());
+        Agregar_campos.getContentPane().setLayout(Agregar_camposLayout);
+        Agregar_camposLayout.setHorizontalGroup(
+            Agregar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Agregar_camposLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(nombre_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+            .addGroup(Agregar_camposLayout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(Boton_agregar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Agregar_camposLayout.setVerticalGroup(
+            Agregar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Agregar_camposLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(Agregar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombre_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(Boton_agregar)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -410,7 +467,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_archivosMouseClicked
 
     private void L_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_camposMouseClicked
-        if (Archivo == null) {
+        if (archivo == null) {
             JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo...");
         } else {
             Menu_campos.setModal(true);
@@ -426,7 +483,7 @@ public class P_Grafica extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             archivo = new File(fileChooser.getSelectedFile().getPath() + ".txt");
-
+            
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
@@ -458,10 +515,12 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Archivos_salirMouseClicked
 
     private void BT_Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Agrega_campoMouseClicked
-        nuevo=false;
-        String campo = Tx_campo.getText();
-        int pos = Combo_tipo.getSelectedIndex();
+        nuevo = false;
         System.out.println(Combo_tipo.getSelectedIndex());
+        String campo = Tx_campo.getText();
+        
+        int pos = Combo_tipo.getSelectedIndex();
+        
         String tipo = "";
         if (pos == 0) {
             tipo = "int";
@@ -475,7 +534,7 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-        String Mensaje = "" + temp.size() + ";0;1;";
+        String Mensaje = "" + temp.size() + ";0;-1;";
         for (int i = 0; i < temp.size(); i++) {
             Mensaje += temp.get(i).toString();
         }
@@ -485,7 +544,7 @@ public class P_Grafica extends javax.swing.JFrame {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(Mensaje);
             bw.close();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -515,30 +574,35 @@ public class P_Grafica extends javax.swing.JFrame {
         JFileChooser jfc = new JFileChooser("./");
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
         jfc.setFileFilter(filtro);
+        System.out.println("filtro");
+        System.out.println(filtro);
         int seleccion = jfc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            Archivo = jfc.getSelectedFile();
+            archivo = jfc.getSelectedFile();
+            System.out.println(archivo.getName());
         }
         if (nuevo == true) {
-
+            
         } else {
-            metadata = leer_archivo.main(Archivo.getName());
-            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            System.out.println("else");
+            metadata = leer_archivo.main(archivo.getName());
+            for (int i = 0; i < metadata.getLista_campos().size()-1; i++) {
                 System.out.println("" + metadata.getLista_campos().get(i).toString());
+                System.out.println(" va");
             }
         }
 
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void Listar_CamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Listar_CamposMouseClicked
         Menu_campos.setVisible(false);
         JTable temp = new JTable();
         DefaultTableModel model = (DefaultTableModel) temp.getModel();
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
-         metadata = leer_archivo.main(Archivo.getName());
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+        metadata = leer_archivo.main(archivo.getName());
+        for (int i = 0; i < metadata.getLista_campos().size()-1; i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
             regi[1] = metadata.getLista_campos().get(i).getTipo();
@@ -550,7 +614,7 @@ public class P_Grafica extends javax.swing.JFrame {
         listar_campos.setLocationRelativeTo(null);
         listar_campos.setVisible(true);
 
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_Listar_CamposMouseClicked
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
         if (jTable1.getSelectedRow() >= 0) {
@@ -570,18 +634,17 @@ public class P_Grafica extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         boolean verificar = false;
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            if( metadata.getLista_campos().get(i).getNombre().equals(Tx_campo.getText())){
+            if (metadata.getLista_campos().get(i).getNombre().equals(Tx_campo.getText())) {
                 verificar = true;
             }
-            
         }
-        if(verificar){
-            JOptionPane.showMessageDialog(this,"Ya existe campo con ese nombre");
-        }else{
-        metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
-        metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
-       JTable temp = new JTable();
-       DefaultTableModel model = (DefaultTableModel) temp.getModel();
+        if (verificar) {
+            JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
+        } else {
+            metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
+            metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
+            JTable temp = new JTable();
+            DefaultTableModel model = (DefaultTableModel) temp.getModel();
             model.addColumn("Nombre");
             model.addColumn("Tipo");
             temp.setModel(model);
@@ -594,12 +657,64 @@ public class P_Grafica extends javax.swing.JFrame {
             temp.setModel(model);
             jTable1.setModel(temp.getModel());
             Modificar_campos.setVisible(false);
-        }    
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
         tf_mod_campo.setText("");
     }//GEN-LAST:event_tf_mod_campoMouseClicked
+
+    private void Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Agrega_campoMouseClicked
+        if (metadata.isRegistros() == true) {
+            JOptionPane.showMessageDialog(jPanel1, "No se puede agregar campos \nsi ya hay registros");
+        } else {
+            Agregar_campos.setModal(true);
+            Agregar_campos.pack();
+            Agregar_campos.setVisible(true);
+        }
+    }//GEN-LAST:event_Agrega_campoMouseClicked
+
+    private void nombre_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nombre_agregarMouseClicked
+        nombre_agregar.setText("");
+    }//GEN-LAST:event_nombre_agregarMouseClicked
+
+    private void Boton_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Boton_agregarMouseClicked
+        String campo = nombre_agregar.getText();
+        System.out.println("nombreee");
+        System.out.println(archivo.getName());
+        System.out.println("despues nombre");
+        int pos = Combo_Agrega.getSelectedIndex();
+        String tipo = "";
+        if (pos == 0) {
+            tipo = "int";
+        } else if (pos == 1) {
+            tipo = "String";
+        } else if (pos == 2) {
+            tipo = "Char";
+        } else if (pos == 3) {
+            tipo = "boolean";
+        }
+        metadata = leer_archivo.main(archivo.getName());
+        metadata.getLista_campos().add(new Campos(campo, tipo));
+        for (int i = 0; i < metadata.getLista_campos().size();i++) {
+            System.out.println(metadata.getLista_campos().get(i));
+        }
+        System.out.println("meta data");
+        System.out.println(metadata.toString());
+        metadata.setNum_campos(metadata.getNum_campos()+1);
+        System.out.println("antes");
+        try {
+            System.out.println("entra");
+            FileWriter fw = new FileWriter(archivo.getName());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(metadata.toString());
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(Agregar_campos, "se agrego con exito.");
+        Agregar_campos.setVisible(false);
+    }//GEN-LAST:event_Boton_agregarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -638,16 +753,21 @@ public class P_Grafica extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Abrir_archivo;
+    private javax.swing.JButton Agrega_campo;
+    private javax.swing.JDialog Agregar_campos;
     private javax.swing.JLabel Archivo_guardar;
     private javax.swing.JLabel Archivo_nuevo;
     private javax.swing.JLabel Archivos_salir;
     private javax.swing.JButton BT_Agrega_campo;
+    private javax.swing.JButton Boton_agregar;
+    private javax.swing.JComboBox<String> Combo_Agrega;
     private javax.swing.JComboBox<String> Combo_tipo;
     private javax.swing.JLabel L_Fondo;
     private javax.swing.JLabel L_archivos;
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
+    private javax.swing.JLabel Listar_Campos;
     private javax.swing.JDialog Menu_archivos;
     private javax.swing.JDialog Menu_campos;
     private javax.swing.JDialog Modificar_campos;
@@ -663,7 +783,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -672,7 +791,7 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JButton mod_campo;
-    private javax.swing.JLabel modificar;
+    private javax.swing.JTextField nombre_agregar;
     private javax.swing.JTextField tf_mod_campo;
     private javax.swing.JLabel utilidades;
     // End of variables declaration//GEN-END:variables

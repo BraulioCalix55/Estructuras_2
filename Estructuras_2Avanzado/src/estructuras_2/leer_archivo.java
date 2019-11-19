@@ -25,15 +25,16 @@ public class leer_archivo {
                 int num_campos=Integer.parseInt(arreglo[0]);
                 boolean registros;
                 if (arreglo[1]=="0") {
-                    registros=false;
-                }else{
                     registros=true;
+                }else{
+                    registros=false;
                 }
                 int cabeza=Integer.parseInt(arreglo[2]);
                 String campos[]=arreglo[3].split(",");
                 ArrayList lista= new ArrayList();
                 for (int i = 0; i < campos.length; i++) {
                     String nombre[]=campos[i].split("=");
+                    System.out.println(nombre[1]);
                     lista.add(nombre[1]);
                 }
                 for (int i = 0; i < lista.size(); i++) {

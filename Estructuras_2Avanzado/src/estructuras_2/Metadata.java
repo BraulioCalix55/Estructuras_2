@@ -13,6 +13,9 @@ public class Metadata implements Serializable{
 
     public Metadata() {
     registros=false;
+    num_campos=0;
+    firstavail=-1;
+    lista_campos= new ArrayList<>();
     }
 
     public Metadata(int num_campos, ArrayList<Campos> lista_campos, boolean registros) {
@@ -62,6 +65,11 @@ public class Metadata implements Serializable{
 
     public void setFirstavail(int firstavail) {
         this.firstavail = firstavail;
+    }
+
+    @Override
+    public String toString() {
+        return num_campos+";"+registros +";" + firstavail +";"+lista_campos.toString();
     }
     
 }
