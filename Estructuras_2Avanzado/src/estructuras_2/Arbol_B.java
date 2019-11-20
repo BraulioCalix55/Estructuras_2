@@ -137,5 +137,30 @@ public class Arbol_B implements Serializable {
             insert_nonfull(r, k);
         }
     }
+    
+    public void printBtree(Nodos node, String indent) {
+
+        if (node == null) {
+            System.out.println(indent + "The B-Tree is Empty");
+        } else {
+            System.out.println(indent + " ");
+
+            String childIndent = indent + "\t";
+
+            for (int i = node.getNum_llaves() - 1; i >= 0; i--) {
+                if (!node.Hoja) {
+                    printBtree(node.getHijos()[i], childIndent);
+                }
+
+                if (node.getLlaves()[i].getLlave() > 0) {
+                    System.out.println(childIndent + node.getLlaves()[i].getLlave());
+                }
+            }
+            if (!node.Hoja) {
+                printBtree(node.getHijos()[node.getNum_llaves()], childIndent);
+            }
+        }
+
+    }
 
 }
