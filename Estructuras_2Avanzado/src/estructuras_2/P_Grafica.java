@@ -619,44 +619,36 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Listar_CamposMouseClicked
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
-//        int posborrar = jTable1.getSelectedRow();
-//        if(posborrar>0&&metadata.getRegistros()==false){
-//            metadata.getLista_campos().remove(posborrar);
-//            JTable temp = new JTable();
-//            DefaultTableModel model = (DefaultTableModel) temp.getModel();
-//            model.addColumn("Nombre");
-//            model.addColumn("Tipo");
-//            temp.setModel(model);
-//            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-//                Object[] regi = new Object[2];
-//                regi[0] = metadata.getLista_campos().get(i).getNombre();
-//                regi[1] = metadata.getLista_campos().get(i).getTipo();
-//                model.addRow(regi);
-//            }
-//            temp.setModel(model);
-//            jTable1.setModel(temp.getModel());
-//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                        ObjectOutputStream oos;
-//            try {
-//                oos = new ObjectOutputStream(bos);
-//                oos.writeObject(metadata);
-//                oos.flush();
-//                byte [] data = bos.toByteArray();
-//                RandomAccessFile f = new RandomAccessFile(Archivo,"rw");
-//                        f.seek(0);
-//                        f.writeInt(data.length);
-//                        f.write(data);
-//            } catch (IOException ex) {
-//                Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }else{
-//            if(posborrar == 0){
-//                JOptionPane.showMessageDialog(this,"No se puede borrar la llave primaria");
-//            }else{
-//                JOptionPane.showMessageDialog(this,"El archivo ya contiene registros no se puede borrar el campo");
-//            
-//            }
-//        }
+        int delete = jTable1.getSelectedRow();
+
+        metadata.getLista_campos().remove(delete);
+        JTable temp = new JTable();
+        DefaultTableModel model = (DefaultTableModel) temp.getModel();
+        model.addColumn("Nombre");
+        model.addColumn("Tipo");
+        temp.setModel(model);
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            Object[] regi = new Object[2];
+            regi[0] = metadata.getLista_campos().get(i).getNombre();
+            regi[1] = metadata.getLista_campos().get(i).getTipo();
+            model.addRow(regi);
+        }
+        temp.setModel(model);
+        jTable1.setModel(temp.getModel());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos;
+        try {
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(metadata);
+            oos.flush();
+            byte[] data = bos.toByteArray();
+            RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
+            f.seek(0);
+            f.writeInt(data.length);
+            f.write(data);
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_elim_campoMouseClicked
 
@@ -750,11 +742,10 @@ public class P_Grafica extends javax.swing.JFrame {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(metadata.toString());
             bw.close();
-        
 
-} catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(Agregar_campos, "se agrego con exito.");
         Agregar_campos.setVisible(false);
@@ -774,28 +765,24 @@ public class P_Grafica extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
