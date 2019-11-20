@@ -5,10 +5,12 @@
  */
 package estructuras_2;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -558,6 +560,46 @@ public class P_Grafica extends javax.swing.JFrame {
             modelo.removeRow(jTable1.getSelectedRow());
             jTable1.setModel(modelo);
         }
+        
+//        File f=new File(F);
+//        File nf=new File("B.txt");
+//        String inf;
+//        int cont=1;
+//        if(f.exists()){
+//           try{
+//             BufferedWriter bw = new BufferedWriter(new FileWriter("B.txt"));
+//             FileReader fr=new FileReader(F);
+//            // FileReader fr2=new FileReader("B.txt");
+//             BufferedReader b = new BufferedReader(fr);
+//             //BufferedReader c = new BufferedReader(fr2);
+//             FileWriter fw=new FileWriter(nf,true);
+//             nf.createNewFile();
+//             while((inf=b.readLine())!=null){
+//                 if(cont!=cont2){
+//                     if(nf.exists()){
+//                         fw.append(inf);
+//                         fw.append("\n");
+//                     }
+//                 }
+//                 else
+//                     if(cont==cont2){
+//                     //nf.createNewFile();
+//                     if(nf.exists()){
+//                         fw.append("");
+//                         fw.append("\n");
+//                     }
+//                 }
+//                 ++cont;
+//             }
+//             /*while((inf=b.readLine())!=null){
+//                 bw.write("");
+//             }
+//              bw.close();*/
+//              fw.close();
+//             b.close();
+//            }catch(IOException ex){ex.printStackTrace();}
+//        }
+    
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
