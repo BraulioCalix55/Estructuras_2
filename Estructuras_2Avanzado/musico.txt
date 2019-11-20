@@ -1,0 +1,1 @@
+3;false;-1;nombre=siu,tipo=int,nombre=america,tipo=int,nombre=nou,tipo=int;
