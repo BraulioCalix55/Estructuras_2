@@ -536,21 +536,7 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-        String Mensaje = "" + temp.size() + ";0;-1;";
-        for (int i = 0; i < temp.size(); i++) {
-            Mensaje += temp.get(i).toString();
-            Mensaje += ",";
-        }
-        Mensaje += ";";
-        try {
-            FileWriter fw = new FileWriter(archivo);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(Mensaje);
-            bw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
 
     }//GEN-LAST:event_BT_Agrega_campoMouseClicked
 
@@ -577,6 +563,21 @@ public class P_Grafica extends javax.swing.JFrame {
             } else {
                 temporal.add(temp.get(i));
             }
+        }
+        String Men = "" + temporal.size() + ";0;-1;";
+        for (int i = 0; i < temporal.size(); i++) {
+            Men += temporal.get(i).toString();
+            Men += ",";
+        }
+        Men += ";";
+        try {
+            FileWriter fw = new FileWriter(archivo);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(Men);
+            bw.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked

@@ -34,19 +34,23 @@ public class leer_archivo {
                 ArrayList lista= new ArrayList();
                 for (int i = 0; i < campos.length; i++) {
                     String nombre[]=campos[i].split("=");
-                    
+                  //  System.out.println("nombre[1]"+nombre[1]);
                     lista.add(nombre[1]);
                 }
+                //System.out.println("holi");
                 for (int i = 0; i < lista.size(); i++) {
                     lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
                     i++;
                 }
+                //System.out.println("num "+num_campos);
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
             }
             input.close();
         } catch (Exception ex) {
             //ex.printStackTrace();
         }
+        System.out.println("return");
+        
         return metadata;
     }
 }
