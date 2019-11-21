@@ -598,12 +598,7 @@ public class P_Grafica extends javax.swing.JFrame {
         } else {
             System.out.println("else");
             metadata = leer_archivo.main(archivo.getName());
-<<<<<<< HEAD
-            System.out.println("antes for");
             for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-=======
-            for (int i = 0; i < metadata.getLista_campos().size() - 1; i++) {
->>>>>>> c79641623299e7abc8c1c46f539c25abfe2c2ddc
                 System.out.println("" + metadata.getLista_campos().get(i).toString());
                 System.out.println("va");
             }
@@ -619,14 +614,8 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         metadata = leer_archivo.main(archivo.getName());
-<<<<<<< HEAD
-        System.out.println("numero");
         System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            System.out.println("meta" + metadata.getLista_campos().get(i).toString());
-=======
-        for (int i = 0; i < metadata.getLista_campos().size() - 1; i++) {
->>>>>>> c79641623299e7abc8c1c46f539c25abfe2c2ddc
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
             regi[1] = metadata.getLista_campos().get(i).getTipo();
