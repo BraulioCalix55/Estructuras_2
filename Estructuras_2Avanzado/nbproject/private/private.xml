@@ -3,9 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/leer_archivo.java</file>
             <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Metadata.java</file>
             <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/P_Grafica.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/ricky/OneDrive/Documentos/Documentos%20Ricky/2019/EDD2/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/P_Grafica.java</file>
+            <file>file:/C:/Users/ricky/OneDrive/Documentos/Documentos%20Ricky/2019/EDD2/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/leer_archivo.java</file>
+=======
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Arbol_B.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/leer_archivo.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Metadata.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/P_Grafica.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Key.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Nodos.java</file>
+            <file>file:/C:/Users/User/Desktop/PROYECTO/Estructuras_2/Estructuras_2Avanzado/src/estructuras_2/Campos.java</file>
+>>>>>>> 1c97afd4003816e1df0062e9cc6657a6eadefb8b
+>>>>>>> c79641623299e7abc8c1c46f539c25abfe2c2ddc
         </group>
     </open-files>
 </project-private>

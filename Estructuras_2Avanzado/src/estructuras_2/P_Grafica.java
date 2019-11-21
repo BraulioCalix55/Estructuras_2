@@ -5,10 +5,12 @@
  */
 package estructuras_2;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -596,8 +598,12 @@ public class P_Grafica extends javax.swing.JFrame {
         } else {
             System.out.println("else");
             metadata = leer_archivo.main(archivo.getName());
+<<<<<<< HEAD
             System.out.println("antes for");
             for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+=======
+            for (int i = 0; i < metadata.getLista_campos().size() - 1; i++) {
+>>>>>>> c79641623299e7abc8c1c46f539c25abfe2c2ddc
                 System.out.println("" + metadata.getLista_campos().get(i).toString());
                 System.out.println("va");
             }
@@ -613,10 +619,14 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         metadata = leer_archivo.main(archivo.getName());
+<<<<<<< HEAD
         System.out.println("numero");
         System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             System.out.println("meta" + metadata.getLista_campos().get(i).toString());
+=======
+        for (int i = 0; i < metadata.getLista_campos().size() - 1; i++) {
+>>>>>>> c79641623299e7abc8c1c46f539c25abfe2c2ddc
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
             regi[1] = metadata.getLista_campos().get(i).getTipo();
@@ -631,11 +641,37 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Listar_CamposMouseClicked
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
-        if (jTable1.getSelectedRow() >= 0) {
-            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-            modelo.removeRow(jTable1.getSelectedRow());
-            jTable1.setModel(modelo);
+        int delete = jTable1.getSelectedRow();
+
+        metadata.getLista_campos().remove(delete);
+        JTable temp = new JTable();
+        DefaultTableModel model = (DefaultTableModel) temp.getModel();
+        model.addColumn("Nombre");
+        model.addColumn("Tipo");
+        temp.setModel(model);
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            Object[] regi = new Object[2];
+            regi[0] = metadata.getLista_campos().get(i).getNombre();
+            regi[1] = metadata.getLista_campos().get(i).getTipo();
+            model.addRow(regi);
         }
+        temp.setModel(model);
+        jTable1.setModel(temp.getModel());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos;
+        try {
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(metadata);
+            oos.flush();
+            byte[] data = bos.toByteArray();
+            RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
+            f.seek(0);
+            f.writeInt(data.length);
+            f.write(data);
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
@@ -655,22 +691,27 @@ public class P_Grafica extends javax.swing.JFrame {
         if (verificar) {
             JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
         } else {
-            metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
-            metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
+            metadata.getLista_campos().get(posmodificar).setNombre(tf_mod_campo.getText());
+            metadata.getLista_campos().get(posmodificar).setTipo(combo_tipo2.getSelectedItem().toString());
             JTable temp = new JTable();
             DefaultTableModel model = (DefaultTableModel) temp.getModel();
-            model.addColumn("Nombre");
-            model.addColumn("Tipo");
-            temp.setModel(model);
-            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                Object[] regi = new Object[2];
-                regi[0] = metadata.getLista_campos().get(i).getNombre();
-                regi[1] = metadata.getLista_campos().get(i).getTipo();
-                model.addRow(regi);
+            if (verificar) {
+                JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
+            } else {
+                metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
+                metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
+                model.addColumn("Nombre");
+                model.addColumn("Tipo");
+                for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                    Object[] regi = new Object[2];
+                    regi[0] = metadata.getLista_campos().get(i).getNombre();
+                    regi[1] = metadata.getLista_campos().get(i).getTipo();
+                    model.addRow(regi);
+                }
+                temp.setModel(model);
+                jTable1.setModel(temp.getModel());
+                Modificar_campos.setVisible(false);
             }
-            temp.setModel(model);
-            jTable1.setModel(temp.getModel());
-            Modificar_campos.setVisible(false);
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -723,8 +764,10 @@ public class P_Grafica extends javax.swing.JFrame {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(metadata.toString());
             bw.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(P_Grafica.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(Agregar_campos, "se agrego con exito.");
         Agregar_campos.setVisible(false);
@@ -744,16 +787,24 @@ public class P_Grafica extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
