@@ -1,1 +1,0 @@
-2;0;-1;nombre=asdw,tipo=Stringnombre=123,tipo=Char;
