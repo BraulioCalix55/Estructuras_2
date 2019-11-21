@@ -34,7 +34,7 @@ public class leer_archivo {
                 ArrayList lista= new ArrayList();
                 for (int i = 0; i < campos.length; i++) {
                     String nombre[]=campos[i].split("=");
-                    System.out.println(nombre[1]);
+                    
                     lista.add(nombre[1]);
                 }
                 for (int i = 0; i < lista.size(); i++) {

@@ -35,10 +35,10 @@ public class P_Grafica extends javax.swing.JFrame {
      */
     File Archivo = null;
     int posmodificar = 0;
-    
+
     public P_Grafica() {
         initComponents();
-        
+
     }
 
     /**
@@ -483,7 +483,7 @@ public class P_Grafica extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             archivo = new File(fileChooser.getSelectedFile().getPath() + ".txt");
-            
+
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
@@ -518,9 +518,9 @@ public class P_Grafica extends javax.swing.JFrame {
         nuevo = false;
         System.out.println(Combo_tipo.getSelectedIndex());
         String campo = Tx_campo.getText();
-        
+
         int pos = Combo_tipo.getSelectedIndex();
-        
+
         String tipo = "";
         if (pos == 0) {
             tipo = "int";
@@ -537,6 +537,7 @@ public class P_Grafica extends javax.swing.JFrame {
         String Mensaje = "" + temp.size() + ";0;-1;";
         for (int i = 0; i < temp.size(); i++) {
             Mensaje += temp.get(i).toString();
+            Mensaje += ",";
         }
         Mensaje += ";";
         try {
@@ -544,7 +545,7 @@ public class P_Grafica extends javax.swing.JFrame {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(Mensaje);
             bw.close();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -559,11 +560,20 @@ public class P_Grafica extends javax.swing.JFrame {
             Mensaje += "\n";
         }
         int numero = -1;
+        ArrayList temporal = new ArrayList();
         while (numero < 0 || numero > temp.size() - 1) {
             try {
                 numero = Integer.parseInt(JOptionPane.showInputDialog(Nuevo_campos, "ingrese el numero del campo que desea que sea la llave: \n" + Mensaje));
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+        temporal.add(temp.get(numero));
+        for (int i = 0; i < temp.size(); i++) {
+            if (i == numero) {
+
+            } else {
+                temporal.add(temp.get(i));
             }
         }
         Nuevo_campos.setVisible(false);
@@ -582,13 +592,14 @@ public class P_Grafica extends javax.swing.JFrame {
             System.out.println(archivo.getName());
         }
         if (nuevo == true) {
-            
+
         } else {
             System.out.println("else");
             metadata = leer_archivo.main(archivo.getName());
-            for (int i = 0; i < metadata.getLista_campos().size()-1; i++) {
+            System.out.println("antes for");
+            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
                 System.out.println("" + metadata.getLista_campos().get(i).toString());
-                System.out.println(" va");
+                System.out.println("va");
             }
         }
 
@@ -602,7 +613,10 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         metadata = leer_archivo.main(archivo.getName());
-        for (int i = 0; i < metadata.getLista_campos().size()-1; i++) {
+        System.out.println("numero");
+        System.out.println(metadata.getNum_campos() + "sadasd");
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            System.out.println("meta" + metadata.getLista_campos().get(i).toString());
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
             regi[1] = metadata.getLista_campos().get(i).getTipo();
@@ -696,12 +710,12 @@ public class P_Grafica extends javax.swing.JFrame {
         }
         metadata = leer_archivo.main(archivo.getName());
         metadata.getLista_campos().add(new Campos(campo, tipo));
-        for (int i = 0; i < metadata.getLista_campos().size();i++) {
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             System.out.println(metadata.getLista_campos().get(i));
         }
         System.out.println("meta data");
         System.out.println(metadata.toString());
-        metadata.setNum_campos(metadata.getNum_campos()+1);
+        metadata.setNum_campos(metadata.getNum_campos() + 1);
         System.out.println("antes");
         try {
             System.out.println("entra");

@@ -35,7 +35,7 @@ public class Campos implements Serializable{
 
     @Override
     public String toString() {
-        return ";nombre=" + nombre + ",tipo=" + tipo;
+        return "nombre=" + nombre + ",tipo=" + tipo;
     }
     
 }

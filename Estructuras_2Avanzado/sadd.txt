@@ -1,0 +1,1 @@
+2;0;-1;nombre=sad1,tipo=int;nombre=sad2,tipo=Char;
