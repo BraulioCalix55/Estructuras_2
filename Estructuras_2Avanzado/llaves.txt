@@ -1,1 +1,0 @@
-2;0;-1;nombre=55,tipo=intnombre=44,tipo=int;

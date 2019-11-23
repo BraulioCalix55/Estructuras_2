@@ -1,1 +1,1 @@
-4;0;-1;;nombre=cuenta,tipo=int;nombre=nombre,tipo=String;nombre=apellido,tipo=String;nombre=edad,tipo=int;
+4;0;-1;nombre=id,tipo=int,nombre=nombre,tipo=String,nombre=apellido,tipo=String,nombre=edad,tipo=int,;

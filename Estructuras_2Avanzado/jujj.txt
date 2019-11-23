@@ -1,1 +1,0 @@
-2;0;-1;nombre=Nombre del Campo,tipo=int,nombre=hggjjhghj,tipo=int,;

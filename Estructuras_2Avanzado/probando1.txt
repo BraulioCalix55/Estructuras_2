@@ -1,0 +1,1 @@
+3;0;-1;nombre=3,tipo=int,nombre=1,tipo=int,nombre=2,tipo=int,;
