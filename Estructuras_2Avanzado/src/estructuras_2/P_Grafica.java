@@ -79,7 +79,7 @@ public class P_Grafica extends javax.swing.JFrame {
         Modificar_campos = new javax.swing.JDialog();
         tf_mod_campo = new javax.swing.JTextField();
         combo_tipo2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        Termina_mod = new javax.swing.JButton();
         Agregar_campos = new javax.swing.JDialog();
         nombre_agregar = new javax.swing.JTextField();
         Boton_agregar = new javax.swing.JButton();
@@ -297,10 +297,10 @@ public class P_Grafica extends javax.swing.JFrame {
         combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
         combo_tipo2.setToolTipText("");
 
-        jButton1.setText("Modificar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Termina_mod.setText("Modificar");
+        Termina_mod.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                Termina_modMouseClicked(evt);
             }
         });
 
@@ -315,8 +315,8 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addComponent(combo_tipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
             .addGroup(Modificar_camposLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButton1)
+                .addGap(125, 125, 125)
+                .addComponent(Termina_mod)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Modificar_camposLayout.setVerticalGroup(
@@ -326,9 +326,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addGroup(Modificar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_mod_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(combo_tipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addComponent(Termina_mod)
+                .addGap(40, 40, 40))
         );
 
         nombre_agregar.setText("Nombre del Campo");
@@ -384,6 +384,11 @@ public class P_Grafica extends javax.swing.JFrame {
         listar_regis.setText("Listar");
 
         buscar_regis.setText("Buscar");
+        buscar_regis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscar_regisMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout RegistrosLayout = new javax.swing.GroupLayout(Registros.getContentPane());
         Registros.getContentPane().setLayout(RegistrosLayout);
@@ -582,7 +587,7 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-        
+
 
     }//GEN-LAST:event_BT_Agrega_campoMouseClicked
 
@@ -610,21 +615,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 temporal.add(temp.get(i));
             }
         }
-        String Men = "" + temporal.size() + ";0;-1;";
-        for (int i = 0; i < temporal.size(); i++) {
-            Men += temporal.get(i).toString();
-            Men += ",";
-        }
-        Men += ";";
-        try {
-            FileWriter fw = new FileWriter(archivo);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(Men);
-            bw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Metadata metas= new Metadata(temporal.size()-1, temporal);
+        leer_archivo.escribir(metas, archivo);
+        
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -645,10 +638,7 @@ public class P_Grafica extends javax.swing.JFrame {
         } else {
             System.out.println("else");
             metadata = leer_archivo.main(archivo.getName());
-            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                System.out.println("" + metadata.getLista_campos().get(i).toString());
-                System.out.println("va");
-            }
+
         }
 
     }//GEN-LAST:event_Abrir_archivoMouseClicked
@@ -677,10 +667,35 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Listar_CamposMouseClicked
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
-        int delete = jTable1.getSelectedRow();
-
-        metadata.getLista_campos().remove(delete);
+        int delete = -1;
+        delete= jTable1.getSelectedRow();
+        if (delete != -1) {
+            metadata.getLista_campos().remove(delete);
+            JOptionPane.showMessageDialog(this, "campo eliminado");
+        } else {
+            JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
+        }
+        listar_campos.setVisible(false);
         JTable temp = new JTable();
+        DefaultTableModel model = (DefaultTableModel) temp.getModel();
+        model.addColumn("Nombre");
+        model.addColumn("Tipo");
+        temp.setModel(model);
+        //metadata = leer_archivo.main(archivo.getName());
+        System.out.println(metadata.getNum_campos() + "sadasd");
+        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+            Object[] regi = new Object[2];
+            regi[0] = metadata.getLista_campos().get(i).getNombre();
+            regi[1] = metadata.getLista_campos().get(i).getTipo();
+            model.addRow(regi);
+        }
+        temp.setModel(model);
+        jTable1.setModel(temp.getModel());
+        listar_campos.pack();
+        listar_campos.setLocationRelativeTo(null);
+        listar_campos.setVisible(true);
+
+        /*JTable temp = new JTable();
         DefaultTableModel model = (DefaultTableModel) temp.getModel();
         model.addColumn("Nombre");
         model.addColumn("Tipo");
@@ -700,13 +715,13 @@ public class P_Grafica extends javax.swing.JFrame {
             oos.writeObject(metadata);
             oos.flush();
             byte[] data = bos.toByteArray();
-            RandomAccessFile f = new RandomAccessFile(Archivo,"rw");
+            RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
             f.seek(0);
             f.writeInt(data.length);
             f.write(data);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
     }//GEN-LAST:event_elim_campoMouseClicked
 
@@ -717,11 +732,12 @@ public class P_Grafica extends javax.swing.JFrame {
         Modificar_campos.setVisible(true);
     }//GEN-LAST:event_mod_campoMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void Termina_modMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Termina_modMouseClicked
         boolean verificar = false;
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            if (metadata.getLista_campos().get(i).getNombre().equals(Tx_campo.getText())) {
+            if (metadata.getLista_campos().get(i).getNombre().equals(tf_mod_campo.getText())) {
                 verificar = true;
+                posmodificar = i;
             }
         }
         if (verificar) {
@@ -749,7 +765,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 Modificar_campos.setVisible(false);
             }
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_Termina_modMouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
         tf_mod_campo.setText("");
@@ -812,11 +828,15 @@ public class P_Grafica extends javax.swing.JFrame {
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
         RandomAccessFile raf = null;
         try {
-            raf = new RandomAccessFile(Archivo, "rw");
+            raf = new RandomAccessFile(archivo, "rw");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_crear_regisMouseClicked
+
+    private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscar_regisMouseClicked
 
     /**
      * @param args the command line arguments
@@ -885,6 +905,7 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel Nuevo_registro;
     private javax.swing.JDialog Registros;
     private javax.swing.JLabel Reindexar;
+    private javax.swing.JButton Termina_mod;
     private javax.swing.JButton Terminar_campos;
     private javax.swing.JTextField Tx_campo;
     private javax.swing.JToggleButton buscar_regis;
@@ -892,7 +913,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JToggleButton crear_regis;
     private javax.swing.JButton elim_campo;
     private javax.swing.JLabel fondo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

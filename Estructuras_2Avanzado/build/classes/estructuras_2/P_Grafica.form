@@ -351,8 +351,8 @@
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+                  <Component id="Termina_mod" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -365,9 +365,9 @@
                       <Component id="tf_mod_campo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="combo_tipo2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <Component id="Termina_mod" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -394,12 +394,12 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="Termina_mod">
           <Properties>
             <Property name="text" type="java.lang.String" value="Modificar"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Termina_modMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
@@ -527,6 +527,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buscar_regisMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

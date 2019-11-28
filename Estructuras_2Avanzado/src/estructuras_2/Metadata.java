@@ -18,10 +18,10 @@ public class Metadata implements Serializable{
     lista_campos= new ArrayList<>();
     }
 
-    public Metadata(int num_campos, ArrayList<Campos> lista_campos, boolean registros) {
+    public Metadata(int num_campos, ArrayList<Campos> lista_campos) {
         this.num_campos = num_campos;
         this.lista_campos = lista_campos;
-        this.registros = registros;
+        this.registros = false;
         this.firstavail = -1;
     }
 
@@ -69,7 +69,12 @@ public class Metadata implements Serializable{
 
     @Override
     public String toString() {
-        return num_campos+";"+registros +";" + firstavail +";"+lista_campos.toString();
+        String mensake="";
+        for (int i = 0; i < lista_campos.size()-1; i++) {
+            mensake+=lista_campos.get(i).getNombre()+",";
+            mensake+=lista_campos.get(i).getTipo()+",";
+        }
+        return num_campos+";"+registros +";" + firstavail +";"+mensake+";";
     }
     
 }
