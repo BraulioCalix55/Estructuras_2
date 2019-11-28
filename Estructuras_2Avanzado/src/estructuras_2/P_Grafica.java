@@ -722,6 +722,7 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             if (metadata.getLista_campos().get(i).getNombre().equals(Tx_campo.getText())) {
                 verificar = true;
+                Tx_campo.setText("");
             }
         }
         if (verificar) {
