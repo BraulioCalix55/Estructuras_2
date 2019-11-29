@@ -32,7 +32,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class P_Grafica extends javax.swing.JFrame {
 
-
     public P_Grafica() {
         initComponents();
 
@@ -772,9 +771,6 @@ public class P_Grafica extends javax.swing.JFrame {
         }
         String file = "";
         String camptemp = JOptionPane.showInputDialog(this, "Ingrese" + metadata.getLista_campos().get(0).getNombre());
-       // while(!isInteger(camptemp)){
-            
-        }
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
@@ -796,23 +792,35 @@ public class P_Grafica extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(P_Grafica.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
 
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+} catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(P_Grafica.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(P_Grafica.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
