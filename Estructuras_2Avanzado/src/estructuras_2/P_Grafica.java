@@ -615,9 +615,8 @@ public class P_Grafica extends javax.swing.JFrame {
                 temporal.add(temp.get(i));
             }
         }
-        Metadata metas= new Metadata(temporal.size()-1, temporal);
+        Metadata metas = new Metadata(temporal.size() - 1, temporal);
         leer_archivo.escribir(metas, archivo);
-        
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -631,16 +630,13 @@ public class P_Grafica extends javax.swing.JFrame {
         int seleccion = jfc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivo = jfc.getSelectedFile();
-            System.out.println(archivo.getName());
-        }
-        if (nuevo == true) {
-
-        } else {
-            System.out.println("else");
+            //System.out.println(archivo.getName());
             metadata = leer_archivo.main(archivo.getName());
-
+            System.out.println("leer");
+            System.out.println(metadata.isRegistros());
+        } else {
+            JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
         }
-
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     private void Listar_CamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Listar_CamposMouseClicked
@@ -650,7 +646,8 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
-        metadata = leer_archivo.main(archivo.getName());
+        //metadata = leer_archivo.main(archivo.getName());
+        
         System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
@@ -668,61 +665,31 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
         int delete = -1;
-        delete= jTable1.getSelectedRow();
+        delete = jTable1.getSelectedRow();
         if (delete != -1) {
-            metadata.getLista_campos().remove(delete);
-            JOptionPane.showMessageDialog(this, "campo eliminado");
+            if (delete == 0) {
+                JOptionPane.showMessageDialog(this, "no se puede borrar el campo llave");
+            } else {
+                metadata.getLista_campos().remove(delete);
+                metadata.setNum_campos(metadata.getNum_campos()-1);
+                JOptionPane.showMessageDialog(this, "campo eliminado");
+                leer_archivo.escribir(metadata, archivo);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
+        }/*
+        DefaultTableModel modelo=(DefaultTableModel)jTable1.getModel();
+        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
+            modelo.removeRow(i);
         }
+        jTable1.setModel(modelo);
+        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
+            Object newRow[]={metadata.getLista_campos().get(i).getNombre(), metadata.getLista_campos().get(i).getTipo()};
+            modelo.addRow(newRow);
+        }
+        jTable1.setModel(modelo);
+        */
         listar_campos.setVisible(false);
-        JTable temp = new JTable();
-        DefaultTableModel model = (DefaultTableModel) temp.getModel();
-        model.addColumn("Nombre");
-        model.addColumn("Tipo");
-        temp.setModel(model);
-        //metadata = leer_archivo.main(archivo.getName());
-        System.out.println(metadata.getNum_campos() + "sadasd");
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            Object[] regi = new Object[2];
-            regi[0] = metadata.getLista_campos().get(i).getNombre();
-            regi[1] = metadata.getLista_campos().get(i).getTipo();
-            model.addRow(regi);
-        }
-        temp.setModel(model);
-        jTable1.setModel(temp.getModel());
-        listar_campos.pack();
-        listar_campos.setLocationRelativeTo(null);
-        listar_campos.setVisible(true);
-
-        /*JTable temp = new JTable();
-        DefaultTableModel model = (DefaultTableModel) temp.getModel();
-        model.addColumn("Nombre");
-        model.addColumn("Tipo");
-        temp.setModel(model);
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            Object[] regi = new Object[2];
-            regi[0] = metadata.getLista_campos().get(i).getNombre();
-            regi[1] = metadata.getLista_campos().get(i).getTipo();
-            model.addRow(regi);
-        }
-        temp.setModel(model);
-        jTable1.setModel(temp.getModel());
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos;
-        try {
-            oos = new ObjectOutputStream(bos);
-            oos.writeObject(metadata);
-            oos.flush();
-            byte[] data = bos.toByteArray();
-            RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
-            f.seek(0);
-            f.writeInt(data.length);
-            f.write(data);
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked

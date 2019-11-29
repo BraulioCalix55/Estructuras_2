@@ -164,12 +164,10 @@ public class Arbol_B implements Serializable {
     }
 
     public boolean delete(Nodos node, Key value) {
-
         int i = 1;
         while (i <= node.getNum_hijos() && value.getLlave() > node.getLlaves()[i - 1].getLlave()) {
             i++;
         }
-
         if (node.Hoja) {
             if (i <= node.getNum_hijos() && value.getLlave() == node.getLlaves()[i - 1].getLlave()) {
                 node.getLlaves()[i - 1].setLlave(0);
