@@ -289,7 +289,7 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         });
 
-        combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
+        combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "int", "String", "char", "boolean" }));
         combo_tipo2.setToolTipText("");
 
         Termina_mod.setText("Modificar");
@@ -333,7 +333,7 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         });
 
-        Boton_agregar.setText("jButton2");
+        Boton_agregar.setText("Agregar Campo");
         Boton_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Boton_agregarMouseClicked(evt);
@@ -353,7 +353,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(Agregar_camposLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(130, 130, 130)
                 .addComponent(Boton_agregar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -364,9 +364,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addGroup(Agregar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombre_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGap(68, 68, 68)
                 .addComponent(Boton_agregar)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         crear_regis.setText("Crear");
@@ -708,7 +708,6 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             if (metadata.getLista_campos().get(i).getNombre().equals(tf_mod_campo.getText())) {
                 verificar = true;
-                
             }
         }
         if (verificar) {
@@ -743,9 +742,6 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void Boton_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Boton_agregarMouseClicked
         String campo = nombre_agregar.getText();
-        System.out.println("nombreee");
-        System.out.println(archivo.getName());
-        System.out.println("despues nombre");
         int pos = Combo_Agrega.getSelectedIndex();
         String tipo = "";
         if (pos == 0) {
@@ -757,28 +753,12 @@ public class P_Grafica extends javax.swing.JFrame {
         } else if (pos == 3) {
             tipo = "boolean";
         }
-        metadata = leer_archivo.main(archivo.getName());
         metadata.getLista_campos().add(new Campos(campo, tipo));
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            System.out.println(metadata.getLista_campos().get(i));
-        }
-        System.out.println("meta data");
-        System.out.println(metadata.toString());
         metadata.setNum_campos(metadata.getNum_campos() + 1);
-        System.out.println("antes");
-        try {
-            System.out.println("entra");
-            FileWriter fw = new FileWriter(archivo.getName());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(metadata.toString());
-            bw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        leer_archivo.escribir(metadata, archivo);
         JOptionPane.showMessageDialog(Agregar_campos, "se agrego con exito.");
         Agregar_campos.setVisible(false);
+        listar_campos.setVisible(false);
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
