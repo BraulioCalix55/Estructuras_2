@@ -32,11 +32,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class P_Grafica extends javax.swing.JFrame {
 
-    /**
-     * Creates new form P_Grafica
-     */
-    File Archivo = null;
-    int posmodificar = 0;
 
     public P_Grafica() {
         initComponents();
@@ -647,7 +642,7 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         //metadata = leer_archivo.main(archivo.getName());
-        
+
         System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
@@ -671,7 +666,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "no se puede borrar el campo llave");
             } else {
                 metadata.getLista_campos().remove(delete);
-                metadata.setNum_campos(metadata.getNum_campos()-1);
+                metadata.setNum_campos(metadata.getNum_campos() - 1);
                 JOptionPane.showMessageDialog(this, "campo eliminado");
                 leer_archivo.escribir(metadata, archivo);
             }
@@ -688,15 +683,24 @@ public class P_Grafica extends javax.swing.JFrame {
             modelo.addRow(newRow);
         }
         jTable1.setModel(modelo);
-        */
+         */
         listar_campos.setVisible(false);
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
-        Modificar_campos.setModal(true);
-        Modificar_campos.pack();
-        Modificar_campos.setLocationRelativeTo(this);
-        Modificar_campos.setVisible(true);
+        posModificar = -1;
+        posModificar = jTable1.getSelectedRow();
+        if (posModificar == -1) {
+            JOptionPane.showMessageDialog(this, "no ha selecciilnado");
+
+        } else if (posModificar == 0) {
+            JOptionPane.showMessageDialog(this, "no se puede modificar la llave");
+        } else if (posModificar > 0) {
+            Modificar_campos.setModal(true);
+            Modificar_campos.pack();
+            Modificar_campos.setLocationRelativeTo(this);
+            Modificar_campos.setVisible(true);
+        }
     }//GEN-LAST:event_mod_campoMouseClicked
 
     private void Termina_modMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Termina_modMouseClicked
@@ -704,34 +708,19 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             if (metadata.getLista_campos().get(i).getNombre().equals(tf_mod_campo.getText())) {
                 verificar = true;
-                posmodificar = i;
+                
             }
         }
         if (verificar) {
             JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
         } else {
-            metadata.getLista_campos().get(posmodificar).setNombre(tf_mod_campo.getText());
-            metadata.getLista_campos().get(posmodificar).setTipo(combo_tipo2.getSelectedItem().toString());
-            JTable temp = new JTable();
-            DefaultTableModel model = (DefaultTableModel) temp.getModel();
-            if (verificar) {
-                JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
-            } else {
-                metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
-                metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
-                model.addColumn("Nombre");
-                model.addColumn("Tipo");
-                for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                    Object[] regi = new Object[2];
-                    regi[0] = metadata.getLista_campos().get(i).getNombre();
-                    regi[1] = metadata.getLista_campos().get(i).getTipo();
-                    model.addRow(regi);
-                }
-                temp.setModel(model);
-                jTable1.setModel(temp.getModel());
-                Modificar_campos.setVisible(false);
-            }
+            metadata.getLista_campos().get(posModificar).setNombre(tf_mod_campo.getText());
+            metadata.getLista_campos().get(posModificar).setTipo(combo_tipo2.getSelectedItem().toString());
+            leer_archivo.escribir(metadata, archivo);
+            JOptionPane.showMessageDialog(this, "se modifico de forma correcta");
         }
+        Modificar_campos.setVisible(false);
+        Menu_campos.setVisible(false);
     }//GEN-LAST:event_Termina_modMouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
@@ -900,4 +889,5 @@ ArrayList<Campos> temp = new ArrayList();
     Metadata metadata = new Metadata();
     File archivo = null;
     boolean nuevo = false;
+    int posModificar = -1;
 }
