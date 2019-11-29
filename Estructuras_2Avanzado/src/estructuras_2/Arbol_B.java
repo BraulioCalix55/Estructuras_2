@@ -163,7 +163,7 @@ public class Arbol_B implements Serializable {
 
     }
 
-    public boolean delete(Nodos node, Key value) {
+    public boolean eliminar(Nodos node, Key value) {
         int i = 1;
         while (i <= node.getNum_hijos() && value.getLlave() > node.getLlaves()[i - 1].getLlave()) {
             i++;
@@ -181,20 +181,20 @@ public class Arbol_B implements Serializable {
                 return true;
             }
         } else {
-            return delete(node.getHijos()[i - 1], value);
+            return eliminar(node.getHijos()[i - 1], value);
         }
         return false;
     }
-    public void printBtree(Nodos node, int num) {
-        for (int i = 0; i < node.getLlaves().length; i++) {
-            if (node.getLlaves()[i] != null) {
-                System.out.println("llave: " + node.getLlaves()[i].getLlave() + ", nivel:" + num);
+    public void imprimir_arblo(Nodos nodo_actual, int num) {
+        for (int i = 0; i < nodo_actual.getLlaves().length; i++) {
+            if (nodo_actual.getLlaves()[i] != null) {
+                System.out.println("llave: " + nodo_actual.getLlaves()[i].getLlave() + ", nivel:" + num);
             }
         }
-        if (node.Hoja==false) {
-            for (int i = 0; i < node.getHijos().length; i++) {
-                if (node.getHijos()[i] != null) {
-                    printBtree(node.getHijos()[i], num + 1);
+        if (nodo_actual.Hoja==false) {
+            for (int i = 0; i < nodo_actual.getHijos().length; i++) {
+                if (nodo_actual.getHijos()[i] != null) {
+                    imprimir_arblo(nodo_actual.getHijos()[i], num + 1);
                 }
             }
         }
