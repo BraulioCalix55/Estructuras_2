@@ -185,4 +185,18 @@ public class Arbol_B implements Serializable {
         }
         return false;
     }
+    public void printBtree(Nodos node, int num) {
+        for (int i = 0; i < node.getLlaves().length; i++) {
+            if (node.getLlaves()[i] != null) {
+                System.out.println("llave: " + node.getLlaves()[i].getLlave() + ", nivel:" + num);
+            }
+        }
+        if (node.Hoja==false) {
+            for (int i = 0; i < node.getHijos().length; i++) {
+                if (node.getHijos()[i] != null) {
+                    printBtree(node.getHijos()[i], num + 1);
+                }
+            }
+        }
+    }
 }
