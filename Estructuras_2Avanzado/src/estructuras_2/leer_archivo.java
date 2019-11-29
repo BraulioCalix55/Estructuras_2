@@ -5,7 +5,10 @@
  */
 package estructuras_2;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,7 +45,7 @@ public class leer_archivo {
                     lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
                     i++;
                 }
-                //System.out.println("num "+num_campos);
+                System.out.println("asasanum "+num_campos);
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
             }
             input.close();
@@ -52,5 +55,17 @@ public class leer_archivo {
         System.out.println("return");
         
         return metadata;
+    }
+    
+    public static void escribir(Metadata meta,File archivo){
+    try {
+            FileWriter fw = new FileWriter(archivo);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(meta.toString());
+            bw.close();
+
+        } catch (IOException ex) {
+            //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
