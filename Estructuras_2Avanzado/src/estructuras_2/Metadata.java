@@ -70,7 +70,7 @@ public class Metadata implements Serializable{
     @Override
     public String toString() {
         String mensake="";
-        for (int i = 0; i < lista_campos.size()-1; i++) {
+        for (int i = 0; i < lista_campos.size(); i++) {
             mensake+=lista_campos.get(i).getNombre()+",";
             mensake+=lista_campos.get(i).getTipo()+",";
         }

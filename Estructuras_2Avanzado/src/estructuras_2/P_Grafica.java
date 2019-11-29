@@ -32,11 +32,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class P_Grafica extends javax.swing.JFrame {
 
-    /**
-     * Creates new form P_Grafica
-     */
-    File Archivo = null;
-    int posmodificar = 0;
 
     public P_Grafica() {
         initComponents();
@@ -294,7 +289,7 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         });
 
-        combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
+        combo_tipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "int", "String", "char", "boolean" }));
         combo_tipo2.setToolTipText("");
 
         Termina_mod.setText("Modificar");
@@ -338,7 +333,7 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         });
 
-        Boton_agregar.setText("jButton2");
+        Boton_agregar.setText("Agregar Campo");
         Boton_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Boton_agregarMouseClicked(evt);
@@ -358,7 +353,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(Agregar_camposLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(130, 130, 130)
                 .addComponent(Boton_agregar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -369,9 +364,9 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addGroup(Agregar_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombre_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Combo_Agrega, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGap(68, 68, 68)
                 .addComponent(Boton_agregar)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         crear_regis.setText("Crear");
@@ -615,9 +610,8 @@ public class P_Grafica extends javax.swing.JFrame {
                 temporal.add(temp.get(i));
             }
         }
-        Metadata metas= new Metadata(temporal.size()-1, temporal);
+        Metadata metas = new Metadata(temporal.size() - 1, temporal);
         leer_archivo.escribir(metas, archivo);
-        
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -631,16 +625,13 @@ public class P_Grafica extends javax.swing.JFrame {
         int seleccion = jfc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivo = jfc.getSelectedFile();
-            System.out.println(archivo.getName());
-        }
-        if (nuevo == true) {
-
-        } else {
-            System.out.println("else");
+            //System.out.println(archivo.getName());
             metadata = leer_archivo.main(archivo.getName());
-
+            System.out.println("leer");
+            System.out.println(metadata.isRegistros());
+        } else {
+            JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
         }
-
     }//GEN-LAST:event_Abrir_archivoMouseClicked
 
     private void Listar_CamposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Listar_CamposMouseClicked
@@ -650,7 +641,8 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
-        metadata = leer_archivo.main(archivo.getName());
+        //metadata = leer_archivo.main(archivo.getName());
+
         System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
@@ -668,68 +660,47 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void elim_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_elim_campoMouseClicked
         int delete = -1;
-        delete= jTable1.getSelectedRow();
+        delete = jTable1.getSelectedRow();
         if (delete != -1) {
-            metadata.getLista_campos().remove(delete);
-            JOptionPane.showMessageDialog(this, "campo eliminado");
+            if (delete == 0) {
+                JOptionPane.showMessageDialog(this, "no se puede borrar el campo llave");
+            } else {
+                metadata.getLista_campos().remove(delete);
+                metadata.setNum_campos(metadata.getNum_campos() - 1);
+                JOptionPane.showMessageDialog(this, "campo eliminado");
+                leer_archivo.escribir(metadata, archivo);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
+        }/*
+        DefaultTableModel modelo=(DefaultTableModel)jTable1.getModel();
+        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
+            modelo.removeRow(i);
         }
+        jTable1.setModel(modelo);
+        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
+            Object newRow[]={metadata.getLista_campos().get(i).getNombre(), metadata.getLista_campos().get(i).getTipo()};
+            modelo.addRow(newRow);
+        }
+        jTable1.setModel(modelo);
+         */
         listar_campos.setVisible(false);
-        JTable temp = new JTable();
-        DefaultTableModel model = (DefaultTableModel) temp.getModel();
-        model.addColumn("Nombre");
-        model.addColumn("Tipo");
-        temp.setModel(model);
-        //metadata = leer_archivo.main(archivo.getName());
-        System.out.println(metadata.getNum_campos() + "sadasd");
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            Object[] regi = new Object[2];
-            regi[0] = metadata.getLista_campos().get(i).getNombre();
-            regi[1] = metadata.getLista_campos().get(i).getTipo();
-            model.addRow(regi);
-        }
-        temp.setModel(model);
-        jTable1.setModel(temp.getModel());
-        listar_campos.pack();
-        listar_campos.setLocationRelativeTo(null);
-        listar_campos.setVisible(true);
-
-        /*JTable temp = new JTable();
-        DefaultTableModel model = (DefaultTableModel) temp.getModel();
-        model.addColumn("Nombre");
-        model.addColumn("Tipo");
-        temp.setModel(model);
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            Object[] regi = new Object[2];
-            regi[0] = metadata.getLista_campos().get(i).getNombre();
-            regi[1] = metadata.getLista_campos().get(i).getTipo();
-            model.addRow(regi);
-        }
-        temp.setModel(model);
-        jTable1.setModel(temp.getModel());
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos;
-        try {
-            oos = new ObjectOutputStream(bos);
-            oos.writeObject(metadata);
-            oos.flush();
-            byte[] data = bos.toByteArray();
-            RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
-            f.seek(0);
-            f.writeInt(data.length);
-            f.write(data);
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
-        Modificar_campos.setModal(true);
-        Modificar_campos.pack();
-        Modificar_campos.setLocationRelativeTo(this);
-        Modificar_campos.setVisible(true);
+        posModificar = -1;
+        posModificar = jTable1.getSelectedRow();
+        if (posModificar == -1) {
+            JOptionPane.showMessageDialog(this, "no ha selecciilnado");
+
+        } else if (posModificar == 0) {
+            JOptionPane.showMessageDialog(this, "no se puede modificar la llave");
+        } else if (posModificar > 0) {
+            Modificar_campos.setModal(true);
+            Modificar_campos.pack();
+            Modificar_campos.setLocationRelativeTo(this);
+            Modificar_campos.setVisible(true);
+        }
     }//GEN-LAST:event_mod_campoMouseClicked
 
     private void Termina_modMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Termina_modMouseClicked
@@ -738,34 +709,19 @@ public class P_Grafica extends javax.swing.JFrame {
             if (metadata.getLista_campos().get(i).getNombre().equals(tf_mod_campo.getText())) {
                 verificar = true;
                 Tx_campo.setText("");
-                posmodificar = i;
+                posModificar = i;
             }
         }
         if (verificar) {
             JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
         } else {
-            metadata.getLista_campos().get(posmodificar).setNombre(tf_mod_campo.getText());
-            metadata.getLista_campos().get(posmodificar).setTipo(combo_tipo2.getSelectedItem().toString());
-            JTable temp = new JTable();
-            DefaultTableModel model = (DefaultTableModel) temp.getModel();
-            if (verificar) {
-                JOptionPane.showMessageDialog(this, "Ya existe campo con ese nombre");
-            } else {
-                metadata.getLista_campos().get(posmodificar).setNombre(Tx_campo.getText());
-                metadata.getLista_campos().get(posmodificar).setTipo(Combo_tipo.getSelectedItem().toString());
-                model.addColumn("Nombre");
-                model.addColumn("Tipo");
-                for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                    Object[] regi = new Object[2];
-                    regi[0] = metadata.getLista_campos().get(i).getNombre();
-                    regi[1] = metadata.getLista_campos().get(i).getTipo();
-                    model.addRow(regi);
-                }
-                temp.setModel(model);
-                jTable1.setModel(temp.getModel());
-                Modificar_campos.setVisible(false);
-            }
+            metadata.getLista_campos().get(posModificar).setNombre(tf_mod_campo.getText());
+            metadata.getLista_campos().get(posModificar).setTipo(combo_tipo2.getSelectedItem().toString());
+            leer_archivo.escribir(metadata, archivo);
+            JOptionPane.showMessageDialog(this, "se modifico de forma correcta");
         }
+        Modificar_campos.setVisible(false);
+        Menu_campos.setVisible(false);
     }//GEN-LAST:event_Termina_modMouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
@@ -788,9 +744,6 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void Boton_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Boton_agregarMouseClicked
         String campo = nombre_agregar.getText();
-        System.out.println("nombreee");
-        System.out.println(archivo.getName());
-        System.out.println("despues nombre");
         int pos = Combo_Agrega.getSelectedIndex();
         String tipo = "";
         if (pos == 0) {
@@ -802,28 +755,12 @@ public class P_Grafica extends javax.swing.JFrame {
         } else if (pos == 3) {
             tipo = "boolean";
         }
-        metadata = leer_archivo.main(archivo.getName());
         metadata.getLista_campos().add(new Campos(campo, tipo));
-        for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-            System.out.println(metadata.getLista_campos().get(i));
-        }
-        System.out.println("meta data");
-        System.out.println(metadata.toString());
         metadata.setNum_campos(metadata.getNum_campos() + 1);
-        System.out.println("antes");
-        try {
-            System.out.println("entra");
-            FileWriter fw = new FileWriter(archivo.getName());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(metadata.toString());
-            bw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        leer_archivo.escribir(metadata, archivo);
         JOptionPane.showMessageDialog(Agregar_campos, "se agrego con exito.");
         Agregar_campos.setVisible(false);
+        listar_campos.setVisible(false);
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
@@ -832,6 +769,11 @@ public class P_Grafica extends javax.swing.JFrame {
             raf = new RandomAccessFile(archivo, "rw");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String file = "";
+        String camptemp = JOptionPane.showInputDialog(this, "Ingrese" + metadata.getLista_campos().get(0).getNombre());
+       // while(!isInteger(camptemp)){
+            
         }
     }//GEN-LAST:event_crear_regisMouseClicked
 
@@ -934,4 +876,5 @@ ArrayList<Campos> temp = new ArrayList();
     Metadata metadata = new Metadata();
     File archivo = null;
     boolean nuevo = false;
+    int posModificar = -1;
 }

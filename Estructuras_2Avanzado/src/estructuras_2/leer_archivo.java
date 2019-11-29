@@ -27,7 +27,7 @@ public class leer_archivo {
                 String []arreglo=line.split(";");
                 int num_campos=Integer.parseInt(arreglo[0]);
                 boolean registros;
-                if (arreglo[1]=="0") {
+                if (arreglo[1]=="false") {
                     registros=true;
                 }else{
                     registros=false;
@@ -36,15 +36,11 @@ public class leer_archivo {
                 String campos[]=arreglo[3].split(",");
                 ArrayList lista= new ArrayList();
                 for (int i = 0; i < campos.length; i++) {
-                    String nombre[]=campos[i].split("=");
-                  //  System.out.println("nombre[1]"+nombre[1]);
-                    lista.add(nombre[1]);
-                }
-                //System.out.println("holi");
-                for (int i = 0; i < lista.size(); i++) {
-                    lista_campos.add(new Campos(lista.get(i).toString(), lista.get(i+1).toString()));
+                    
+                    lista_campos.add(new Campos(campos[i],campos[i+1]));
                     i++;
                 }
+                
                 System.out.println("asasanum "+num_campos);
                 metadata= new Metadata(num_campos, lista_campos, registros, cabeza);
             }
@@ -65,7 +61,7 @@ public class leer_archivo {
             bw.close();
 
         } catch (IOException ex) {
-            //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
 }
