@@ -191,26 +191,24 @@ public class P_Grafica extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(BT_Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
-                        .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(90, Short.MAX_VALUE))
+            .addComponent(fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         Nuevo_camposLayout.setVerticalGroup(
             Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Nuevo_camposLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
+                .addComponent(jLabel5)
+                .addGap(51, 51, 51)
                 .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Nuevo_camposLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(51, 51, 51)
-                        .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Tx_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Combo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BT_Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Tx_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Combo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(Nuevo_camposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BT_Agrega_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Terminar_campos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -671,18 +669,7 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
-        }/*
-        DefaultTableModel modelo=(DefaultTableModel)jTable1.getModel();
-        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
-            modelo.removeRow(i);
         }
-        jTable1.setModel(modelo);
-        for (int i = 0; i <metadata.getLista_campos().size(); i++) {
-            Object newRow[]={metadata.getLista_campos().get(i).getNombre(), metadata.getLista_campos().get(i).getTipo()};
-            modelo.addRow(newRow);
-        }
-        jTable1.setModel(modelo);
-         */
         listar_campos.setVisible(false);
     }//GEN-LAST:event_elim_campoMouseClicked
 
