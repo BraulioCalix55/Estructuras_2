@@ -51,7 +51,7 @@ public class Metadata implements Serializable{
         this.lista_campos = lista_campos;
     }
 
-    public boolean isRegistros() {
+    public boolean getRegistros() {
         return registros;
     }
 

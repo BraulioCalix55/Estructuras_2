@@ -628,7 +628,7 @@ public class P_Grafica extends javax.swing.JFrame {
             //System.out.println(archivo.getName());
             metadata = leer_archivo.main(archivo.getName());
             System.out.println("leer");
-            System.out.println(metadata.isRegistros());
+            System.out.println(metadata.getRegistros());
         } else {
             JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
         }
@@ -729,7 +729,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_mod_campoMouseClicked
 
     private void Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Agrega_campoMouseClicked
-        if (metadata.isRegistros() == true) {
+        if (metadata.getRegistros() == true) {
             JOptionPane.showMessageDialog(jPanel1, "No se puede agregar campos \nsi ya hay registros");
         } else {
             Agregar_campos.setModal(true);
@@ -772,9 +772,28 @@ public class P_Grafica extends javax.swing.JFrame {
         }
         String file = "";
         String camptemp = JOptionPane.showInputDialog(this, "Ingrese" + metadata.getLista_campos().get(0).getNombre());
-       // while(!isInteger(camptemp)){
-            
+        
+        file += camptemp + ",";
+        Key first = new Key(Integer.parseInt(camptemp), 1000);
+        
+        if(tree.search(tree.getRaiz(), first)==null){
+            if(metadata.getRegistros() == false) {
+                
+                try {
+                    file += camptemp + ",";
+                    boolean verify = false;
+                    long pos = 0;
+                    int enc = 0;
+                    for (int i = 0; i < 0; i++) {
+                        
+                    }
+                } catch (Exception e) {
+                }
+                
+            }
         }
+            
+        
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
@@ -877,4 +896,6 @@ ArrayList<Campos> temp = new ArrayList();
     File archivo = null;
     boolean nuevo = false;
     int posModificar = -1;
+    Arbol_B tree = new Arbol_B();
+    //ArrayList<dispo> availist = new ArrayList();
 }
