@@ -750,34 +750,20 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-        RandomAccessFile raf = null;
-        try {
-            raf = new RandomAccessFile(archivo, "rw");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String file = "";
-        String camptemp = JOptionPane.showInputDialog(this, "Ingrese" + metadata.getLista_campos().get(0).getNombre());
-        
-        file += camptemp + ",";
-        Key first = new Key(Integer.parseInt(camptemp), 1000);
-        
-        if(tree.search(tree.getRaiz(), first)==null){
-            if(metadata.getRegistros() == false) {
-                
-                try {
-                    file += camptemp + ",";
-                    boolean verify = false;
-                    long pos = 0;
-                    int enc = 0;
-                    for (int i = 0; i < 0; i++) {
-                        
-                    }
-                } catch (Exception e) {
-                }
-                
+        System.out.println("boton");        
+        Registros regis_temp = new Registros();
+        regis_temp.setNum_camp(metadata.getNum_campos());
+        regis_temp.setTama(metadata.getNum_campos());
+        System.out.println(metadata.getNum_campos());
+        System.out.println("antes for");
+        for (int i = 0; i < regis_temp.getArreglo().length; i++) {
+            if (i == 0) {
+                regis_temp.getArreglo()[i]=JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+            } else {
+                regis_temp.getArreglo()[i]=JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
             }
         }
+        registros.add(regis_temp);
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
@@ -799,35 +785,23 @@ public class P_Grafica extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-                
-
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -894,5 +868,5 @@ ArrayList<Campos> temp = new ArrayList();
     int posModificar = -1;
     Arbol_B tree = new Arbol_B();
     //ArrayList<dispo> availist = new ArrayList();
+    ArrayList<Registros> registros = new ArrayList<>();
 }
-
