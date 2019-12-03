@@ -1,1 +1,1 @@
-2;false;-1;llave,int,nollabe,int,;
+5;false;-1;llave,int,nollabe,int,NombredelCampo,int,asda,int,quepedos,int,;

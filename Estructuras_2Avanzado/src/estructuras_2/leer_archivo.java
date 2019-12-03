@@ -36,7 +36,6 @@ public class leer_archivo {
                 String campos[]=arreglo[3].split(",");
                 ArrayList lista= new ArrayList();
                 for (int i = 0; i < campos.length; i++) {
-                    
                     lista_campos.add(new Campos(campos[i],campos[i+1]));
                     i++;
                 }

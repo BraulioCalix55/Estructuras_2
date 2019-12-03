@@ -549,10 +549,14 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Tx_campoMouseClicked
 
     private void Nuevo_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Nuevo_registroMouseClicked
-        Nuevo_campos.setModal(true);
-        Nuevo_campos.pack();
-        Nuevo_campos.setLocationRelativeTo(this);
-        Nuevo_campos.setVisible(true);
+        if (metadata.getNum_campos() == 0) {
+            Nuevo_campos.setModal(true);
+            Nuevo_campos.pack();
+            Nuevo_campos.setLocationRelativeTo(this);
+            Nuevo_campos.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(Menu_campos, "ya se crearon los campos iniciales, ingrese al menu de la tabla");
+        }
     }//GEN-LAST:event_Nuevo_registroMouseClicked
 
     private void Archivos_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Archivos_salirMouseClicked
@@ -750,7 +754,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-        System.out.println("boton");        
+        System.out.println("boton");
         Registros regis_temp = new Registros();
         regis_temp.setNum_camp(metadata.getNum_campos());
         regis_temp.setTama(metadata.getNum_campos());
@@ -758,9 +762,9 @@ public class P_Grafica extends javax.swing.JFrame {
         System.out.println("antes for");
         for (int i = 0; i < regis_temp.getArreglo().length; i++) {
             if (i == 0) {
-                regis_temp.getArreglo()[i]=JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+                regis_temp.getArreglo()[i] = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
             } else {
-                regis_temp.getArreglo()[i]=JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+                regis_temp.getArreglo()[i] = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
             }
         }
         registros.add(regis_temp);
