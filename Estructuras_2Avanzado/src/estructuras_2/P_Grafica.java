@@ -501,11 +501,17 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
+        Arbol_B arbol = new Arbol_B();
         try {
             leer_archivo.Archivo10000(archivo);
+            leer_archivo.arbol(arbol, archivo,metadata);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
+        arbol.imprimir_arblo(arbol.getRaiz(), 0);
+        
     }//GEN-LAST:event_ReindexarMouseClicked
 
     private void L_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_archivosMouseClicked
@@ -558,7 +564,7 @@ public class P_Grafica extends javax.swing.JFrame {
             Nuevo_campos.pack();
             Nuevo_campos.setLocationRelativeTo(this);
             Nuevo_campos.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(Menu_campos, "ya se crearon los campos iniciales, ingrese al menu de la tabla");
         }
     }//GEN-LAST:event_Nuevo_registroMouseClicked
