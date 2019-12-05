@@ -141,7 +141,7 @@ public class leer_archivo {
             String estudia = Carrera.get((int) Math.floor(Math.random() * 18));
             int edad = 17 + r.nextInt(26);
             String registro = i + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
-            System.out.println(registro);
+            //System.out.println(registro);
             arbol.insert(new Key(i, f.getFilePointer()));
             f.writeChars(registro);
         }
@@ -159,22 +159,26 @@ public class leer_archivo {
     }
 
     public static void arbol(Arbol_B arbol, File archivo, Metadata meta) throws FileNotFoundException {
+        int valor = 0;
+        String num = "";
+        String recio = "";
         try {
             RandomAccessFile Ra = new RandomAccessFile(archivo, "rw");
             Ra.seek(300);
-            String recio = Ra.readLine();
-            recio=recio.replaceAll(" ","");
-                   
-            String[] registro = recio.split(";");
-            String[] unReg;
-            int valor=0;
-            for (int i = 0; i < registro.length; i++) {
-                unReg = registro[i].split(",");
-                System.out.println(unReg[0] + "antes");
-                valor=Integer.parseInt(unReg[0]);
-            }
+            recio = Ra.readLine();
+
         } catch (IOException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        String completo[] = recio.split(";");
+        try {
+            for (int i = 0; i < completo.length; i++) {
+                String[] registro = completo[i].split(",");
+                
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
