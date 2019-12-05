@@ -118,7 +118,7 @@ public class Arbol_B implements Serializable {
         }
     }
 
-    public void insert(Key Llave) {
+    public  void insert(Key Llave) {
         Nodos nodo_raiz = raiz;
         if (nodo_raiz.getNum_hijos() == 3) {
 

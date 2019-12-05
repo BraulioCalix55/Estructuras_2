@@ -1,0 +1,3 @@
+1;false;-1;id,int,nombre,String,;[estructuras_2.Registros@4515b5c8]
+[estructuras_2.Registros@7f304278]
+javax.swing.JDialog[dialog0,109,108,588x373,invalid,layout=java.awt.BorderLayout,APPLICATION_MODAL,title=,defaultCloseOperation=HIDE_ON_CLOSE,rootPane=javax.swing.JRootPane[,8,31,572x334,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=javax.swing.plaf.synth.SynthBorder@562dd0a0,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]

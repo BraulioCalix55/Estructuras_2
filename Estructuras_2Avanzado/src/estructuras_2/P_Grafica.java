@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -500,7 +501,17 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
-        JOptionPane.showMessageDialog(this, "opcion no implementada..... aún ;)");
+        Arbol_B arbol = new Arbol_B();
+        try {
+            leer_archivo.Archivo10000(archivo);
+            leer_archivo.arbol(arbol, archivo, metadata);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        arbol.imprimir_arblo(arbol.getRaiz(), 0);
+
     }//GEN-LAST:event_ReindexarMouseClicked
 
     private void L_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_archivosMouseClicked
@@ -548,10 +559,14 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Tx_campoMouseClicked
 
     private void Nuevo_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Nuevo_registroMouseClicked
-        Nuevo_campos.setModal(true);
-        Nuevo_campos.pack();
-        Nuevo_campos.setLocationRelativeTo(this);
-        Nuevo_campos.setVisible(true);
+        if (metadata.getNum_campos() == 0) {
+            Nuevo_campos.setModal(true);
+            Nuevo_campos.pack();
+            Nuevo_campos.setLocationRelativeTo(this);
+            Nuevo_campos.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(Menu_campos, "ya se crearon los campos iniciales, ingrese al menu de la tabla");
+        }
     }//GEN-LAST:event_Nuevo_registroMouseClicked
 
     private void Archivos_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Archivos_salirMouseClicked
@@ -668,7 +683,6 @@ public class P_Grafica extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
         }
-        listar_campos.setVisible(false);
     }//GEN-LAST:event_elim_campoMouseClicked
 
     private void mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mod_campoMouseClicked
@@ -763,31 +777,29 @@ public class P_Grafica extends javax.swing.JFrame {
         }
         registros.add(regis_temp);
 
-        String Mensaje = "";
-        for (int i = 0; i < temp.size(); i++) {
-            Mensaje += i + ") ";
-            Mensaje += temp.get(i).toString();
-            Mensaje += "\n";
+        //File archivo = null;
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            //archivo = new File(archivo);
+            fw = new FileWriter(archivo, true);
+            bw = new BufferedWriter(fw);
+            
+            bw.write(regis_temp.toString());
+            bw.flush();
+            
+        } catch (Exception e) {
         }
-        int numero = -1;
-        ArrayList temporal = new ArrayList();
-//        while (numero < 0 || numero > temp.size() - 1) {
-//            try {
-//                numero = Integer.parseInt(JOptionPane.showInputDialog(Nuevo_campos, "ingrese el numero del campo que desea que sea la llave: \n" + Mensaje));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-        temporal.add(temp.get(numero));
-        for (int i = 0; i < temp.size(); i++) {
-            if (i == numero) {
-
-            } else {
-                temporal.add(temp.get(i));
-            }
+        try {
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Metadata metas = new Metadata(temporal.size() - 1, temporal);
-        leer_archivo.escribir(metas, archivo);
+        try {
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked

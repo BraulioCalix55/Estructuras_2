@@ -1,1 +1,3 @@
-2;false;-1;llave,int,nollabe,int,;
+4;false;-1;llave,int,nollabe,int,NombredelCampo,int,asdo,String,;estructuras_2.Registros@30dd2309
+estructuras_2.Registros@2e33dac8
+estructuras_2.Registros@293cbce2
