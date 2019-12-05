@@ -70,7 +70,7 @@ public class leer_archivo {
     }
 
     public static void Archivo10000(File Archivo) throws IOException {
-        Arbol_B arbol= new Arbol_B();
+        Arbol_B arbol = new Arbol_B();
         ArrayList<String> Nombres = new ArrayList();
         Nombres.add("Leonardo");
         Nombres.add("Daniel");
@@ -90,8 +90,6 @@ public class leer_archivo {
         Nombres.add("Maria");
         Nombres.add("Renato");
         Nombres.add("Alvaro");
-        //Nombres.add("Guillermo");
-        
         ArrayList<String> Carrera = new ArrayList();
         Carrera.add("Ing. Sistemas");
         Carrera.add("Ing. Industrial");
@@ -111,7 +109,6 @@ public class leer_archivo {
         Carrera.add("lic. terapia");
         Carrera.add("Ing. Quimica");
         Carrera.add("lic. Astronomia");
-        
         ArrayList<String> Apellidos = new ArrayList();
         Apellidos.add("Montesinos");
         Apellidos.add("Montalvan");
@@ -131,18 +128,16 @@ public class leer_archivo {
         Apellidos.add("Sagastume");
         Apellidos.add("Castro");
         Apellidos.add("Fernandez");
-        //Apellidos.add("Navarro");
-
         RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
-        f.seek(200);
-        Random r= new Random();
+        f.seek(300);
+        Random r = new Random();
         for (int i = 0; i <= 10000; i++) {
             System.out.println(i);
             String nombre = Nombres.get((int) Math.floor(Math.random() * 18));
             String apellido = Apellidos.get((int) Math.floor(Math.random() * 18));
-            String estudia= Carrera.get((int)Math.floor(Math.random()*18));
-            int edad = 17+r.nextInt(26);
-            String registro = i + "," + apellido + "," + nombre + ","+estudia+"," + edad + ",;";
+            String estudia = Carrera.get((int) Math.floor(Math.random() * 18));
+            int edad = 17 + r.nextInt(26);
+            String registro = i + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
             arbol.insert(new Key(i, f.getFilePointer()));
             f.writeChars(registro);
         }
