@@ -501,7 +501,11 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
-        JOptionPane.showMessageDialog(this, "opcion no implementada..... aún ;)");
+        try {
+            leer_archivo.Archivo10000(archivo);
+        } catch (IOException ex) {
+            //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ReindexarMouseClicked
 
     private void L_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_archivosMouseClicked
