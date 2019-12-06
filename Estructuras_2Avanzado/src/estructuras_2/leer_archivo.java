@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Scanner;
 
 /**
  *
@@ -140,13 +141,16 @@ public class leer_archivo {
             String apellido = Apellidos.get((int) Math.floor(Math.random() * 18));
             String estudia = Carrera.get((int) Math.floor(Math.random() * 18));
             int edad = 17 + r.nextInt(26);
-            String registro = i + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
+            String registro = i + 1 + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
             //System.out.println(registro);
             arbol.insert(new Key(i, f.getFilePointer()));
             f.writeChars(registro);
         }
         f.close();
-        RandomAccessFile f2 = new RandomAccessFile("ArbolMamado.txt", "rw");
+        String Archivoarbol = Archivo.getName();
+        String archi[] = Archivoarbol.split(".");
+        //archi[0] = archi[0] + "arbol.txt";
+        RandomAccessFile f2 = new RandomAccessFile("azteca.txt", "rw");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(arbol);
@@ -166,18 +170,19 @@ public class leer_archivo {
             RandomAccessFile Ra = new RandomAccessFile(archivo, "rw");
             Ra.seek(300);
             recio = Ra.readLine();
-
+            //System.out.println("cara");
+            String[] registros = recio.split(";");
+            ArrayList cosas= new ArrayList();
+            for (int i = 0; i < registros.length - 1; i++) {
+                String campos[] = registros[i].split(",");
+                cosas.add(campos[i]);
+            }
+            System.out.println("array");
+            for (int i = 0; i < cosas.size(); i++) {
+                System.out.println(cosas.get(i));
+            }
         } catch (IOException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String completo[] = recio.split(";");
-        try {
-            for (int i = 0; i < completo.length; i++) {
-                String[] registro = completo[i].split(",");
-                
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
     }
