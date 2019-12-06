@@ -1,3 +1,0 @@
-3;false;-1;ID,int,Nombre,String,apellido,String,Edad,int,;estructuras_2.Registros@21ef230a
-estructuras_2.Registros@62d59950
-estructuras_2.Registros@52f68a28

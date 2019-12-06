@@ -49,4 +49,10 @@ public class Registros {
     public void setTama(int tamano){
         arreglo=new String[tamano];
     }
+
+    @Override
+    public String toString() {
+        return "Registros{" + "num_camp=" + num_camp + ", arreglo=" + arreglo + ", posicion=" + posicion + '}';
+    }
+    
 }
