@@ -772,7 +772,7 @@ public class P_Grafica extends javax.swing.JFrame {
             regis_temp.setTama(metadata.getNum_campos());
             System.out.println(metadata.getNum_campos());
             System.out.println("antes for");
-            for (int i = 0; i < metadata.getNum_campos(); i++) {
+            for (int i = 0; i < metadata.getNum_campos() + 1; i++) {
                 System.out.println("en");
                 System.out.println(metadata.getLista_campos().get(i).getTipo());
                 if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
