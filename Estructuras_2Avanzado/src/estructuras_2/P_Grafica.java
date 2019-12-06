@@ -762,44 +762,54 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-        System.out.println("boton");
-        Registros regis_temp = new Registros();
-        regis_temp.setNum_camp(metadata.getNum_campos());
-        regis_temp.setTama(metadata.getNum_campos());
-        System.out.println(metadata.getNum_campos());
-        System.out.println("antes for");
-        for (int i = 0; i < regis_temp.getArreglo().length; i++) {
-            if (i == 0) {
-                regis_temp.getArreglo()[i] = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-            } else {
-                regis_temp.getArreglo()[i] = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-            }
-        }
-        registros.add(regis_temp);
 
-        //File archivo = null;
-        FileWriter fw = null;
-        BufferedWriter bw = null;
         try {
-            //archivo = new File(archivo);
-            fw = new FileWriter(archivo, true);
-            bw = new BufferedWriter(fw);
-            
-            bw.write(regis_temp.toString());
-            bw.flush();
-            
-        } catch (Exception e) {
-        }
-        try {
-            bw.close();
+            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+            System.out.println("boton");
+            Registros regis_temp = new Registros();
+            ArrayList lista = new ArrayList();
+            regis_temp.setNum_camp(metadata.getNum_campos());
+            regis_temp.setTama(metadata.getNum_campos());
+            System.out.println(metadata.getNum_campos());
+            System.out.println("antes for");
+            for (int i = 0; i < metadata.getNum_campos(); i++) {
+                System.out.println("en");
+                System.out.println(metadata.getLista_campos().get(i).getTipo());
+                if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
+                    int numero = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()));
+                    lista.add(numero);
+                } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
+                    String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+                    lista.add(cadena);
+                } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
+                    String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+                    char car = caracter.charAt(0);
+                    lista.add(car);
+                } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
+                    int bool = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()) + "\n 1) para true otro numero para false");
+                    boolean real;
+                    if (bool == 1) {
+                        real = true;
+                    } else {
+                        real = false;
+                    }
+                    lista.add(real);
+                }else{
+                    System.out.println("no entra a los if");
+                }
+            }
+            f.seek(300);
+            for (int i = 0; i < lista.size(); i++) {
+                f.writeBytes(lista.get(i) + ",");
+            }
+            f.writeBytes(";");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            fw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
