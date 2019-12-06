@@ -798,6 +798,7 @@ public class P_Grafica extends javax.swing.JFrame {
                     System.out.println("no entra a los if");
                 }
             }
+            //long pos= archivo.getTotalSpace()-archivo.getFreeSpace();
             f.seek(300);
             for (int i = 0; i < lista.size(); i++) {
                 f.writeBytes(lista.get(i) + ",");
