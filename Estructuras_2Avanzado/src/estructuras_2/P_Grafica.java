@@ -762,7 +762,6 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             System.out.println("boton");
@@ -809,7 +808,7 @@ public class P_Grafica extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+            
 
     }//GEN-LAST:event_crear_regisMouseClicked
 
