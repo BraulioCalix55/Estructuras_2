@@ -32,10 +32,10 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
-
+    
     public P_Grafica() {
         initComponents();
-
+        
     }
 
     /**
@@ -538,7 +538,7 @@ public class P_Grafica extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             archivo = new File(fileChooser.getSelectedFile().getPath() + ".txt");
-
+            
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
@@ -577,9 +577,7 @@ public class P_Grafica extends javax.swing.JFrame {
         nuevo = false;
         System.out.println(Combo_tipo.getSelectedIndex());
         String campo = Tx_campo.getText();
-
         int pos = Combo_tipo.getSelectedIndex();
-
         String tipo = "";
         if (pos == 0) {
             tipo = "int";
@@ -593,8 +591,6 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-
-
     }//GEN-LAST:event_BT_Agrega_campoMouseClicked
 
     private void Terminar_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Terminar_camposMouseClicked
@@ -616,13 +612,15 @@ public class P_Grafica extends javax.swing.JFrame {
         temporal.add(temp.get(numero));
         for (int i = 0; i < temp.size(); i++) {
             if (i == numero) {
-
+                
             } else {
                 temporal.add(temp.get(i));
             }
         }
-        Metadata metas = new Metadata(temporal.size() - 1, temporal);
+        
+        Metadata metas = new Metadata(temporal.size(), temporal);
         leer_archivo.escribir(metas, archivo);
+        Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
     private void Abrir_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Abrir_archivoMouseClicked
@@ -651,9 +649,8 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
-        //metadata = leer_archivo.main(archivo.getName());
-
-        System.out.println(metadata.getNum_campos() + "sadasd");
+        metadata = leer_archivo.main(archivo.getName());
+       // System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
@@ -679,6 +676,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 metadata.setNum_campos(metadata.getNum_campos() - 1);
                 JOptionPane.showMessageDialog(this, "campo eliminado");
                 leer_archivo.escribir(metadata, archivo);
+                listar_campos.setVisible(true);
             }
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
@@ -690,7 +688,7 @@ public class P_Grafica extends javax.swing.JFrame {
         posModificar = jTable1.getSelectedRow();
         if (posModificar == -1) {
             JOptionPane.showMessageDialog(this, "no ha selecciilnado");
-
+            
         } else if (posModificar == 0) {
             JOptionPane.showMessageDialog(this, "no se puede modificar la llave");
         } else if (posModificar > 0) {
@@ -719,7 +717,7 @@ public class P_Grafica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "se modifico de forma correcta");
         }
         Modificar_campos.setVisible(false);
-        Menu_campos.setVisible(false);
+        listar_campos.setVisible(false);
     }//GEN-LAST:event_Termina_modMouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
@@ -762,7 +760,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-
+        
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             System.out.println("boton");
@@ -794,7 +792,7 @@ public class P_Grafica extends javax.swing.JFrame {
                         real = false;
                     }
                     lista.add(real);
-                }else{
+                } else {
                     System.out.println("no entra a los if");
                 }
             }
@@ -804,12 +802,13 @@ public class P_Grafica extends javax.swing.JFrame {
                 f.writeBytes(lista.get(i) + ",");
             }
             f.writeBytes(";");
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
 
     }//GEN-LAST:event_crear_regisMouseClicked
 
@@ -831,21 +830,21 @@ public class P_Grafica extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
