@@ -152,4 +152,15 @@ public class leer_archivo {
         }
         f2.close();
     }
+    public static ArrayList<Registros> leeArchivos(File archivo,Metadata meta){
+    ArrayList <Registros> registros = new ArrayList();
+        try {
+            Scanner input = new Scanner(archivo);
+        } catch (FileNotFoundException ex) {
+            
+        }
+    
+    
+    return registros;
+    }
 }

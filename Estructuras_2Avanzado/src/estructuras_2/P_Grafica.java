@@ -54,7 +54,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class P_Grafica extends javax.swing.JFrame {
     private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
 
-    
     public P_Grafica() {
         initComponents();
 
@@ -103,6 +102,11 @@ public class P_Grafica extends javax.swing.JFrame {
         Registros = new javax.swing.JDialog();
         crear_regis = new javax.swing.JToggleButton();
         listar_regis = new javax.swing.JToggleButton();
+        ListarArbol = new javax.swing.JDialog();
+        Lista_arbols = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        fondo = new javax.swing.JLabel();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -168,7 +172,7 @@ public class P_Grafica extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondocampos.jpg"))); // NOI18N
         Menu_campos.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 390));
 
-        Combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Int", "String", "Char", "Boolean" }));
+        Combo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "int", "String", "char", "boolean" }));
 
         Tx_campo.setText("Nombre del Campo");
         Tx_campo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -422,6 +426,27 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
+        ListarArbol.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        Lista_arbols.setViewportView(jTable2);
+
+        ListarArbol.getContentPane().add(Lista_arbols, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+
+        jToggleButton1.setText("Proximos 10 registros");
+        ListarArbol.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, -1, -1));
+        ListarArbol.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 775, 570));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -527,9 +552,12 @@ public class P_Grafica extends javax.swing.JFrame {
         // con patron solido del color indicado
         style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        String[] titulos = {metadata.getLista_campos().toString()};
+        
+        String[] titulos = {metadata.getLista_campos().get(i).getNombre()};
         String[] datos = {Registros.getName()};
+        
+
+        
 
         // Creamos una fila en la hoja en la posicion 0
         Row fila = pagina.createRow(0);
@@ -666,7 +694,7 @@ public class P_Grafica extends javax.swing.JFrame {
         } else if (pos == 1) {
             tipo = "String";
         } else if (pos == 2) {
-            tipo = "Char";
+            tipo = "char";
         } else if (pos == 3) {
             tipo = "boolean";
         }
@@ -865,33 +893,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-        try {
-            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
-            System.out.println("boton");
-            Registros regis_temp = new Registros();
-            ArrayList lista = new ArrayList();
-            regis_temp.setNum_camp(metadata.getNum_campos());
-            regis_temp.setTama(metadata.getNum_campos());
-            System.out.println(metadata.getNum_campos());
-            System.out.println("antes for");
-            for (int i = 0; i < metadata.getNum_campos() + 1; i++) {
-                System.out.println("en");
-                System.out.println(metadata.getLista_campos().get(i).getTipo());
-                if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    int numero = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()));
-                    lista.add(numero);
-                } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-                    lista.add(cadena);
-                } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-                    char car = caracter.charAt(0);
-                    lista.add(car);
-                } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    int bool = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()) + "\n 1) para true otro numero para false");
-                    boolean real;
-                    if (bool == 1) {
-                        real = true;
+        
         if (archivo.getName().equals("Registros10k.txt")) {
             JOptionPane.showMessageDialog(Registros, "no se puede crear mas registros en el archivo de 10 mil regitros");
         } else {
@@ -947,16 +949,18 @@ public class P_Grafica extends javax.swing.JFrame {
                         }
 
                         lista.add(cade);
-                    } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
+                    } else if ("char".equals(metadata.getLista_campos().get(i).getTipo())) {
                         String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se agarrara el primer caracter");
                         char car = caracter.charAt(0);
                         lista.add(car);
                     } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        int bool = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()) + "\n 1) para true otro numero para false");
+                        String bool = JOptionPane.showInputDialog(Registros, " 1) para true otro numero para false \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre().charAt(i));
                         boolean real;
-                        if (bool == 1) {
+                        if (bool == "1") {
+                            System.out.println("uno");
                             real = true;
                         } else {
+                            System.out.println("otronumero");
                             real = false;
                         }
                         lista.add(real);
@@ -1011,6 +1015,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Registros, "elija un archivo que sea de arbol");
             }
         }
+        
     }//GEN-LAST:event_listar_regisMouseClicked
 
     /**
@@ -1072,6 +1077,8 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
+    private javax.swing.JScrollPane Lista_arbols;
+    private javax.swing.JDialog ListarArbol;
     private javax.swing.JLabel Listar_Campos;
     private javax.swing.JDialog Menu_archivos;
     private javax.swing.JDialog Menu_campos;
@@ -1086,6 +1093,7 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_tipo2;
     private javax.swing.JToggleButton crear_regis;
     private javax.swing.JButton elim_campo;
+    private javax.swing.JLabel fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1095,6 +1103,8 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JToggleButton listar_regis;
     private javax.swing.JButton mod_campo;
