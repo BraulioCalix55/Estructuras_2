@@ -614,13 +614,8 @@ public class P_Grafica extends javax.swing.JFrame {
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Error de entrada/salida");
         }
-    
-            System.out.println("size del array "+ registros.size());
-
-            for (int i = 0; i < registros.size(); i++) {
-                System.out.println(registros.get(i).getLista().toString()+"kkk"+i);
                 
-        }
+        
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
