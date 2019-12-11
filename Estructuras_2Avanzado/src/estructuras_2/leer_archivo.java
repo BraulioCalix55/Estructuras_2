@@ -48,7 +48,8 @@ public class leer_archivo {
                     lista_campos.add(new Campos(campos[i], campos[i + 1]));
                     i++;
                 }
-                metadata = new Metadata(num_campos, lista_campos, registros, cabeza);
+                int longitud = Integer.parseInt(arreglo[4]);
+                metadata = new Metadata(num_campos, lista_campos, registros, cabeza, longitud);
             }
             input.close();
         } catch (Exception ex) {

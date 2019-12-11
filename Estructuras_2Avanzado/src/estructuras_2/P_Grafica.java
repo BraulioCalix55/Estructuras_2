@@ -605,8 +605,25 @@ public class P_Grafica extends javax.swing.JFrame {
                 temporal.add(temp.get(i));
             }
         }
+        int longitud = 0;
+        for (int i = 0; i < temp.size(); i++) {
+            String tipo = temp.get(i).getTipo();
+            if (tipo == "String") {
+                longitud += 16;
+            }
+            if (tipo == "int") {
+                longitud += 9;
+            }
+            if (tipo == "char") {
+                longitud += 2;
+            }
+            if (tipo == "boolean") {
+                longitud += 7;
+            }
+        }
+        longitud++;
 
-        Metadata metas = new Metadata(temporal.size(), temporal);
+        Metadata metas = new Metadata(temporal.size(), temporal, longitud);
         leer_archivo.escribir(metas, archivo);
         try {
 
@@ -765,14 +782,52 @@ public class P_Grafica extends javax.swing.JFrame {
                 regis_temp.setNum_camp(metadata.getNum_campos());
                 regis_temp.setTama(metadata.getNum_campos());
                 for (int i = 0; i < metadata.getNum_campos(); i++) {
+
                     if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        int numero = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()));
-                        lista.add(numero);
+                        String numero = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede numeros de 8 digitos o menos");
+                        String valor = "";
+                        String tamp = "";
+                        System.out.println(numero);
+                        boolean peque = false;
+                        if (numero.length() < 9) {
+                            peque = true;
+                        }
+                        for (int j = 0; j < 8; j++) {
+                            if (numero.length() - 1 > j) {
+
+                            } else {
+                                tamp += "0";
+                            }
+                        }
+                        if (peque == true) {
+
+                            valor += tamp;
+                            valor += numero;
+                        }
+                        lista.add(valor);
                     } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-                        lista.add(cadena);
+                        String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede Strings de 15 digitos o menos");
+                        String cade = "";
+                        String tamp = "";
+                        boolean peque = false;
+                        if (cadena.length() < 16) {
+                            peque = true;
+                        }
+                        for (int j = 0; j < 15; j++) {
+                            if (cadena.length() - 1 > j) {
+
+                            } else {
+                                tamp += "%";
+                            }
+                        }
+                        if (peque == true) {
+                            cade += cadena;
+                            cade += tamp;
+                        }
+
+                        lista.add(cade);
                     } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
+                        String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se agarrara el primer caracter");
                         char car = caracter.charAt(0);
                         lista.add(car);
                     } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
