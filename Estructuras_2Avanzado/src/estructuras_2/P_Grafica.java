@@ -5,11 +5,14 @@
  */
 package estructuras_2;
 
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,16 +29,35 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import  org.apache.poi.hssf.usermodel.HSSFSheet;
+import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import  org.apache.poi.hssf.usermodel.HSSFRow;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
+    private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
 
+    
     public P_Grafica() {
         initComponents();
-
+        
     }
 
     /**
@@ -497,7 +519,79 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_registroMouseClicked
 
     private void utilidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_utilidadesMouseClicked
-        JOptionPane.showMessageDialog(this, "opcion no implementada..... aún ;)");
+
+        // Creamos el archivo donde almacenaremos la hoja
+        // de calculo, recuerde usar la extension correcta,
+        // en este caso .xlsx
+        File archivo = new File("Registros.xlsx");
+
+        // Creamos el libro de trabajo de Excel formato OOXML
+        Workbook workbook = new XSSFWorkbook();
+
+        // La hoja donde pondremos los datos
+        Sheet pagina = workbook.createSheet("Registros");
+
+        // Creamos el estilo paga las celdas del encabezado
+        CellStyle style = workbook.createCellStyle();
+        // Indicamos que tendra un fondo azul aqua
+        // con patron solido del color indicado
+        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        String[] titulos = {metadata.getLista_campos().toString()};
+        String[] datos = {Registros.getName()};
+
+        // Creamos una fila en la hoja en la posicion 0
+        Row fila = pagina.createRow(0);
+
+        // Creamos el encabezado
+        for (int i = 0; i < titulos.length; i++) {
+            // Creamos una celda en esa fila, en la posicion 
+            // indicada por el contador del ciclo
+            Cell celda = fila.createCell(i);
+
+            // Indicamos el estilo que deseamos 
+            // usar en la celda, en este caso el unico 
+            // que hemos creado
+            celda.setCellStyle(style);
+            celda.setCellValue(titulos[i]);
+        }
+
+        // Ahora creamos una fila en la posicion 1
+        fila = pagina.createRow(1);
+
+        // Y colocamos los datos en esa fila
+        for (int i = 0; i < datos.length; i++) {
+            // Creamos una celda en esa fila, en la
+            // posicion indicada por el contador del ciclo
+            Cell celda = fila.createCell(i);
+
+            celda.setCellValue(datos[i]);
+        }
+
+        // Ahora guardaremos el archivo
+        try {
+            // Creamos el flujo de salida de datos,
+            // apuntando al archivo donde queremos 
+            // almacenar el libro de Excel
+            FileOutputStream salida = new FileOutputStream(archivo);
+
+            // Almacenamos el libro de 
+            // Excel via ese 
+            // flujo de datos
+            workbook.write(salida);
+
+            // Cerramos el libro para concluir operaciones
+            workbook.close();
+
+            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
+
+        } catch (FileNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
+        }
+    
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
@@ -538,7 +632,7 @@ public class P_Grafica extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             archivo = new File(fileChooser.getSelectedFile().getPath() + ".txt");
-
+            
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
@@ -577,9 +671,7 @@ public class P_Grafica extends javax.swing.JFrame {
         nuevo = false;
         System.out.println(Combo_tipo.getSelectedIndex());
         String campo = Tx_campo.getText();
-
         int pos = Combo_tipo.getSelectedIndex();
-
         String tipo = "";
         if (pos == 0) {
             tipo = "int";
@@ -593,8 +685,6 @@ public class P_Grafica extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(Nuevo_campos, "Campo agregado con exito ");
         Tx_campo.setText("Nombre del Campo");
         temp.add(new Campos(campo, tipo));
-
-
     }//GEN-LAST:event_BT_Agrega_campoMouseClicked
 
     private void Terminar_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Terminar_camposMouseClicked
@@ -616,13 +706,15 @@ public class P_Grafica extends javax.swing.JFrame {
         temporal.add(temp.get(numero));
         for (int i = 0; i < temp.size(); i++) {
             if (i == numero) {
-
+                
             } else {
                 temporal.add(temp.get(i));
             }
         }
-        Metadata metas = new Metadata(temporal.size() - 1, temporal);
+        
+        Metadata metas = new Metadata(temporal.size(), temporal);
         leer_archivo.escribir(metas, archivo);
+        Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
     private void Abrir_archivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Abrir_archivoMouseClicked
@@ -651,9 +743,8 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Nombre");
         model.addColumn("Tipo");
         temp.setModel(model);
-        //metadata = leer_archivo.main(archivo.getName());
-
-        System.out.println(metadata.getNum_campos() + "sadasd");
+        metadata = leer_archivo.main(archivo.getName());
+       // System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
@@ -679,6 +770,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 metadata.setNum_campos(metadata.getNum_campos() - 1);
                 JOptionPane.showMessageDialog(this, "campo eliminado");
                 leer_archivo.escribir(metadata, archivo);
+                listar_campos.setVisible(true);
             }
         } else {
             JOptionPane.showMessageDialog(this, "seleccione algo de la lista ");
@@ -690,7 +782,7 @@ public class P_Grafica extends javax.swing.JFrame {
         posModificar = jTable1.getSelectedRow();
         if (posModificar == -1) {
             JOptionPane.showMessageDialog(this, "no ha selecciilnado");
-
+            
         } else if (posModificar == 0) {
             JOptionPane.showMessageDialog(this, "no se puede modificar la llave");
         } else if (posModificar > 0) {
@@ -719,7 +811,7 @@ public class P_Grafica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "se modifico de forma correcta");
         }
         Modificar_campos.setVisible(false);
-        Menu_campos.setVisible(false);
+        listar_campos.setVisible(false);
     }//GEN-LAST:event_Termina_modMouseClicked
 
     private void tf_mod_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_mod_campoMouseClicked
@@ -793,7 +885,7 @@ public class P_Grafica extends javax.swing.JFrame {
                         real = false;
                     }
                     lista.add(real);
-                }else{
+                } else {
                     System.out.println("no entra a los if");
                 }
             }
@@ -803,12 +895,12 @@ public class P_Grafica extends javax.swing.JFrame {
                 f.writeBytes(lista.get(i) + ",");
             }
             f.writeBytes(";");
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
 
     }//GEN-LAST:event_crear_regisMouseClicked
 
@@ -830,21 +922,21 @@ public class P_Grafica extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);

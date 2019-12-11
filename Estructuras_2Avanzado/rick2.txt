@@ -1,1 +1,0 @@
-3;false;-1;numero cuenta,int,nombre,String,edad,int,sexo,String,;
