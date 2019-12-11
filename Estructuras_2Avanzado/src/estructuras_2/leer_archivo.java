@@ -155,7 +155,7 @@ public class leer_archivo {
 
     public static ArrayList<Registros> leeArchivos(File archivo, Metadata meta) {
         ArrayList<Registros> ListaReg = new ArrayList();
-        
+
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             f.seek(400);
@@ -165,18 +165,20 @@ public class leer_archivo {
             ArrayList cosas = new ArrayList();
             for (int i = 0; i < registros.length; i++) {
                 String campo[] = registros[i].split(",");
-                
+
                 for (int j = 0; j < meta.getLista_campos().size(); j++) {
                     if (meta.getLista_campos().get(j).getTipo().equals("String")) {
-                       System.out.println(meta.getLista_campos().get(j).getNombre()+"dentrocadeana");
+                        //System.out.println(meta.getLista_campos().get(j).getNombre() + "dentrocadeana");
                         String cadena = campo[j];
-                        System.out.println(campo[j]);
-                        cosas.add(cadena);
-                        System.out.println("cadena"+ cadena);
+                        //System.out.println(campo[j]);
+                        
+                        String mandar = cadena.replaceAll("%", "");
+                        cosas.add(mandar);
+                        //System.out.println("cadena" + cadena);
                     } else if (meta.getLista_campos().get(j).getTipo().equals("int")) {
                         int numer = Integer.parseInt(campo[j]);
-                        System.out.println(meta.getLista_campos().get(j).getTipo());
-                        System.out.println(campo[j]+"dentro de int");
+//                        System.out.println(meta.getLista_campos().get(j).getTipo());
+//                        System.out.println(campo[j] + "dentro de int");
                         cosas.add(numer);
                     } else if (meta.getLista_campos().get(j).getTipo().equals("char")) {
                         char letra = campo[j].charAt(0);
@@ -187,15 +189,11 @@ public class leer_archivo {
                             bool = true;
                         }
                         cosas.add(bool);
-                       
+
                     }
                 }
-                 ListaReg.add(new Registros(meta.getNum_campos(), cosas, f.getFilePointer()));
-                        System.out.println(cosas.size()+"tamano dentro del meteodo");
-            }
-            for (int i = 0; i < ListaReg.size(); i++) {
-                System.out.println("Dentro for");
-                System.out.println(ListaReg.get(i));
+                ListaReg.add(new Registros(meta.getNum_campos(), cosas, f.getFilePointer()));
+                //System.out.println(cosas.size() + "tamano dentro del meteodo");
             }
 
         } catch (FileNotFoundException ex) {
