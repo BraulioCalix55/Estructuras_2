@@ -1,0 +1,2 @@
+la cantidad de caracteres que tenga la cadena es el número del offset que devuelve el f.getpointer();
+ buscar un valor donde poner el offset para escribir la posición 

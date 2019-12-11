@@ -620,6 +620,14 @@ public class P_Grafica extends javax.swing.JFrame {
 
         Metadata metas = new Metadata(temporal.size(), temporal);
         leer_archivo.escribir(metas, archivo);
+        try {
+
+            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+            f.seek(200);
+            f.writeBytes("400;");
+            System.out.println("escribio");
+        } catch (Exception e) {
+        }
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -770,7 +778,7 @@ public class P_Grafica extends javax.swing.JFrame {
             regis_temp.setTama(metadata.getNum_campos());
             System.out.println(metadata.getNum_campos());
             System.out.println("antes for");
-            for (int i = 0; i < metadata.getNum_campos() ; i++) {
+            for (int i = 0; i < metadata.getNum_campos(); i++) {
                 System.out.println("en");
                 System.out.println(metadata.getLista_campos().get(i).getTipo());
                 if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
@@ -796,15 +804,18 @@ public class P_Grafica extends javax.swing.JFrame {
                     System.out.println("no entra a los if");
                 }
             }
-            System.out.println("pointer antes "+f.getFilePointer());
+            System.out.println("pointer antes " + f.getFilePointer());
             //long pos= archivo.getTotalSpace()-archivo.getFreeSpace();
-            f.seek(300);
-           // System.out.println(f.getFilePointer());
+            f.seek(200);
+            int Cadena=f.read();
+//            long posicion = f.readLong();
+            //f.seek(posicion);
+            System.out.println(Cadena+"  asd");
             for (int i = 0; i < lista.size(); i++) {
                 f.writeBytes(lista.get(i) + ",");
             }
             f.writeBytes(";");
-            System.out.println("pointer"+f.getFilePointer());
+            System.out.println("pointer" + f.getFilePointer());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
