@@ -52,13 +52,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
-<<<<<<< HEAD
     private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
 
     
-=======
-
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     public P_Grafica() {
         initComponents();
 
@@ -869,7 +865,6 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-<<<<<<< HEAD
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             System.out.println("boton");
@@ -897,7 +892,6 @@ public class P_Grafica extends javax.swing.JFrame {
                     boolean real;
                     if (bool == 1) {
                         real = true;
-=======
         if (archivo.getName().equals("Registros10k.txt")) {
             JOptionPane.showMessageDialog(Registros, "no se puede crear mas registros en el archivo de 10 mil regitros");
         } else {
@@ -966,7 +960,6 @@ public class P_Grafica extends javax.swing.JFrame {
                             real = false;
                         }
                         lista.add(real);
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
                     } else {
 
                     }
@@ -995,10 +988,6 @@ public class P_Grafica extends javax.swing.JFrame {
                 Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void listar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listar_regisMouseClicked
