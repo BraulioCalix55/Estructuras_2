@@ -52,12 +52,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
+<<<<<<< HEAD
     private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
 
     
+=======
+
+>>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     public P_Grafica() {
         initComponents();
-        
+
     }
 
     /**
@@ -103,7 +107,6 @@ public class P_Grafica extends javax.swing.JFrame {
         Registros = new javax.swing.JDialog();
         crear_regis = new javax.swing.JToggleButton();
         listar_regis = new javax.swing.JToggleButton();
-        buscar_regis = new javax.swing.JToggleButton();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -396,11 +399,9 @@ public class P_Grafica extends javax.swing.JFrame {
         });
 
         listar_regis.setText("Listar");
-
-        buscar_regis.setText("Buscar");
-        buscar_regis.addMouseListener(new java.awt.event.MouseAdapter() {
+        listar_regis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buscar_regisMouseClicked(evt);
+                listar_regisMouseClicked(evt);
             }
         });
 
@@ -409,15 +410,10 @@ public class P_Grafica extends javax.swing.JFrame {
         RegistrosLayout.setHorizontalGroup(
             RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RegistrosLayout.createSequentialGroup()
-                .addGroup(RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RegistrosLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(crear_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
-                        .addComponent(listar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(RegistrosLayout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(buscar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(91, 91, 91)
+                .addComponent(crear_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
+                .addComponent(listar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         RegistrosLayout.setVerticalGroup(
@@ -427,9 +423,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 .addGroup(RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(crear_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(listar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69)
-                .addComponent(buscar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -598,7 +592,6 @@ public class P_Grafica extends javax.swing.JFrame {
         Arbol_B arbol = new Arbol_B();
         try {
             leer_archivo.Archivo10000(archivo);
-            leer_archivo.arbol(arbol, archivo, metadata);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -632,7 +625,7 @@ public class P_Grafica extends javax.swing.JFrame {
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             archivo = new File(fileChooser.getSelectedFile().getPath() + ".txt");
-            
+
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
@@ -669,7 +662,6 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void BT_Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Agrega_campoMouseClicked
         nuevo = false;
-        System.out.println(Combo_tipo.getSelectedIndex());
         String campo = Tx_campo.getText();
         int pos = Combo_tipo.getSelectedIndex();
         String tipo = "";
@@ -706,14 +698,38 @@ public class P_Grafica extends javax.swing.JFrame {
         temporal.add(temp.get(numero));
         for (int i = 0; i < temp.size(); i++) {
             if (i == numero) {
-                
+
             } else {
                 temporal.add(temp.get(i));
             }
         }
-        
-        Metadata metas = new Metadata(temporal.size(), temporal);
+        int longitud = 0;
+        for (int i = 0; i < temp.size(); i++) {
+            String tipo = temp.get(i).getTipo();
+            if (tipo == "String") {
+                longitud += 16;
+            }
+            if (tipo == "int") {
+                longitud += 9;
+            }
+            if (tipo == "char") {
+                longitud += 2;
+            }
+            if (tipo == "boolean") {
+                longitud += 7;
+            }
+        }
+        longitud++;
+
+        Metadata metas = new Metadata(temporal.size(), temporal, longitud);
         leer_archivo.escribir(metas, archivo);
+        try {
+
+            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+            f.seek(200);
+            f.writeBytes("400;");
+        } catch (Exception e) {
+        }
         Nuevo_campos.setVisible(false);
     }//GEN-LAST:event_Terminar_camposMouseClicked
 
@@ -722,15 +738,15 @@ public class P_Grafica extends javax.swing.JFrame {
         JFileChooser jfc = new JFileChooser("./");
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
         jfc.setFileFilter(filtro);
-        System.out.println("filtro");
-        System.out.println(filtro);
         int seleccion = jfc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivo = jfc.getSelectedFile();
-            //System.out.println(archivo.getName());
             metadata = leer_archivo.main(archivo.getName());
-            System.out.println("leer");
-            System.out.println(metadata.getRegistros());
+//            try {
+//                leer_archivo.Archivo10000(archivo);
+//            } catch (IOException ex) {
+//                //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         } else {
             JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
         }
@@ -744,7 +760,6 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         metadata = leer_archivo.main(archivo.getName());
-       // System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
@@ -782,7 +797,7 @@ public class P_Grafica extends javax.swing.JFrame {
         posModificar = jTable1.getSelectedRow();
         if (posModificar == -1) {
             JOptionPane.showMessageDialog(this, "no ha selecciilnado");
-            
+
         } else if (posModificar == 0) {
             JOptionPane.showMessageDialog(this, "no se puede modificar la llave");
         } else if (posModificar > 0) {
@@ -854,6 +869,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
+<<<<<<< HEAD
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             System.out.println("boton");
@@ -881,32 +897,132 @@ public class P_Grafica extends javax.swing.JFrame {
                     boolean real;
                     if (bool == 1) {
                         real = true;
-                    } else {
-                        real = false;
-                    }
-                    lista.add(real);
-                } else {
-                    System.out.println("no entra a los if");
-                }
-            }
-            //long pos= archivo.getTotalSpace()-archivo.getFreeSpace();
-            f.seek(300);
-            for (int i = 0; i < lista.size(); i++) {
-                f.writeBytes(lista.get(i) + ",");
-            }
-            f.writeBytes(";");
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        }
+=======
+        if (archivo.getName().equals("Registros10k.txt")) {
+            JOptionPane.showMessageDialog(Registros, "no se puede crear mas registros en el archivo de 10 mil regitros");
+        } else {
 
+            try {
+                RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+                Registros regis_temp = new Registros();
+                ArrayList lista = new ArrayList();
+                regis_temp.setNum_camp(metadata.getNum_campos());
+                regis_temp.setTama(metadata.getNum_campos());
+                for (int i = 0; i < metadata.getNum_campos(); i++) {
+
+                    if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
+                        String numero = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede numeros de 8 digitos o menos");
+                        String valor = "";
+                        String tamp = "";
+                        System.out.println(numero);
+                        boolean peque = false;
+                        if (numero.length() < 9) {
+                            peque = true;
+                        }
+                        for (int j = 0; j < 8; j++) {
+                            if (numero.length() - 1 > j) {
+
+                            } else {
+                                tamp += "0";
+                            }
+                        }
+                        if (peque == true) {
+
+                            valor += tamp;
+                            valor += numero;
+                        }
+                        lista.add(valor);
+                    } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
+                        String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede Strings de 15 digitos o menos");
+                        String cade = "";
+                        String tamp = "";
+                        boolean peque = false;
+                        if (cadena.length() < 16) {
+                            peque = true;
+                        }
+                        for (int j = 0; j < 15; j++) {
+                            if (cadena.length() - 1 > j) {
+
+                            } else {
+                                tamp += "%";
+                            }
+                        }
+                        if (peque == true) {
+                            cade += cadena;
+                            cade += tamp;
+                        }
+
+                        lista.add(cade);
+                    } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
+                        String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se agarrara el primer caracter");
+                        char car = caracter.charAt(0);
+                        lista.add(car);
+                    } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
+                        int bool = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()) + "\n 1) para true otro numero para false");
+                        boolean real;
+                        if (bool == 1) {
+                            real = true;
+                        } else {
+                            real = false;
+                        }
+                        lista.add(real);
+>>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
+                    } else {
+
+                    }
+                }
+                if (metadata.getRegistros() == false) {
+                    f.seek(2);
+                    f.writeBytes("true");
+                    f.getFilePointer();
+                }
+                f.seek(200);
+                String Cadena = f.readLine();
+                String[] numero = Cadena.split(";");
+                String offseet = numero[0];
+                long offset = Integer.parseInt(offseet);
+                f.seek(offset);
+                for (int i = 0; i < lista.size(); i++) {
+                    f.writeBytes(lista.get(i) + ",");
+                }
+                f.writeBytes(";");
+                long nuevo_final = f.getFilePointer();
+                f.seek(200);
+                f.writeBytes(nuevo_final + ";");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+<<<<<<< HEAD
+
+=======
+>>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     }//GEN-LAST:event_crear_regisMouseClicked
 
-    private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buscar_regisMouseClicked
+    private void listar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listar_regisMouseClicked
+        boolean Archivo_arbol = false;
+        while (Archivo_arbol == false) {
+
+            JFileChooser jfc = new JFileChooser("./");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
+            jfc.setFileFilter(filtro);
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                archivoarbol = jfc.getSelectedFile();
+                String nombre = archivoarbol.getName();
+                if (nombre.contains("arbol")) {
+                    Archivo_arbol = true;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
+            }
+            if (Archivo_arbol == false) {
+                JOptionPane.showMessageDialog(Registros, "elija un archivo que sea de arbol");
+            }
+        }
+    }//GEN-LAST:event_listar_regisMouseClicked
 
     /**
      * @param args the command line arguments
@@ -922,21 +1038,21 @@ public class P_Grafica extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(P_Grafica.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -978,7 +1094,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JButton Termina_mod;
     private javax.swing.JButton Terminar_campos;
     private javax.swing.JTextField Tx_campo;
-    private javax.swing.JToggleButton buscar_regis;
     private javax.swing.JComboBox<String> combo_tipo2;
     private javax.swing.JToggleButton crear_regis;
     private javax.swing.JButton elim_campo;
@@ -1001,6 +1116,7 @@ public class P_Grafica extends javax.swing.JFrame {
 ArrayList<Campos> temp = new ArrayList();
     Metadata metadata = new Metadata();
     File archivo = null;
+    File archivoarbol = null;
     boolean nuevo = false;
     int posModificar = -1;
     Arbol_B tree = new Arbol_B();
