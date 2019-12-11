@@ -102,6 +102,11 @@ public class P_Grafica extends javax.swing.JFrame {
         Registros = new javax.swing.JDialog();
         crear_regis = new javax.swing.JToggleButton();
         listar_regis = new javax.swing.JToggleButton();
+        ListarArbol = new javax.swing.JDialog();
+        Lista_arbols = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        fondo = new javax.swing.JLabel();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
         Reindexar = new javax.swing.JLabel();
@@ -420,6 +425,27 @@ public class P_Grafica extends javax.swing.JFrame {
                     .addComponent(listar_regis, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
+
+        ListarArbol.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        Lista_arbols.setViewportView(jTable2);
+
+        ListarArbol.getContentPane().add(Lista_arbols, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+
+        jToggleButton1.setText("Proximos 10 registros");
+        ListarArbol.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, -1, -1));
+        ListarArbol.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 775, 570));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -984,6 +1010,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Registros, "elija un archivo que sea de arbol");
             }
         }
+        
     }//GEN-LAST:event_listar_regisMouseClicked
 
     /**
@@ -1045,6 +1072,8 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
+    private javax.swing.JScrollPane Lista_arbols;
+    private javax.swing.JDialog ListarArbol;
     private javax.swing.JLabel Listar_Campos;
     private javax.swing.JDialog Menu_archivos;
     private javax.swing.JDialog Menu_campos;
@@ -1059,6 +1088,7 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_tipo2;
     private javax.swing.JToggleButton crear_regis;
     private javax.swing.JButton elim_campo;
+    private javax.swing.JLabel fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1068,6 +1098,8 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JToggleButton listar_regis;
     private javax.swing.JButton mod_campo;
