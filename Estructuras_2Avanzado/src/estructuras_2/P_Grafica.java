@@ -29,36 +29,31 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import  org.apache.poi.hssf.usermodel.HSSFSheet;
-import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import  org.apache.poi.hssf.usermodel.HSSFRow;
+//import  org.apache.poi.hssf.usermodel.HSSFSheet;
+//import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
+//import  org.apache.poi.hssf.usermodel.HSSFRow;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.CellStyle;
+//import org.apache.poi.ss.usermodel.FillPatternType;
+//import org.apache.poi.ss.usermodel.IndexedColors;
+//import org.apache.poi.ss.usermodel.Row;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
-<<<<<<< HEAD
     private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
 
-    
-=======
-
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     public P_Grafica() {
         initComponents();
 
@@ -513,79 +508,79 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_registroMouseClicked
 
     private void utilidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_utilidadesMouseClicked
-
-        // Creamos el archivo donde almacenaremos la hoja
-        // de calculo, recuerde usar la extension correcta,
-        // en este caso .xlsx
-        File archivo = new File("Registros.xlsx");
-
-        // Creamos el libro de trabajo de Excel formato OOXML
-        Workbook workbook = new XSSFWorkbook();
-
-        // La hoja donde pondremos los datos
-        Sheet pagina = workbook.createSheet("Registros");
-
-        // Creamos el estilo paga las celdas del encabezado
-        CellStyle style = workbook.createCellStyle();
-        // Indicamos que tendra un fondo azul aqua
-        // con patron solido del color indicado
-        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        String[] titulos = {metadata.getLista_campos().toString()};
-        String[] datos = {Registros.getName()};
-
-        // Creamos una fila en la hoja en la posicion 0
-        Row fila = pagina.createRow(0);
-
-        // Creamos el encabezado
-        for (int i = 0; i < titulos.length; i++) {
-            // Creamos una celda en esa fila, en la posicion 
-            // indicada por el contador del ciclo
-            Cell celda = fila.createCell(i);
-
-            // Indicamos el estilo que deseamos 
-            // usar en la celda, en este caso el unico 
-            // que hemos creado
-            celda.setCellStyle(style);
-            celda.setCellValue(titulos[i]);
-        }
-
-        // Ahora creamos una fila en la posicion 1
-        fila = pagina.createRow(1);
-
-        // Y colocamos los datos en esa fila
-        for (int i = 0; i < datos.length; i++) {
-            // Creamos una celda en esa fila, en la
-            // posicion indicada por el contador del ciclo
-            Cell celda = fila.createCell(i);
-
-            celda.setCellValue(datos[i]);
-        }
-
-        // Ahora guardaremos el archivo
-        try {
-            // Creamos el flujo de salida de datos,
-            // apuntando al archivo donde queremos 
-            // almacenar el libro de Excel
-            FileOutputStream salida = new FileOutputStream(archivo);
-
-            // Almacenamos el libro de 
-            // Excel via ese 
-            // flujo de datos
-            workbook.write(salida);
-
-            // Cerramos el libro para concluir operaciones
-            workbook.close();
-
-            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
-
-        } catch (FileNotFoundException ex) {
-            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
-        }
-    
+//
+//        // Creamos el archivo donde almacenaremos la hoja
+//        // de calculo, recuerde usar la extension correcta,
+//        // en este caso .xlsx
+//        File archivo = new File("Registros.xlsx");
+//
+//        // Creamos el libro de trabajo de Excel formato OOXML
+//        Workbook workbook = new XSSFWorkbook();
+//
+//        // La hoja donde pondremos los datos
+//        Sheet pagina = workbook.createSheet("Registros");
+//
+//        // Creamos el estilo paga las celdas del encabezado
+//        CellStyle style = workbook.createCellStyle();
+//        // Indicamos que tendra un fondo azul aqua
+//        // con patron solido del color indicado
+//        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+//        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//
+//        String[] titulos = {metadata.getLista_campos().toString()};
+//        String[] datos = {Registros.getName()};
+//
+//        // Creamos una fila en la hoja en la posicion 0
+//        Row fila = pagina.createRow(0);
+//
+//        // Creamos el encabezado
+//        for (int i = 0; i < titulos.length; i++) {
+//            // Creamos una celda en esa fila, en la posicion 
+//            // indicada por el contador del ciclo
+//            Cell celda = fila.createCell(i);
+//
+//            // Indicamos el estilo que deseamos 
+//            // usar en la celda, en este caso el unico 
+//            // que hemos creado
+//            celda.setCellStyle(style);
+//            celda.setCellValue(titulos[i]);
+//        }
+//
+//        // Ahora creamos una fila en la posicion 1
+//        fila = pagina.createRow(1);
+//
+//        // Y colocamos los datos en esa fila
+//        for (int i = 0; i < datos.length; i++) {
+//            // Creamos una celda en esa fila, en la
+//            // posicion indicada por el contador del ciclo
+//            Cell celda = fila.createCell(i);
+//
+//            celda.setCellValue(datos[i]);
+//        }
+//
+//        // Ahora guardaremos el archivo
+//        try {
+//            // Creamos el flujo de salida de datos,
+//            // apuntando al archivo donde queremos 
+//            // almacenar el libro de Excel
+//            FileOutputStream salida = new FileOutputStream(archivo);
+//
+//            // Almacenamos el libro de 
+//            // Excel via ese 
+//            // flujo de datos
+//            workbook.write(salida);
+//
+//            // Cerramos el libro para concluir operaciones
+//            workbook.close();
+//
+//            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
+//
+//        } catch (FileNotFoundException ex) {
+//            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
+//        } catch (IOException ex) {
+//            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
+//        }
+//    
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
@@ -869,35 +864,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-<<<<<<< HEAD
-        try {
-            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
-            System.out.println("boton");
-            Registros regis_temp = new Registros();
-            ArrayList lista = new ArrayList();
-            regis_temp.setNum_camp(metadata.getNum_campos());
-            regis_temp.setTama(metadata.getNum_campos());
-            System.out.println(metadata.getNum_campos());
-            System.out.println("antes for");
-            for (int i = 0; i < metadata.getNum_campos() + 1; i++) {
-                System.out.println("en");
-                System.out.println(metadata.getLista_campos().get(i).getTipo());
-                if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    int numero = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()));
-                    lista.add(numero);
-                } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-                    lista.add(cadena);
-                } else if ("Char".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre());
-                    char car = caracter.charAt(0);
-                    lista.add(car);
-                } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
-                    int bool = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()) + "\n 1) para true otro numero para false");
-                    boolean real;
-                    if (bool == 1) {
-                        real = true;
-=======
+
         if (archivo.getName().equals("Registros10k.txt")) {
             JOptionPane.showMessageDialog(Registros, "no se puede crear mas registros en el archivo de 10 mil regitros");
         } else {
@@ -966,7 +933,6 @@ public class P_Grafica extends javax.swing.JFrame {
                             real = false;
                         }
                         lista.add(real);
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
                     } else {
 
                     }
@@ -995,10 +961,6 @@ public class P_Grafica extends javax.swing.JFrame {
                 Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> eac68f9c47623bdbff896637ed8fe9ef9cf82456
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void listar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listar_regisMouseClicked
