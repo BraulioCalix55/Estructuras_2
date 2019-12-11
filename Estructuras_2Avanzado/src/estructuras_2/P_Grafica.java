@@ -575,7 +575,6 @@ public class P_Grafica extends javax.swing.JFrame {
 
     private void BT_Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Agrega_campoMouseClicked
         nuevo = false;
-        System.out.println(Combo_tipo.getSelectedIndex());
         String campo = Tx_campo.getText();
         int pos = Combo_tipo.getSelectedIndex();
         String tipo = "";
@@ -625,7 +624,6 @@ public class P_Grafica extends javax.swing.JFrame {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             f.seek(200);
             f.writeBytes("400;");
-            System.out.println("escribio");
         } catch (Exception e) {
         }
         Nuevo_campos.setVisible(false);
@@ -636,15 +634,15 @@ public class P_Grafica extends javax.swing.JFrame {
         JFileChooser jfc = new JFileChooser("./");
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
         jfc.setFileFilter(filtro);
-        System.out.println("filtro");
-        System.out.println(filtro);
         int seleccion = jfc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivo = jfc.getSelectedFile();
-            //System.out.println(archivo.getName());
             metadata = leer_archivo.main(archivo.getName());
-            System.out.println("leer");
-            System.out.println(metadata.getRegistros());
+//            try {
+//                leer_archivo.Archivo10000(archivo);
+//            } catch (IOException ex) {
+//                //Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         } else {
             JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
         }
@@ -658,7 +656,6 @@ public class P_Grafica extends javax.swing.JFrame {
         model.addColumn("Tipo");
         temp.setModel(model);
         metadata = leer_archivo.main(archivo.getName());
-        // System.out.println(metadata.getNum_campos() + "sadasd");
         for (int i = 0; i < metadata.getLista_campos().size(); i++) {
             Object[] regi = new Object[2];
             regi[0] = metadata.getLista_campos().get(i).getNombre();
@@ -771,16 +768,11 @@ public class P_Grafica extends javax.swing.JFrame {
 
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
-            System.out.println("boton");
             Registros regis_temp = new Registros();
             ArrayList lista = new ArrayList();
             regis_temp.setNum_camp(metadata.getNum_campos());
             regis_temp.setTama(metadata.getNum_campos());
-            System.out.println(metadata.getNum_campos());
-            System.out.println("antes for");
             for (int i = 0; i < metadata.getNum_campos(); i++) {
-                System.out.println("en");
-                System.out.println(metadata.getLista_campos().get(i).getTipo());
                 if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
                     int numero = Integer.parseInt(JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre()));
                     lista.add(numero);
@@ -801,28 +793,32 @@ public class P_Grafica extends javax.swing.JFrame {
                     }
                     lista.add(real);
                 } else {
-                    System.out.println("no entra a los if");
+                   
                 }
             }
-            System.out.println("pointer antes " + f.getFilePointer());
-            //long pos= archivo.getTotalSpace()-archivo.getFreeSpace();
+            if (metadata.getRegistros() == false) {
+                f.seek(2);
+                f.writeBytes("true");
+                f.getFilePointer();
+            }
             f.seek(200);
-            int Cadena=f.read();
-//            long posicion = f.readLong();
-            //f.seek(posicion);
-            System.out.println(Cadena+"  asd");
+            String Cadena = f.readLine();
+            String[] numero = Cadena.split(";");
+            String offseet = numero[0];
+            long offset = Integer.parseInt(offseet);
+            f.seek(offset);
             for (int i = 0; i < lista.size(); i++) {
                 f.writeBytes(lista.get(i) + ",");
             }
             f.writeBytes(";");
-            System.out.println("pointer" + f.getFilePointer());
+            long nuevo_final = f.getFilePointer();
+            f.seek(200);
+            f.writeBytes(nuevo_final + ";");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void buscar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar_regisMouseClicked

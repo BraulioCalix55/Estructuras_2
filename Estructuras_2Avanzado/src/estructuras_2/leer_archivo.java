@@ -37,9 +37,9 @@ public class leer_archivo {
                 int num_campos = Integer.parseInt(arreglo[0]);
                 boolean registros;
                 if (arreglo[1] == "false") {
-                    registros = true;
-                } else {
                     registros = false;
+                } else {
+                    registros = true;
                 }
                 int cabeza = Integer.parseInt(arreglo[2]);
                 String campos[] = arreglo[3].split(",");
@@ -48,16 +48,12 @@ public class leer_archivo {
                     lista_campos.add(new Campos(campos[i], campos[i + 1]));
                     i++;
                 }
-
-                System.out.println("asasanum " + num_campos);
                 metadata = new Metadata(num_campos, lista_campos, registros, cabeza);
             }
             input.close();
         } catch (Exception ex) {
             //ex.printStackTrace();
         }
-        System.out.println("return");
-
         return metadata;
     }
 
@@ -133,7 +129,9 @@ public class leer_archivo {
         Apellidos.add("Castro");
         Apellidos.add("Fernandez");
         RandomAccessFile f = new RandomAccessFile(Archivo, "rw");
-        f.seek(300);
+        f.seek(0);
+        f.writeBytes("5;truee;-1;valor,int,apellido,String,nombre,String,carrera,String,edad,int,;");
+        f.seek(400);
         Random r = new Random();
         for (int i = 0; i <= 10000; i++) {
             //System.out.println(i);
@@ -144,13 +142,12 @@ public class leer_archivo {
             String registro = i + 1 + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
             //System.out.println(registro);
             arbol.insert(new Key(i, f.getFilePointer()));
-            f.writeChars(registro);
+            f.writeBytes(registro);
         }
         f.close();
         String Archivoarbol = Archivo.getName();
         String archi[] = Archivoarbol.split(".");
-        //archi[0] = archi[0] + "arbol.txt";
-        RandomAccessFile f2 = new RandomAccessFile("azteca.txt", "rw");
+        RandomAccessFile f2 = new RandomAccessFile("Arbol10k.txt", "rw");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(arbol);
@@ -159,7 +156,6 @@ public class leer_archivo {
         f2.writeInt(dataarbol.length);
         f2.write(dataarbol);
         f2.close();
-        System.out.println("Termino");
     }
 
     public static void arbol(Arbol_B arbol, File archivo, Metadata meta) throws FileNotFoundException {
@@ -172,7 +168,7 @@ public class leer_archivo {
             recio = Ra.readLine();
             //System.out.println("cara");
             String[] registros = recio.split(";");
-            ArrayList cosas= new ArrayList();
+            ArrayList cosas = new ArrayList();
             for (int i = 0; i < registros.length - 1; i++) {
                 String campos[] = registros[i].split(",");
                 cosas.add(campos[i]);
