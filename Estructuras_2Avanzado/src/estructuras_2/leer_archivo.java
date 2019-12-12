@@ -25,7 +25,7 @@ import java.util.Scanner;
  * @author User
  */
 public class leer_archivo {
-
+    
     public static Metadata main(String ruta) {
         ArrayList<Campos> lista_campos = new ArrayList();
         Metadata metadata = null;
@@ -36,7 +36,7 @@ public class leer_archivo {
                 String[] arreglo = line.split(";");
                 int num_campos = Integer.parseInt(arreglo[0]);
                 boolean registros;
-                if (arreglo[1] == "false") {
+                if ("false".equals(arreglo[1])) {
                     registros = false;
                 } else {
                     registros = true;
@@ -57,19 +57,19 @@ public class leer_archivo {
         }
         return metadata;
     }
-
+    
     public static void escribir(Metadata meta, File archivo) {
         try {
             FileWriter fw = new FileWriter(archivo);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(meta.toString());
             bw.close();
-
+            
         } catch (IOException ex) {
-
+            
         }
     }
-
+    
     public static void Archivo10000(File Archivo) throws IOException {
         ArrayList<String> Nombres = new ArrayList();
         Nombres.add("Leonardo");
@@ -134,35 +134,45 @@ public class leer_archivo {
         f.seek(400);
         Random r = new Random();
         ArrayList lista = new ArrayList();
+        String arc = "arbol";
+        arc += Archivo.getName();
+        RandomAccessFile f2 = new RandomAccessFile(arc, "rw");
+        f2.seek(200);
+        long finalf1=0;
         for (int i = 0; i <= 10000; i++) {
             String nombre = Nombres.get((int) Math.floor(Math.random() * 18));
             String apellido = Apellidos.get((int) Math.floor(Math.random() * 18));
             String estudia = Carrera.get((int) Math.floor(Math.random() * 18));
             int edad = 17 + r.nextInt(26);
             String registro = i + 1 + "," + apellido + "," + nombre + "," + estudia + "," + edad + ",;";
+            f2.writeBytes(i + "," + f.getFilePointer() + ";");
             long posicion = f.getFilePointer();
+            
             f.writeBytes(registro);
             String cadena = i + "," + posicion + ";";
             lista.add(cadena);
+            
         }
+        finalf1=f.getFilePointer();
+        long num = f2.getFilePointer();
+        f2.seek(0);
+        f2.writeBytes(num + ";");
+        f.seek(76);
+        f.writeBytes(""+finalf1);
         f.close();
-        RandomAccessFile f2 = new RandomAccessFile("arbol10k.txt", "rw");
-        for (int i = 0; i < lista.size(); i++) {
-            f2.writeBytes(lista.get(i).toString());
-        }
         f2.close();
     }
-
+    
     public static ArrayList<Registros> leeArchivos(File archivo, Metadata meta) {
         ArrayList<Registros> ListaReg = new ArrayList();
-
+        
         try {
             RandomAccessFile f = new RandomAccessFile(archivo, "rw");
             f.seek(400);
             String Caneda = f.readLine();
             String registros[] = Caneda.split(";");
             long pos = f.getFilePointer();
-
+            
             for (int i = 0; i < registros.length; i++) {
                 String campo[] = registros[i].split(",");
                 ArrayList cosas = new ArrayList();
@@ -195,7 +205,7 @@ public class leer_archivo {
                 ListaReg.add(new Registros(meta.getNum_campos(), cosas, f.getFilePointer()));
                 //System.out.println(cosas.size() + "tamano dentro del meteodo");
             }
-
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -203,52 +213,75 @@ public class leer_archivo {
         }
         return ListaReg;
     }
-
-    public static void escritura_arbol(File archivo, ArrayList<Registros> lista, Metadata meta) throws IOException {
+    
+    public static void escritura_arbol(File archivo, Key llave) throws IOException {
         String archi = "arbol";
-        int valor = meta.getLongitud();
-        long offse = 400;
         archi += archivo.getName();
         try {
-
             RandomAccessFile f = new RandomAccessFile(archi, "rw");
-            for (int i = 0; i < lista.size(); i++) {
-                String llave = lista.get(i).getLista().get(0).toString();
-                String cadena = llave + "," + offse + ";";
-                offse += valor;
-                f.writeBytes(cadena);
-            }
+            f.seek(0);
+            String Cadena = f.readLine();
+            String[] numero = Cadena.split(";");
+            String offseet = numero[0];
+            long posi = Integer.parseInt(offseet);
+            f.seek(posi);
+            f.writeBytes(llave.getLlave() + "," + llave.getPos() + ";");
+            long pos = f.getFilePointer();
+            f.seek(0);
+            f.writeBytes(pos + ";");
             f.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static Arbol_B crea_arbol(Arbol_B arbol, File archivo) {
+    
+    public static void crea_archivo_arbol(File archivo, Key llave) {
         String archi = "arbol";
         archi += archivo.getName();
         try {
             RandomAccessFile f = new RandomAccessFile(archi, "rw");
-            String lina= f.readLine();
-            System.out.println(lina);
-            String nodo[]=lina.split(";");
-            System.out.println(nodo[0]);
-            System.out.println(nodo.length+"tama");
-            for (int i = 0; i < nodo.length; i++) {
-                String llave[]=nodo[i].split(",");
-                System.out.println(llave[i]);
-                int numer=Integer.parseInt(llave[i].toString());
-                System.out.println(llave[i+1]);
-                int off=Integer.parseInt(llave[i+1].toString());
-                //arbol.insert(new Key(numer, off));
-                i++;
-            }
-            
+            f.seek(200);
+            f.writeBytes(llave.getLlave() + "," + llave.getPos() + ";");
+            long pos = f.getFilePointer();
+            f.seek(0);
+            f.writeBytes(pos + ";");
+            f.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static Arbol_B cargarArbol(Arbol_B arbol, File archivo) {
+        arbol = new Arbol_B();
+        String archi = "arbol";
+        archi += archivo.getName();
+        try {
+            RandomAccessFile f2 = new RandomAccessFile(archi, "rw");
+            f2.seek(200);
+            String cade = f2.readLine();
+            //System.out.println(cade);
+            String[] valor = cade.split(";");
+            //System.out.println(valor.length + "sout");
+            for (int i = 0; i < valor.length; i++) {
+                String[] valores = valor[i].split(",");
+                for (int j = 0; j < valores.length; j++) {
+                    int lave = Integer.parseInt(valores[0]);
+                    long pos = Integer.parseInt(valores[1]);
+                    Key llave = new Key(lave, pos);
+                    arbol.insert(llave);
+                    j = 2;
+                }
+                
+            }
+            f2.close();
+        } catch (FileNotFoundException ex) {
+            //Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            // Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return arbol;
     }
 }

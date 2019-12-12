@@ -14,7 +14,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class Arbol_B implements Serializable {
 
-    private Nodos raiz;
+    private Nodos raiz=null;
     private int altura;
 
     public Arbol_B() {
@@ -53,45 +53,43 @@ public class Arbol_B implements Serializable {
         if (!Nodo.isHoja()) {
             return search(Nodo.getHijos()[i - 1], value);
         }
-
+        System.out.println("no lo encontre");
         return null;
     }
 
-    public void Split(Nodos NodoPadre, int childIndex, Nodos newChild) {
+    public void split2(Nodos parentNode, int childIndex, Nodos newChild) {
 
         Nodos z = new Nodos(0, 0, null, true);
         z.Hoja = newChild.Hoja;
         z.setNum_hijos(1);
         z.getLlaves()[0] = newChild.getLlaves()[2];
-
         if (!newChild.Hoja) {
             z.getHijos()[0] = newChild.getHijos()[2];
             z.getHijos()[1] = newChild.getHijos()[3];
-
         }
+
         newChild.setNum_hijos(1);
-
-        //corre nodo padre
-        for (int j = NodoPadre.getNum_hijos() + 1; j >= childIndex + 1; j--) {
-            NodoPadre.getHijos()[j] = NodoPadre.getHijos()[j - 1];
-            NodoPadre.getLlaves()[j - 1] = NodoPadre.getLlaves()[j - 2];
+        parentNode.getHijos()[childIndex] = z;
+        for (int j = parentNode.getNum_hijos() + 1; j >= childIndex + 1; j--) {
+            parentNode.getHijos()[j] = parentNode.getHijos()[j - 1];
+            parentNode.getLlaves()[j - 1] = parentNode.getLlaves()[j - 2];
         }
+        parentNode.getLlaves()[childIndex - 1] = newChild.getLlaves()[1];
 
-        NodoPadre.getHijos()[childIndex] = z;
-        NodoPadre.getLlaves()[childIndex - 1] = newChild.getLlaves()[1];
+        for (int i = 0; i <= parentNode.getHijos()[childIndex - 1].getNum_hijos(); i++) {
+            parentNode.getHijos()[childIndex - 1].getLlaves()[i + 1] = null;
+        }
+        parentNode.getHijos()[childIndex - 1].setNum_hijos(1);
 
-        int y = NodoPadre.getNum_hijos() + 1;
-        NodoPadre.setNum_hijos(y);
+        int y = parentNode.getNum_hijos() + 1;
+        parentNode.setNum_hijos(y);
+
     }
 
-    public void inserta_nolleno(Nodos nodo, Key value) {
-
+    public void insert_no_full(Nodos nodo, Key value) {
         int i = nodo.getNum_hijos();
-
         if (nodo.isHoja()) {
-
             while (i >= 1 && value.getLlave() < nodo.getLlaves()[i - 1].getLlave()) {
-
                 nodo.getLlaves()[i] = nodo.getLlaves()[i - 1];
                 i--;
             }
@@ -104,40 +102,35 @@ public class Arbol_B implements Serializable {
                 i--;
             }
             i++;
-
             if (nodo.getHijos()[i - 1].getNum_hijos() == 3) {
 
-                Split(nodo, i, nodo.getHijos()[i - 1]);
+                split2(nodo, i, nodo.getHijos()[i - 1]);
 
                 if (value.getLlave() > nodo.getLlaves()[i - 1].getLlave()) {
 
                     i++;
                 }
             }
-            inserta_nolleno(nodo.getHijos()[i - 1], value);
+
+            insert_no_full(nodo.getHijos()[i - 1], value);
         }
     }
 
-    public  void insert(Key Llave) {
-        Nodos nodo_raiz = raiz;
-        if (nodo_raiz.getNum_hijos() == 3) {
-
+    public void insert(Key Llave) {
+        Nodos r = raiz;
+        if (r.getNum_hijos() == 3) {
             Nodos nodo_temp = new Nodos(0, 0, null, true);
-
             raiz = nodo_temp;
             nodo_temp.setNum_hijos(0);
-
             nodo_temp.Hoja = false;
-            nodo_temp.getHijos()[0] = nodo_raiz;
-
-            Split(nodo_temp, 1, nodo_raiz);
-
-            inserta_nolleno(nodo_temp, Llave);
+            nodo_temp.getHijos()[0] = r;
+            split2(nodo_temp, 1, r);
+            insert_no_full(nodo_temp, Llave);
         } else {
-            inserta_nolleno(nodo_raiz, Llave);
+            insert_no_full(r, Llave);
         }
     }
-    
+
     public void printBtree(Nodos node, String indent) {
 
         if (node == null) {
@@ -185,7 +178,8 @@ public class Arbol_B implements Serializable {
         }
         return false;
     }
-    public void imprimir_arblo(Nodos nodo_actual, int num) { 
+
+    public void imprimir_arblo(Nodos nodo_actual, int num) {
         //se debe iniciar num en 0 a la hora de llamar el metodo
         for (int i = 0; i < nodo_actual.getLlaves().length; i++) {
             if (nodo_actual.getLlaves()[i] != null) {
@@ -193,7 +187,7 @@ public class Arbol_B implements Serializable {
             }
         }
         //si no es hoja, se llama el metodo recursivo pero ahora con su hijo
-        if (nodo_actual.Hoja==false) {
+        if (nodo_actual.Hoja == false) {
             for (int i = 0; i < nodo_actual.getHijos().length; i++) {
                 if (nodo_actual.getHijos()[i] != null) {
                     imprimir_arblo(nodo_actual.getHijos()[i], num + 1);
