@@ -610,7 +610,7 @@ public class P_Grafica extends javax.swing.JFrame {
 
                 // Y colocamos los datos en esa fila
                 for (int j = 0; j < datos.length; j++) {
-
+                    
                     // Creamos una celda en esa fila, en la
                     // posicion indicada por el contador del ciclo
                     datos[j] = registros.get(j).getLista().toString();
