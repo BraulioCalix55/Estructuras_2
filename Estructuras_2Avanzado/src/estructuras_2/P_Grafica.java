@@ -5,7 +5,6 @@
  */
 package estructuras_2;
 
-
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,9 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import  org.apache.poi.hssf.usermodel.HSSFSheet;
-import  org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import  org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,11 +51,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author User
  */
 public class P_Grafica extends javax.swing.JFrame {
-    private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");  
+
+    private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");
 
     public P_Grafica() {
         initComponents();
-
 
     }
 
@@ -105,12 +104,11 @@ public class P_Grafica extends javax.swing.JFrame {
         listar_regis = new javax.swing.JToggleButton();
         ListarArbol = new javax.swing.JDialog();
         Lista_arbols = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        Lista_registros = new javax.swing.JTable();
         fondo = new javax.swing.JLabel();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
-        Reindexar = new javax.swing.JLabel();
+        Imprimir_arbol = new javax.swing.JLabel();
         utilidades = new javax.swing.JLabel();
         L_registro = new javax.swing.JLabel();
         L_salir = new javax.swing.JLabel();
@@ -429,7 +427,7 @@ public class P_Grafica extends javax.swing.JFrame {
 
         ListarArbol.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        Lista_registros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -440,13 +438,10 @@ public class P_Grafica extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        Lista_arbols.setViewportView(jTable2);
+        Lista_arbols.setViewportView(Lista_registros);
 
-        ListarArbol.getContentPane().add(Lista_arbols, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
-
-        jToggleButton1.setText("Proximos 10 registros");
-        ListarArbol.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, -1, -1));
-        ListarArbol.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 775, 570));
+        ListarArbol.getContentPane().add(Lista_arbols, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, 260));
+        ListarArbol.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 490));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -469,13 +464,13 @@ public class P_Grafica extends javax.swing.JFrame {
         });
         getContentPane().add(L_archivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, -1));
 
-        Reindexar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/arbol.png"))); // NOI18N
-        Reindexar.addMouseListener(new java.awt.event.MouseAdapter() {
+        Imprimir_arbol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/arbol.png"))); // NOI18N
+        Imprimir_arbol.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ReindexarMouseClicked(evt);
+                Imprimir_arbolMouseClicked(evt);
             }
         });
-        getContentPane().add(Reindexar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        getContentPane().add(Imprimir_arbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
         utilidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/xml.png"))); // NOI18N
         utilidades.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -554,13 +549,10 @@ public class P_Grafica extends javax.swing.JFrame {
         // con patron solido del color indicado
         style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        
-        String[] titulos= new String[metadata.getNum_campos()]; 
-       
-        String[] datos = new String[registros.size()];
-        
 
-        
+        String[] titulos = new String[metadata.getNum_campos()];
+
+        String[] datos = new String[registros.size()];
 
         // Creamos una fila en la hoja en la posicion 0
         Row fila = pagina.createRow(0);
@@ -569,7 +561,8 @@ public class P_Grafica extends javax.swing.JFrame {
         for (int i = 0; i < titulos.length; i++) {
             // Creamos una celda en esa fila, en la posicion 
             // indicada por el contador del ciclo
-            titulos[i]=metadata.getLista_campos().get(i).getNombre();
+            titulos[i] = metadata.getLista_campos().get(i).getNombre();
+
             Cell celda = fila.createCell(i);
 
             // Indicamos el estilo que deseamos 
@@ -614,22 +607,22 @@ public class P_Grafica extends javax.swing.JFrame {
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Error de entrada/salida");
         }
-                
-        
+
+
     }//GEN-LAST:event_utilidadesMouseClicked
 
-    private void ReindexarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReindexarMouseClicked
-        Arbol_B arbol = new Arbol_B();
+    private void Imprimir_arbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imprimir_arbolMouseClicked
+
         try {
-            leer_archivo.Archivo10000(archivo);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            registros = leer_archivo.leeArchivos(archivo, metadata);
+            leer_archivo.escritura_arbol(archivo, registros, metadata);
+            leer_archivo.crea_arbol(tree, archivo);
+            tree.imprimir_arblo(tree.getRaiz(), 0);
         } catch (IOException ex) {
             Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        arbol.imprimir_arblo(arbol.getRaiz(), 0);
-
-    }//GEN-LAST:event_ReindexarMouseClicked
+        System.out.println("escribe");
+    }//GEN-LAST:event_Imprimir_arbolMouseClicked
 
     private void L_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_archivosMouseClicked
         Menu_archivos.setModal(true);
@@ -899,7 +892,7 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton_agregarMouseClicked
 
     private void crear_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crear_regisMouseClicked
-        
+
         if (archivo.getName().equals("Registros10k.txt")) {
             JOptionPane.showMessageDialog(Registros, "no se puede crear mas registros en el archivo de 10 mil regitros");
         } else {
@@ -981,7 +974,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 }
                 f.seek(200);
                 String Cadena = f.readLine();
-                String[]registros= Cadena.split(";");
+                String[] registros = Cadena.split(";");
                 String[] numero = Cadena.split(";");
                 String offseet = numero[0];
                 long offset = Integer.parseInt(offseet);
@@ -1002,27 +995,41 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_crear_regisMouseClicked
 
     private void listar_regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listar_regisMouseClicked
-        boolean Archivo_arbol = false;
-        while (Archivo_arbol == false) {
 
-            JFileChooser jfc = new JFileChooser("./");
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archvivos de Texto", "txt");
-            jfc.setFileFilter(filtro);
-            int seleccion = jfc.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION) {
-                archivoarbol = jfc.getSelectedFile();
-                String nombre = archivoarbol.getName();
-                if (nombre.contains("arbol")) {
-                    Archivo_arbol = true;
+        if (metadata == null) {
+            JOptionPane.showMessageDialog(this, "no se ha hecho la metadata");
+        } else {
+
+            registros = leer_archivo.leeArchivos(archivo, metadata);
+            JTable temp = new JTable();
+            DefaultTableModel model = (DefaultTableModel) temp.getModel();
+            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                model.addColumn(metadata.getLista_campos().get(i).getNombre());
+            }
+            Object[][] matriz = new Object[10][metadata.getLista_campos().size()];
+
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    matriz[i][j] = registros.get(i).getLista().get(j);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "no se pudo abrir ningun archivo");
+
             }
-            if (Archivo_arbol == false) {
-                JOptionPane.showMessageDialog(Registros, "elija un archivo que sea de arbol");
+
+            for (int i = 0; i < matriz.length; i++) {
+                Object[] regi = new Object[matriz[0].length];
+                for (int j = 0; j < matriz[i].length; j++) {
+                    regi[j] = matriz[i][j];
+
+                }
+                model.addRow(regi);
             }
+            Lista_registros.setModel(model);
+            ListarArbol.setModal(true);
+            ListarArbol.pack();
+            ListarArbol.setLocationRelativeTo(Registros);
+            ListarArbol.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_listar_regisMouseClicked
 
     /**
@@ -1079,12 +1086,14 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JButton Boton_agregar;
     private javax.swing.JComboBox<String> Combo_Agrega;
     private javax.swing.JComboBox<String> Combo_tipo;
+    private javax.swing.JLabel Imprimir_arbol;
     private javax.swing.JLabel L_Fondo;
     private javax.swing.JLabel L_archivos;
     private javax.swing.JLabel L_campos;
     private javax.swing.JLabel L_registro;
     private javax.swing.JLabel L_salir;
     private javax.swing.JScrollPane Lista_arbols;
+    private javax.swing.JTable Lista_registros;
     private javax.swing.JDialog ListarArbol;
     private javax.swing.JLabel Listar_Campos;
     private javax.swing.JDialog Menu_archivos;
@@ -1093,7 +1102,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JDialog Nuevo_campos;
     private javax.swing.JLabel Nuevo_registro;
     private javax.swing.JDialog Registros;
-    private javax.swing.JLabel Reindexar;
     private javax.swing.JButton Termina_mod;
     private javax.swing.JButton Terminar_campos;
     private javax.swing.JTextField Tx_campo;
@@ -1110,8 +1118,6 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JDialog listar_campos;
     private javax.swing.JToggleButton listar_regis;
     private javax.swing.JButton mod_campo;
@@ -1128,4 +1134,5 @@ ArrayList<Campos> temp = new ArrayList();
     Arbol_B tree = new Arbol_B();
     //ArrayList<dispo> availist = new ArrayList();
     ArrayList<Registros> registros = new ArrayList();
+
 }

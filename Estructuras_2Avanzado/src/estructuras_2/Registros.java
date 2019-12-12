@@ -12,9 +12,10 @@ import java.util.ArrayList;
  * @author ricky
  */
 public class Registros {
+
     int num_camp;
     ArrayList lista;
-            
+
     long posicion;
 
     public Registros() {
@@ -25,8 +26,6 @@ public class Registros {
         this.lista = lista;
         this.posicion = posicion;
     }
-
-   
 
     public int getNum_camp() {
         return num_camp;
@@ -44,8 +43,6 @@ public class Registros {
         this.lista = lista;
     }
 
-    
-
     public long getPosicion() {
         return posicion;
     }
@@ -53,11 +50,10 @@ public class Registros {
     public void setPosicion(long posicion) {
         this.posicion = posicion;
     }
-   
 
     @Override
     public String toString() {
-        return "Registros{" + "num_camp=" + num_camp +", posicion=" + posicion + '}';
+        return lista.toString();
     }
-    
+
 }
