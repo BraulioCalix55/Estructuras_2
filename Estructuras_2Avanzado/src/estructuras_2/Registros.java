@@ -5,23 +5,28 @@
  */
 package estructuras_2;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ricky
  */
 public class Registros {
     int num_camp;
-    String arreglo[];
-    int posicion;
+    ArrayList lista;
+            
+    long posicion;
 
     public Registros() {
     }
 
-    public Registros(int num_camp, String[] arreglo, int posicion) {
+    public Registros(int num_camp, ArrayList lista, long posicion) {
         this.num_camp = num_camp;
-        this.arreglo = arreglo;
+        this.lista = lista;
         this.posicion = posicion;
     }
+
+   
 
     public int getNum_camp() {
         return num_camp;
@@ -31,28 +36,28 @@ public class Registros {
         this.num_camp = num_camp;
     }
 
-    public String[] getArreglo() {
-        return arreglo;
+    public ArrayList getLista() {
+        return lista;
     }
 
-    public void setArreglo(String[] arreglo) {
-        this.arreglo = arreglo;
+    public void setLista(ArrayList lista) {
+        this.lista = lista;
     }
 
-    public int getPosicion() {
+    
+
+    public long getPosicion() {
         return posicion;
     }
 
-    public void setPosicion(int posicion) {
+    public void setPosicion(long posicion) {
         this.posicion = posicion;
     }
-    public void setTama(int tamano){
-        arreglo=new String[tamano];
-    }
+   
 
     @Override
     public String toString() {
-        return "Registros{" + "num_camp=" + num_camp + ", arreglo=" + arreglo + ", posicion=" + posicion + '}';
+        return "Registros{" + "num_camp=" + num_camp +", posicion=" + posicion + '}';
     }
     
 }

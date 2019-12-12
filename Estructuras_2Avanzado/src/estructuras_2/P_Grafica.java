@@ -900,7 +900,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 Registros regis_temp = new Registros();
                 ArrayList lista = new ArrayList();
                 regis_temp.setNum_camp(metadata.getNum_campos());
-                regis_temp.setTama(metadata.getNum_campos());
+                //regis_temp.setTama(metadata.getNum_campos());
                 for (int i = 0; i < metadata.getNum_campos(); i++) {
 
                     if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
@@ -970,6 +970,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 }
                 f.seek(200);
                 String Cadena = f.readLine();
+                String[]registros= Cadena.split(";");
                 String[] numero = Cadena.split(";");
                 String offseet = numero[0];
                 long offset = Integer.parseInt(offseet);

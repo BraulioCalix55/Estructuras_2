@@ -152,15 +152,45 @@ public class leer_archivo {
         }
         f2.close();
     }
-    public static ArrayList<Registros> leeArchivos(File archivo,Metadata meta){
-    ArrayList <Registros> registros = new ArrayList();
+
+    public static ArrayList<Registros> leeArchivos(File archivo, Metadata meta) {
+        ArrayList<Registros> ListaReg = new ArrayList();
         try {
-            Scanner input = new Scanner(archivo);
+            RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+            f.seek(400);
+            String Caneda = f.readLine();
+            String registros[] = Caneda.split(";");
+            long pos = f.getFilePointer();
+            ArrayList cosas = new ArrayList();
+            for (int i = 0; i < registros.length; i++) {
+                String campo[] = registros[i].split(",");
+                for (int j = 0; j < meta.getLista_campos().size(); j++) {
+                    if (meta.getLista_campos().get(j).getTipo().equals("String")) {
+                        String cadena = campo[i];
+                        cosas.add(cadena);
+                    } else if (meta.getLista_campos().get(j).getTipo().equals("int")) {
+                        int numer = Integer.parseInt(campo[i]);
+                        cosas.add(numer);
+                    } else if (meta.getLista_campos().get(j).getTipo().equals("char")) {
+                        char letra = campo[i].charAt(0);
+                        cosas.add(letra);
+                    } else if (meta.getLista_campos().get(j).getTipo().equals("boolean")) {
+                        boolean bool = false;
+                        if (campo[i] == "true") {
+                            bool = true;
+                        }
+                        cosas.add(bool);
+                        ListaReg.add(new Registros(meta.getNum_campos(), cosas, f.getFilePointer()));
+                    }
+                }
+                
+            }
+
         } catch (FileNotFoundException ex) {
-            
+            Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(leer_archivo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-    
-    return registros;
+        return ListaReg;
     }
 }
