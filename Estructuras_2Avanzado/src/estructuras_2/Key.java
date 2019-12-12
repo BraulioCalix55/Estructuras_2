@@ -16,6 +16,9 @@ public class Key implements Serializable {
     private int llave;
     private long pos;
 
+    public Key() {
+    }
+
     public Key(int llave, long pos) {
         this.llave = llave;
         this.pos = pos;

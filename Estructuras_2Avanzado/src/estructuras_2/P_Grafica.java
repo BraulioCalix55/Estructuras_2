@@ -116,6 +116,7 @@ public class P_Grafica extends javax.swing.JFrame {
         ListarArbol = new javax.swing.JDialog();
         Lista_arbols = new javax.swing.JScrollPane();
         Lista_registros = new javax.swing.JTable();
+        busca_llave = new javax.swing.JButton();
         fondo = new javax.swing.JLabel();
         L_campos = new javax.swing.JLabel();
         L_archivos = new javax.swing.JLabel();
@@ -452,6 +453,14 @@ public class P_Grafica extends javax.swing.JFrame {
         Lista_arbols.setViewportView(Lista_registros);
 
         ListarArbol.getContentPane().add(Lista_arbols, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, 260));
+
+        busca_llave.setText("Buscar una llave");
+        busca_llave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                busca_llaveMouseClicked(evt);
+            }
+        });
+        ListarArbol.getContentPane().add(busca_llave, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, -1, -1));
         ListarArbol.getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 490));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -534,134 +543,144 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_salirMouseClicked
 
     private void L_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_registroMouseClicked
-        Registros.setModal(true);
-        Registros.pack();
-        Registros.setLocationRelativeTo(this);
-        Registros.setVisible(true);
+        if (archivo.getName().equals("archivo10k.txt")) {
+            JOptionPane.showMessageDialog(this, "el archivo seleccionado solo es para el ejemplo \nde 10 mil registros, trate de imprimirlo");
+        } else {
+            if (archivo == null) {
+                JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo");
+            } else {
+                Registros.setModal(true);
+                Registros.pack();
+                Registros.setLocationRelativeTo(this);
+                Registros.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_L_registroMouseClicked
 
     private void utilidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_utilidadesMouseClicked
-        registros = leer_archivo.leeArchivos(archivo, metadata);
+        if (archivo.getName().equals("archivo10k.txt")) {
+            JOptionPane.showMessageDialog(this, "el archivo seleccionado solo es para el ejemplo \nde 10 mil registros, trate de imprimirlo");
+        } else {
+            if (archivo == null) {
+                JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo");
+            } else {
+                registros = leer_archivo.leeArchivos(archivo, metadata);
+                // Creamos el archivo donde almacenaremos la hoja
+                // de calculo, recuerde usar la extension correcta,
+                // en este caso .xlsx
+                File archivo = new File("Registros.xlsx");
 
-        // Creamos el archivo donde almacenaremos la hoja
-        // de calculo, recuerde usar la extension correcta,
-        // en este caso .xlsx
-        File archivo = new File("Registros.xlsx");
+                // Creamos el libro de trabajo de Excel formato OOXML
+                Workbook workbook = new XSSFWorkbook();
 
-        // Creamos el libro de trabajo de Excel formato OOXML
-        Workbook workbook = new XSSFWorkbook();
+                // La hoja donde pondremos los datos
+                Sheet pagina = workbook.createSheet("Registros");
 
-        // La hoja donde pondremos los datos
-        Sheet pagina = workbook.createSheet("Registros");
+                // Creamos el estilo paga las celdas del encabezado
+                CellStyle style = workbook.createCellStyle();
+                // Indicamos que tendra un fondo azul aqua
+                // con patron solido del color indicado
+                style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+                style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        // Creamos el estilo paga las celdas del encabezado
-        CellStyle style = workbook.createCellStyle();
-        // Indicamos que tendra un fondo azul aqua
-        // con patron solido del color indicado
-        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                String[] titulos = new String[metadata.getNum_campos()];
 
-        String[] titulos = new String[metadata.getNum_campos()];
+                String[] datos = new String[registros.size()];
 
-        String[] datos = new String[registros.size()];
+                // Creamos una fila en la hoja en la posicion 0
+                Row fila = pagina.createRow(0);
 
-        // Creamos una fila en la hoja en la posicion 0
-        Row fila = pagina.createRow(0);
+                // Creamos el encabezado
+                for (int i = 0; i < titulos.length; i++) {
+                    // Creamos una celda en esa fila, en la posicion 
+                    // indicada por el contador del ciclo
+                    titulos[i] = metadata.getLista_campos().get(i).getNombre();
 
-        // Creamos el encabezado
-        for (int i = 0; i < titulos.length; i++) {
-            // Creamos una celda en esa fila, en la posicion 
-            // indicada por el contador del ciclo
-            titulos[i] = metadata.getLista_campos().get(i).getNombre();
+                    Cell celda = fila.createCell(i);
 
-            Cell celda = fila.createCell(i);
+                    // Indicamos el estilo que deseamos 
+                    // usar en la celda, en este caso el unico 
+                    // que hemos creado
+                    celda.setCellStyle(style);
+                    celda.setCellValue(titulos[i]);
+                }
 
-            // Indicamos el estilo que deseamos 
-            // usar en la celda, en este caso el unico 
-            // que hemos creado
-            celda.setCellStyle(style);
-            celda.setCellValue(titulos[i]);
-        }
+                // Ahora creamos una fila en la posicion 1
+                fila = pagina.createRow(1);
 
-        // Ahora creamos una fila en la posicion 1
-        fila = pagina.createRow(1);
+                // Y colocamos los datos en esa fila
+                for (int j = 0; j < datos.length; j++) {
 
-        // Y colocamos los datos en esa fila
-        for (int j = 0; j < datos.length; j++) {
-            // Creamos una celda en esa fila, en la
-            // posicion indicada por el contador del ciclo
-            datos[j] = registros.get(j).getLista().toString();
-            Cell celda = fila.createCell(j);
+                    // Creamos una celda en esa fila, en la
+                    // posicion indicada por el contador del ciclo
+                    datos[j] = registros.get(j).getLista().toString();
+                    Cell celda = fila.createCell(j);
 
-            celda.setCellValue(datos[j]);
-        }
+                    celda.setCellValue(datos[j]);
+                }
 
-        // Ahora guardaremos el archivo
-        try {
-            // Creamos el flujo de salida de datos,
-            // apuntando al archivo donde queremos 
-            // almacenar el libro de Excel
-            FileOutputStream salida = new FileOutputStream(archivo);
+                // Ahora guardaremos el archivo
+                try {
+                    // Creamos el flujo de salida de datos,
+                    // apuntando al archivo donde queremos 
+                    // almacenar el libro de Excel
+                    FileOutputStream salida = new FileOutputStream(archivo);
 
-            // Almacenamos el libro de 
-            // Excel via ese 
-            // flujo de datos
-            workbook.write(salida);
+                    // Almacenamos el libro de 
+                    // Excel via ese 
+                    // flujo de datos
+                    workbook.write(salida);
 
-            // Cerramos el libro para concluir operaciones
-            workbook.close();
+                    // Cerramos el libro para concluir operaciones
+                    workbook.close();
 
-            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
+                    LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
 
-        } catch (FileNotFoundException ex) {
-            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
-        }
-        
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.newDocument();
-            doc.setXmlStandalone(true);
-            Element rootElement = doc.createElement("Campos");
-            doc.appendChild(rootElement);
-            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                Element Campo =  doc.createElement("Campo");
-                Campo.setAttribute(metadata.getLista_campos().get(i).getNombre(),""+metadata.getLista_campos().get(i).getTipo());
-                rootElement.appendChild(Campo);
+                } catch (FileNotFoundException ex) {
+                    LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
+                } catch (IOException ex) {
+                    LOGGER.log(Level.SEVERE, "Error de entrada/salida");
+                }
+
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder;
+                try {
+                    builder = factory.newDocumentBuilder();
+                    Document doc = builder.newDocument();
+                    doc.setXmlStandalone(true);
+                    Element rootElement = doc.createElement("Campos");
+                    doc.appendChild(rootElement);
+                    for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                        Element Campo = doc.createElement("Campo");
+                        Campo.setAttribute(metadata.getLista_campos().get(i).getNombre(), "" + metadata.getLista_campos().get(i).getTipo());
+                        rootElement.appendChild(Campo);
+                    }
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    DOMSource dom = new DOMSource(doc);
+                    String ss = archivo.getAbsolutePath();
+                    ss = ss.substring(0, ss.length());
+                    StreamResult result = new StreamResult(new File(ss + ".xml"));
+                    transformer.transform(dom, result);
+                    JOptionPane.showMessageDialog(this, "Creado con exito");
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TransformerConfigurationException ex) {
+                    Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TransformerException ex) {
+                    Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource dom = new DOMSource(doc);
-            String ss = archivo.getAbsolutePath();
-            ss = ss.substring(0,ss.length());
-            StreamResult result = new StreamResult(new File(ss+".xml"));
-            transformer.transform(dom, result);
-            JOptionPane.showMessageDialog(this,"Creado con exito");
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-
     }//GEN-LAST:event_utilidadesMouseClicked
 
     private void Imprimir_arbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Imprimir_arbolMouseClicked
-
-        try {
-            registros = leer_archivo.leeArchivos(archivo, metadata);
-            leer_archivo.escritura_arbol(archivo, registros, metadata);
-            leer_archivo.crea_arbol(tree, archivo);
+        if (archivo == null) {
+            JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo con arbol");
+        } else {
+            tree = leer_archivo.cargarArbol(tree, archivo);
             tree.imprimir_arblo(tree.getRaiz(), 0);
-        } catch (IOException ex) {
-            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("escribe");
     }//GEN-LAST:event_Imprimir_arbolMouseClicked
 
     private void L_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_archivosMouseClicked
@@ -672,14 +691,19 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_archivosMouseClicked
 
     private void L_camposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L_camposMouseClicked
-        if (archivo == null) {
-            JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo...");
+        if (archivo.getName().equals("archivo10k.txt")) {
+            JOptionPane.showMessageDialog(this, "el archivo seleccionado solo es para el ejemplo \nde 10 mil registros, trate de imprimirlo");
         } else {
-            Menu_campos.setModal(true);
-            Menu_campos.pack();
-            Menu_campos.setLocationRelativeTo(this);
-            Menu_campos.setVisible(true);
+            if (archivo == null) {
+                JOptionPane.showMessageDialog(this, "no ha seleccionado ningun archivo...");
+            } else {
+                Menu_campos.setModal(true);
+                Menu_campos.pack();
+                Menu_campos.setLocationRelativeTo(this);
+                Menu_campos.setVisible(true);
+            }
         }
+
     }//GEN-LAST:event_L_camposMouseClicked
 
     private void Archivo_nuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Archivo_nuevoMouseClicked
@@ -692,6 +716,7 @@ public class P_Grafica extends javax.swing.JFrame {
             if (!archivo.exists()) {
                 try {
                     archivo.createNewFile();
+
                 } catch (IOException ex) {
                     Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -700,6 +725,7 @@ public class P_Grafica extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Menu_archivos, "Arhcivo con ese nombre ya existe");
             }
         }
+//        
         nuevo = true;
     }//GEN-LAST:event_Archivo_nuevoMouseClicked
 
@@ -783,7 +809,6 @@ public class P_Grafica extends javax.swing.JFrame {
             }
         }
         longitud++;
-
         Metadata metas = new Metadata(temporal.size(), temporal, longitud);
         leer_archivo.escribir(metas, archivo);
         try {
@@ -897,12 +922,12 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_mod_campoMouseClicked
 
     private void Agrega_campoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Agrega_campoMouseClicked
-        if (metadata.getRegistros() == true) {
-            JOptionPane.showMessageDialog(jPanel1, "No se puede agregar campos \nsi ya hay registros");
-        } else {
+        if (metadata.getRegistros() == false) {
             Agregar_campos.setModal(true);
             Agregar_campos.pack();
             Agregar_campos.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(jPanel1, "No se puede agregar campos \nsi ya hay registros");
         }
     }//GEN-LAST:event_Agrega_campoMouseClicked
 
@@ -938,94 +963,143 @@ public class P_Grafica extends javax.swing.JFrame {
         } else {
 
             try {
-                RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+                String offseet = "";
+                Key llave = new Key();
+
                 Registros regis_temp = new Registros();
-                ArrayList lista = new ArrayList();
+
                 regis_temp.setNum_camp(metadata.getNum_campos());
-                //regis_temp.setTama(metadata.getNum_campos());
-                for (int i = 0; i < metadata.getNum_campos(); i++) {
+                boolean existe = false;
+                while (existe == false) {
+                    ArrayList lista = new ArrayList();
+                    for (int i = 0; i < metadata.getNum_campos(); i++) {
 
-                    if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String numero = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede numeros de 8 digitos o menos");
-                        String valor = "";
-                        String tamp = "";
-                        System.out.println(numero);
-                        boolean peque = false;
-                        if (numero.length() < 9) {
-                            peque = true;
-                        }
-                        for (int j = 0; j < 8; j++) {
-                            if (numero.length() - 1 > j) {
-
-                            } else {
-                                tamp += "0";
+                        if ("int".equals(metadata.getLista_campos().get(i).getTipo())) {
+                            String numero = JOptionPane.showInputDialog(Registros, "ingrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede numeros de 8 digitos o menos");
+                            String valor = "";
+                            String tamp = "";
+                            System.out.println(numero);
+                            boolean peque = false;
+                            if (numero.length() < 9) {
+                                peque = true;
                             }
-                        }
-                        if (peque == true) {
+                            for (int j = 0; j < 8; j++) {
+                                if (numero.length() - 1 > j) {
 
-                            valor += tamp;
-                            valor += numero;
-                        }
-                        lista.add(valor);
-                    } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede Strings de 15 digitos o menos");
-                        String cade = "";
-                        String tamp = "";
-                        boolean peque = false;
-                        if (cadena.length() < 16) {
-                            peque = true;
-                        }
-                        for (int j = 0; j < 15; j++) {
-                            if (cadena.length() - 1 > j) {
-
-                            } else {
-                                tamp += "%";
+                                } else {
+                                    tamp += "0";
+                                }
                             }
-                        }
-                        if (peque == true) {
-                            cade += cadena;
-                            cade += tamp;
-                        }
+                            if (peque == true) {
 
-                        lista.add(cade);
-                    } else if ("char".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se agarrara el primer caracter");
-                        char car = caracter.charAt(0);
-                        lista.add(car);
-                    } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
-                        String bool = JOptionPane.showInputDialog(Registros, " 1) para true otro numero para false \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre().charAt(i));
-                        boolean real;
-                        if (bool == "1") {
-                            System.out.println("uno");
-                            real = true;
+                                valor += tamp;
+                                valor += numero;
+                            }
+                            lista.add(valor);
+                        } else if ("String".equals(metadata.getLista_campos().get(i).getTipo())) {
+                            String cadena = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se puede Strings de 15 digitos o menos");
+                            String cade = "";
+                            String tamp = "";
+                            boolean peque = false;
+                            if (cadena.length() < 16) {
+                                peque = true;
+                            }
+                            for (int j = 0; j < 15; j++) {
+                                if (cadena.length() - 1 > j) {
+
+                                } else {
+                                    tamp += "%";
+                                }
+                            }
+                            if (peque == true) {
+                                cade += cadena;
+                                cade += tamp;
+                            }
+
+                            lista.add(cade);
+                        } else if ("char".equals(metadata.getLista_campos().get(i).getTipo())) {
+                            String caracter = JOptionPane.showInputDialog(Registros, "campo llave \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre() + "\nsolo se agarrara el primer caracter");
+                            char car = caracter.charAt(0);
+                            lista.add(car);
+                        } else if ("boolean".equals(metadata.getLista_campos().get(i).getTipo())) {
+                            String bool = JOptionPane.showInputDialog(Registros, " 1) para true otro numero para false \ningrese un " + metadata.getLista_campos().get(i).getTipo() + " para el campo " + metadata.getLista_campos().get(i).getNombre().charAt(i));
+                            boolean real;
+                            if (bool == "1") {
+                                System.out.println("uno");
+                                real = true;
+                            } else {
+                                System.out.println("otronumero");
+                                real = false;
+                            }
+                            lista.add(real);
                         } else {
-                            System.out.println("otronumero");
-                            real = false;
-                        }
-                        lista.add(real);
-                    } else {
 
+                        }
                     }
+                    System.out.println(metadata.getRegistros());
+                    System.out.println("bool");
+                    if (metadata.getRegistros() == false) {
+                        RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+                        metadata.setRegistros(true);
+                        leer_archivo.escribir(metadata, archivo);
+                        int num = Integer.parseInt(lista.get(0).toString());
+                        System.out.println("num=" + num);
+                        llave = new Key(Integer.parseInt(lista.get(0).toString()), 400);
+                        System.out.println("entra");
+                        leer_archivo.crea_archivo_arbol(archivo, llave);
+                        tree = leer_archivo.cargarArbol(tree, archivo);
+                        existe = true;
+                        f.seek(2);
+                        f.writeBytes("true");
+                        f.getFilePointer();
+                        long offset = 400;
+                        f.seek(offset);
+                        for (int i = 0; i < lista.size(); i++) {
+                            f.writeBytes(lista.get(i) + ",");
+                        }
+
+                        f.writeBytes(";");
+                        long nuevo_final = f.getFilePointer();
+                        f.seek(200);
+                        f.writeBytes(nuevo_final + ";");
+                        f.close();
+                    } else {
+                        RandomAccessFile f = new RandomAccessFile(archivo, "rw");
+                        System.out.println("else");
+                        f.seek(200);
+                        String Cadena = f.readLine();
+                        String[] numero = Cadena.split(";");
+                        offseet = numero[0];
+                        System.out.println(offseet);
+                        System.out.println("of");
+                        long offset = Integer.parseInt(offseet);
+                        tree = leer_archivo.cargarArbol(tree, archivo);
+                        System.out.println("imprime arbol");
+                        tree.imprimir_arblo(tree.getRaiz(), 0);
+                        llave = new Key(Integer.parseInt(lista.get(0).toString()), offset);
+                        Key llav = tree.search(tree.getRaiz(), llave);
+                        System.out.println("busco");
+                        if (llav == null) {
+                            f.seek(offset);
+                            for (int i = 0; i < lista.size(); i++) {
+                                f.writeBytes(lista.get(i) + ",");
+                            }
+                            f.writeBytes(";");
+                            long nuevo_final = f.getFilePointer();
+                            f.seek(200);
+                            f.writeBytes(nuevo_final + ";");
+                            leer_archivo.escritura_arbol(archivo, llave);
+                            System.out.println("entro al nullo");
+                            existe = true;
+                        } else {
+                            JOptionPane.showMessageDialog(Registros, "ya existe un registro con esa llave");
+                            existe = false;
+                        }
+                        f.close();
+                    }
+
+                    System.out.println(existe);
                 }
-                if (metadata.getRegistros() == false) {
-                    f.seek(2);
-                    f.writeBytes("true");
-                    f.getFilePointer();
-                }
-                f.seek(200);
-                String Cadena = f.readLine();
-                String[] registros = Cadena.split(";");
-                String[] numero = Cadena.split(";");
-                String offseet = numero[0];
-                long offset = Integer.parseInt(offseet);
-                f.seek(offset);
-                for (int i = 0; i < lista.size(); i++) {
-                    f.writeBytes(lista.get(i) + ",");
-                }
-                f.writeBytes(";");
-                long nuevo_final = f.getFilePointer();
-                f.seek(200);
-                f.writeBytes(nuevo_final + ";");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -1039,38 +1113,53 @@ public class P_Grafica extends javax.swing.JFrame {
         if (metadata == null) {
             JOptionPane.showMessageDialog(this, "no se ha hecho la metadata");
         } else {
+            if (registros.size() > 10) {
+                JOptionPane.showMessageDialog(listar_campos, "se ocuoan minimo 10 registros ingresados");
 
-            registros = leer_archivo.leeArchivos(archivo, metadata);
-            JTable temp = new JTable();
-            DefaultTableModel model = (DefaultTableModel) temp.getModel();
-            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
-                model.addColumn(metadata.getLista_campos().get(i).getNombre());
-            }
-            Object[][] matriz = new Object[10][metadata.getLista_campos().size()];
+            } else {
+                registros = leer_archivo.leeArchivos(archivo, metadata);
+                JTable temp = new JTable();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                    model.addColumn(metadata.getLista_campos().get(i).getNombre());
+                }
+                Object[][] matriz = new Object[10][metadata.getLista_campos().size()];
 
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    matriz[i][j] = registros.get(i).getLista().get(j);
+                for (int i = 0; i < matriz.length; i++) {
+                    for (int j = 0; j < matriz[i].length; j++) {
+                        matriz[i][j] = registros.get(i).getLista().get(j);
+                    }
+
                 }
 
-            }
+                for (int i = 0; i < matriz.length; i++) {
+                    Object[] regi = new Object[matriz[0].length];
+                    for (int j = 0; j < matriz[i].length; j++) {
+                        regi[j] = matriz[i][j];
 
-            for (int i = 0; i < matriz.length; i++) {
-                Object[] regi = new Object[matriz[0].length];
-                for (int j = 0; j < matriz[i].length; j++) {
-                    regi[j] = matriz[i][j];
-
+                    }
+                    model.addRow(regi);
                 }
-                model.addRow(regi);
+                Lista_registros.setModel(model);
+                ListarArbol.setModal(true);
+                ListarArbol.pack();
+                ListarArbol.setLocationRelativeTo(Registros);
+                ListarArbol.setVisible(true);
             }
-            Lista_registros.setModel(model);
-            ListarArbol.setModal(true);
-            ListarArbol.pack();
-            ListarArbol.setLocationRelativeTo(Registros);
-            ListarArbol.setVisible(true);
         }
-
     }//GEN-LAST:event_listar_regisMouseClicked
+
+    private void busca_llaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_busca_llaveMouseClicked
+        tree = leer_archivo.cargarArbol(tree, archivo);
+        int numero = Integer.parseInt(JOptionPane.showInputDialog(ListarArbol, "ingrese un int de la llave que desea buscar"));
+        Key temp = new Key(numero, 0);
+        Key existe = tree.search(tree.getRaiz(), temp);
+        if (existe == null) {
+            JOptionPane.showMessageDialog(ListarArbol, "la llave no existe");
+        } else {
+            JOptionPane.showMessageDialog(ListarArbol, "LA LLAVE SI EXISTE!!!");
+        }
+    }//GEN-LAST:event_busca_llaveMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1145,6 +1234,7 @@ public class P_Grafica extends javax.swing.JFrame {
     private javax.swing.JButton Termina_mod;
     private javax.swing.JButton Terminar_campos;
     private javax.swing.JTextField Tx_campo;
+    private javax.swing.JButton busca_llave;
     private javax.swing.JComboBox<String> combo_tipo2;
     private javax.swing.JToggleButton crear_regis;
     private javax.swing.JButton elim_campo;
@@ -1171,7 +1261,7 @@ ArrayList<Campos> temp = new ArrayList();
     File archivoarbol = null;
     boolean nuevo = false;
     int posModificar = -1;
-    Arbol_B tree = new Arbol_B();
+    Arbol_B tree;
     //ArrayList<dispo> availist = new ArrayList();
     ArrayList<Registros> registros = new ArrayList();
 
