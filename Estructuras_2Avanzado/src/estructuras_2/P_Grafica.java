@@ -57,6 +57,7 @@ public class P_Grafica extends javax.swing.JFrame {
     public P_Grafica() {
         initComponents();
 
+
     }
 
     /**
@@ -534,83 +535,86 @@ public class P_Grafica extends javax.swing.JFrame {
     }//GEN-LAST:event_L_registroMouseClicked
 
     private void utilidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_utilidadesMouseClicked
+        registros = leer_archivo.leeArchivos(archivo, metadata);
 
-//        // Creamos el archivo donde almacenaremos la hoja
-//        // de calculo, recuerde usar la extension correcta,
-//        // en este caso .xlsx
-//        File archivo = new File("Registros.xlsx");
-//
-//        // Creamos el libro de trabajo de Excel formato OOXML
-//        Workbook workbook = new XSSFWorkbook();
-//
-//        // La hoja donde pondremos los datos
-//        Sheet pagina = workbook.createSheet("Registros");
-//
-//        // Creamos el estilo paga las celdas del encabezado
-//        CellStyle style = workbook.createCellStyle();
-//        // Indicamos que tendra un fondo azul aqua
-//        // con patron solido del color indicado
-//        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-//        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//        
-//        String[] titulos = {metadata.getLista_campos().get(i).getNombre()};
-//        String[] datos = {Registros.getName()};
-//        
-//
-//        
-//
-//        // Creamos una fila en la hoja en la posicion 0
-//        Row fila = pagina.createRow(0);
-//
-//        // Creamos el encabezado
-//        for (int i = 0; i < titulos.length; i++) {
-//            // Creamos una celda en esa fila, en la posicion 
-//            // indicada por el contador del ciclo
-//            Cell celda = fila.createCell(i);
-//
-//            // Indicamos el estilo que deseamos 
-//            // usar en la celda, en este caso el unico 
-//            // que hemos creado
-//            celda.setCellStyle(style);
-//            celda.setCellValue(titulos[i]);
-//        }
-//
-//        // Ahora creamos una fila en la posicion 1
-//        fila = pagina.createRow(1);
-//
-//        // Y colocamos los datos en esa fila
-//        for (int i = 0; i < datos.length; i++) {
-//            // Creamos una celda en esa fila, en la
-//            // posicion indicada por el contador del ciclo
-//            Cell celda = fila.createCell(i);
-//
-//            celda.setCellValue(datos[i]);
-//        }
-//
-//        // Ahora guardaremos el archivo
-//        try {
-//            // Creamos el flujo de salida de datos,
-//            // apuntando al archivo donde queremos 
-//            // almacenar el libro de Excel
-//            FileOutputStream salida = new FileOutputStream(archivo);
-//
-//            // Almacenamos el libro de 
-//            // Excel via ese 
-//            // flujo de datos
-//            workbook.write(salida);
-//
-//            // Cerramos el libro para concluir operaciones
-//            workbook.close();
-//
-//            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
-//
-//        } catch (FileNotFoundException ex) {
-//            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
-//        } catch (IOException ex) {
-//            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
-//        }
-//    
-            registros = leer_archivo.leeArchivos(archivo, metadata);
+        // Creamos el archivo donde almacenaremos la hoja
+        // de calculo, recuerde usar la extension correcta,
+        // en este caso .xlsx
+        File archivo = new File("Registros.xlsx");
+
+        // Creamos el libro de trabajo de Excel formato OOXML
+        Workbook workbook = new XSSFWorkbook();
+
+        // La hoja donde pondremos los datos
+        Sheet pagina = workbook.createSheet("Registros");
+
+        // Creamos el estilo paga las celdas del encabezado
+        CellStyle style = workbook.createCellStyle();
+        // Indicamos que tendra un fondo azul aqua
+        // con patron solido del color indicado
+        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        
+        String[] titulos= new String[metadata.getNum_campos()]; 
+       
+        String[] datos = new String[registros.size()];
+        
+
+        
+
+        // Creamos una fila en la hoja en la posicion 0
+        Row fila = pagina.createRow(0);
+
+        // Creamos el encabezado
+        for (int i = 0; i < titulos.length; i++) {
+            // Creamos una celda en esa fila, en la posicion 
+            // indicada por el contador del ciclo
+            titulos[i]=metadata.getLista_campos().get(i).getNombre();
+            Cell celda = fila.createCell(i);
+
+            // Indicamos el estilo que deseamos 
+            // usar en la celda, en este caso el unico 
+            // que hemos creado
+            celda.setCellStyle(style);
+            celda.setCellValue(titulos[i]);
+        }
+
+        // Ahora creamos una fila en la posicion 1
+        fila = pagina.createRow(1);
+
+        // Y colocamos los datos en esa fila
+        for (int i = 0; i < datos.length; i++) {
+            // Creamos una celda en esa fila, en la
+            // posicion indicada por el contador del ciclo
+            datos[i] = registros.get(i).getLista().get(i).toString();
+            Cell celda = fila.createCell(i);
+
+            celda.setCellValue(datos[i]);
+        }
+
+        // Ahora guardaremos el archivo
+        try {
+            // Creamos el flujo de salida de datos,
+            // apuntando al archivo donde queremos 
+            // almacenar el libro de Excel
+            FileOutputStream salida = new FileOutputStream(archivo);
+
+            // Almacenamos el libro de 
+            // Excel via ese 
+            // flujo de datos
+            workbook.write(salida);
+
+            // Cerramos el libro para concluir operaciones
+            workbook.close();
+
+            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
+
+        } catch (FileNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Archivo no localizable en sistema de archivos");
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
+        }
+    
             System.out.println("size del array "+ registros.size());
 
             for (int i = 0; i < registros.size(); i++) {
