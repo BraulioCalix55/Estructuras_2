@@ -37,6 +37,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -45,6 +54,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -576,13 +587,13 @@ public class P_Grafica extends javax.swing.JFrame {
         fila = pagina.createRow(1);
 
         // Y colocamos los datos en esa fila
-        for (int i = 0; i < datos.length; i++) {
+        for (int j = 0; j < datos.length; j++) {
             // Creamos una celda en esa fila, en la
             // posicion indicada por el contador del ciclo
-            datos[i] = registros.get(i).getLista().get(i).toString();
-            Cell celda = fila.createCell(i);
+            datos[j] = registros.get(j).getLista().toString();
+            Cell celda = fila.createCell(j);
 
-            celda.setCellValue(datos[i]);
+            celda.setCellValue(datos[j]);
         }
 
         // Ahora guardaremos el archivo
@@ -607,7 +618,36 @@ public class P_Grafica extends javax.swing.JFrame {
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Error de entrada/salida");
         }
-
+        
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.newDocument();
+            doc.setXmlStandalone(true);
+            Element rootElement = doc.createElement("Campos");
+            doc.appendChild(rootElement);
+            for (int i = 0; i < metadata.getLista_campos().size(); i++) {
+                Element Campo =  doc.createElement("Campo");
+                Campo.setAttribute(metadata.getLista_campos().get(i).getNombre(),""+metadata.getLista_campos().get(i).getTipo());
+                rootElement.appendChild(Campo);
+            }
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource dom = new DOMSource(doc);
+            String ss = archivo.getAbsolutePath();
+            ss = ss.substring(0,ss.length());
+            StreamResult result = new StreamResult(new File(ss+".xml"));
+            transformer.transform(dom, result);
+            JOptionPane.showMessageDialog(this,"Creado con exito");
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(P_Grafica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
 
     }//GEN-LAST:event_utilidadesMouseClicked
 
